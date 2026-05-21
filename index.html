@@ -1,0 +1,698 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stan (Aisling) Leiva-Davila — Founder & AI Builder</title>
+<meta name="description" content="Stan (Aisling) Leiva-Davila — Founder of Nisaba Capital Charting · AI Builder · Hardware-fluent Software Engineer · NYC. Inaugural cohort of Pursuit's AI-Native Builder Program.">
+<meta property="og:title" content="Stan (Aisling) Leiva-Davila — Founder & AI Builder">
+<meta property="og:description" content="Native-Rust financial intelligence terminal · +37% paper-trade ROI · built solo in 30 days. NYC.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #f5f2eb;
+    --paper-soft: #ebe5d4;
+    --navy: #0d1828;
+    --brass: #b8893c;
+    --ink: #14202d;
+    --quiet: #5b6470;
+    --rule: #d4cbb0;
+    --card: #fffdf8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+  a { color: var(--brass); text-decoration: none; transition: color 0.15s; }
+  a:hover { color: var(--navy); }
+  .container { max-width: 1080px; margin: 0 auto; padding: 0 2rem; }
+  img { max-width: 100%; height: auto; display: block; }
+
+  /* Nav */
+  nav.top {
+    position: sticky;
+    top: 0;
+    background: rgba(245, 242, 235, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: 100;
+    border-bottom: 1px solid var(--rule);
+  }
+  nav.top .inner {
+    max-width: 1080px;
+    margin: 0 auto;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  nav.top .logo {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: var(--navy);
+    letter-spacing: -0.005em;
+  }
+  nav.top .links {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    display: flex;
+    gap: 1.5rem;
+  }
+  nav.top .links a { color: var(--quiet); text-decoration: none; }
+  nav.top .links a:hover { color: var(--navy); }
+  nav.top .links .founder-link { color: var(--brass); font-weight: 500; }
+
+  /* Hero */
+  .hero { padding: 5rem 0 4rem; display: grid; grid-template-columns: 1.6fr 1fr; gap: 4rem; align-items: start; }
+  .hero .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 1.5rem;
+  }
+  .hero h1 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: clamp(2.5rem, 5.5vw, 4rem);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 1.25rem;
+  }
+  .hero h1 .pref { font-style: italic; color: var(--brass); font-weight: 400; }
+  .hero .lede {
+    font-size: 1.15rem;
+    color: var(--ink);
+    line-height: 1.55;
+    margin-bottom: 1.5rem;
+    max-width: 34rem;
+  }
+  .hero .lede strong { color: var(--navy); }
+  .hero .meta {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--quiet);
+    line-height: 2;
+  }
+  .hero .meta a { color: var(--ink); border-bottom: 1px dotted var(--brass); }
+
+  /* Founder badge */
+  .founder-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: var(--navy);
+    color: var(--brass);
+    padding: 0.45rem 0.9rem;
+    border-radius: 999px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.74rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-bottom: 1.25rem;
+  }
+  .founder-badge .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: var(--brass);
+    animation: pulse 2s ease-in-out infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 0.4; }
+    50% { opacity: 1; }
+  }
+
+  .hero-side .photo {
+    width: 100%;
+    aspect-ratio: 4 / 5;
+    background: url('assets/portrait-placeholder.jpg') center top / cover;
+    background-color: var(--paper-soft);
+    border: 1px solid var(--rule);
+    margin-bottom: 1.25rem;
+    position: relative;
+  }
+  .hero-side .photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, transparent 60%, rgba(13, 24, 40, 0.45) 100%);
+    pointer-events: none;
+  }
+  .hero-side .quickstats {
+    background: var(--navy);
+    color: var(--paper);
+    padding: 1.25rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    line-height: 1.9;
+  }
+  .hero-side .quickstats .row {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px dashed rgba(245, 242, 235, 0.2);
+    padding: 0.35rem 0;
+  }
+  .hero-side .quickstats .row:last-child { border-bottom: none; }
+  .hero-side .quickstats .v { color: var(--brass); }
+
+  /* Section heads */
+  section { padding: 4rem 0; border-top: 1px solid var(--rule); }
+  .section-head {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: 3rem;
+    margin-bottom: 2.5rem;
+    align-items: end;
+  }
+  .section-head .num {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--brass);
+    letter-spacing: 0.15em;
+  }
+  .section-head h2 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 2.25rem;
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    color: var(--navy);
+    line-height: 1.15;
+  }
+  .section-head .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--quiet);
+    margin-top: 0.5rem;
+  }
+
+  /* About block */
+  .about-body { max-width: 44rem; }
+  .about-body p { font-size: 1.05rem; line-height: 1.65; margin-bottom: 1rem; }
+  .about-body strong { color: var(--navy); font-weight: 600; }
+
+  /* Founder section — Nisaba grimoire palette */
+  #founder {
+    background: var(--navy);
+    color: var(--paper);
+    padding: 5rem 0 6rem;
+    border-top: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  #founder::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(circle at 15% 25%, rgba(184, 137, 60, 0.18), transparent 45%),
+      radial-gradient(circle at 85% 75%, rgba(184, 137, 60, 0.12), transparent 45%);
+    pointer-events: none;
+    z-index: 0;
+  }
+  #founder .container { position: relative; z-index: 1; }
+  #founder .section-head h2 { color: var(--paper); font-family: 'Fraunces', serif; font-weight: 400; }
+  #founder .section-head .num { color: var(--brass); }
+  #founder .section-head .sub { color: rgba(245, 242, 235, 0.6); }
+
+  .nisaba-card {
+    background: rgba(184, 137, 60, 0.06);
+    border: 1px solid rgba(184, 137, 60, 0.3);
+    padding: 2.25rem 2rem 2.5rem;
+    margin-top: 1.5rem;
+  }
+  .nisaba-card h3 {
+    font-family: 'Fraunces', serif;
+    font-size: 2rem;
+    font-weight: 600;
+    color: var(--paper);
+    margin-bottom: 0.8rem;
+    letter-spacing: -0.01em;
+  }
+  .nisaba-card .quote {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 1.15rem;
+    color: rgba(245, 242, 235, 0.75);
+    border-left: 3px solid var(--brass);
+    padding-left: 1.1rem;
+    margin-bottom: 1.5rem;
+  }
+  .nisaba-card .quote .cite {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--brass);
+    font-style: normal;
+    margin-top: 0.5rem;
+    letter-spacing: 0.1em;
+  }
+  .nisaba-card p { color: rgba(245, 242, 235, 0.85); font-size: 0.98rem; margin-bottom: 1.2rem; line-height: 1.6; }
+  .nisaba-card .stats-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid rgba(184, 137, 60, 0.3);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.75rem;
+    color: rgba(245, 242, 235, 0.6);
+  }
+  .nisaba-card .stats-row .v {
+    display: block;
+    color: var(--brass);
+    font-size: 1.55rem;
+    font-weight: 600;
+    margin-bottom: 0.2rem;
+    font-family: 'Source Serif 4', serif;
+  }
+  .nisaba-card .cta-link {
+    display: inline-block;
+    color: var(--brass);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.88rem;
+    border-bottom: 1px solid var(--brass);
+    padding-bottom: 2px;
+    margin-top: 1.75rem;
+  }
+
+  /* Lineage table inside founder */
+  .lineage {
+    margin-top: 2rem;
+    border-collapse: collapse;
+    width: 100%;
+    font-size: 0.85rem;
+    color: rgba(245, 242, 235, 0.8);
+  }
+  .lineage th, .lineage td { padding: 0.55rem 0.75rem; text-align: left; border-bottom: 1px solid rgba(184, 137, 60, 0.2); }
+  .lineage th { color: var(--brass); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; }
+  .lineage td strong { color: var(--paper); font-weight: 600; }
+
+  /* Projects */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+  }
+  .card {
+    background: var(--card);
+    border: 1px solid var(--rule);
+    padding: 1.75rem;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 20px 40px -25px rgba(13, 24, 40, 0.25);
+  }
+  .card .tag {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 0.6rem;
+  }
+  .card h3 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.005em;
+  }
+  .card p { font-size: 0.92rem; color: var(--ink); margin-bottom: 0.8rem; line-height: 1.55; }
+  .card .stats {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    color: var(--quiet);
+    margin-bottom: 0.75rem;
+  }
+
+  /* Experience timeline */
+  .timeline .row {
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    padding: 1.5rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .timeline .row:last-child { border-bottom: none; }
+  .timeline .when {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    color: var(--quiet);
+    line-height: 1.6;
+  }
+  .timeline h4 {
+    font-family: 'Source Serif 4', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--navy);
+    margin-bottom: 0.25rem;
+  }
+  .timeline .role { font-style: italic; color: var(--brass); font-weight: 400; }
+  .timeline .row p { font-size: 0.95rem; margin-top: 0.5rem; line-height: 1.6; }
+
+  /* Skills */
+  .skills-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem 3rem; }
+  .skills-grid .col h4 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--brass);
+    margin-bottom: 0.6rem;
+    padding-bottom: 0.4rem;
+    border-bottom: 1px solid var(--rule);
+  }
+  .skills-grid .col p { font-size: 0.92rem; margin-bottom: 1.25rem; line-height: 1.6; }
+
+  /* Education */
+  .ed-row {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+    padding: 1.25rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+  .ed-row:last-child { border-bottom: none; }
+  .ed-row .left h4 { font-family: 'Source Serif 4', serif; font-size: 1.15rem; font-weight: 600; color: var(--navy); }
+  .ed-row .left .when { font-family: 'JetBrains Mono', monospace; font-size: 0.75rem; color: var(--quiet); margin-top: 0.2rem; }
+  .ed-row p { font-size: 0.95rem; line-height: 1.6; }
+
+  /* Footer */
+  footer {
+    background: var(--navy);
+    color: rgba(245, 242, 235, 0.7);
+    padding: 3.5rem 0;
+  }
+  footer .grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2rem; }
+  footer h5 {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.18em;
+    color: var(--brass);
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+  }
+  footer p, footer a { color: rgba(245, 242, 235, 0.8); font-size: 0.9rem; line-height: 1.8; }
+  footer a:hover { color: var(--brass); }
+  footer .colophon { margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid rgba(184, 137, 60, 0.3); font-family: 'JetBrains Mono', monospace; font-size: 0.72rem; color: rgba(245, 242, 235, 0.5); }
+
+  @media (max-width: 720px) {
+    .hero, .projects-grid, .section-head, .skills-grid, .ed-row, footer .grid { grid-template-columns: 1fr; gap: 2rem; }
+    .timeline .row { grid-template-columns: 1fr; }
+    .nisaba-card .stats-row { grid-template-columns: repeat(2, 1fr); }
+    nav.top .links { gap: 1rem; font-size: 0.7rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav class="top">
+  <div class="inner">
+    <div class="logo">Stan (Aisling) Leiva-Davila</div>
+    <div class="links">
+      <a href="#about">about</a>
+      <a href="#founder" class="founder-link">⌁ founder</a>
+      <a href="#projects">projects</a>
+      <a href="#experience">experience</a>
+      <a href="#contact">contact</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <section class="hero" style="border-top:none;">
+    <div>
+      <span class="founder-badge"><span class="dot"></span>Founder · Open to opportunities · NYC</span>
+      <h1>Stan <span class="pref">(Aisling)</span><br>Leiva-Davila</h1>
+      <p class="lede">Independent, self-taught <strong>AI Builder &amp; founder</strong>. Ship production-grade systems solo &mdash; a native-Rust desktop terminal in 30 days (<strong>+37% paper-trade ROI</strong>), Python AI lead-gen scrapers, and full web platforms. Specializing in AI-driven lead-generation tools and financial intelligence platforms.</p>
+      <p class="meta">
+        ness.aisling@gmail.com &middot; New York, NY<br>
+        <a href="https://www.linkedin.com/in/stan-leiva-davila/">linkedin.com/in/stan-leiva-davila</a><br>
+        <a href="https://github.com/nessaisling-lab">github.com/nessaisling-lab</a> &middot; <a href="https://github.com/aislingld-pursuit">github.com/aislingld-pursuit</a>
+      </p>
+    </div>
+    <div class="hero-side">
+      <div class="photo" aria-label="Stan (Aisling) Leiva-Davila portrait"></div>
+      <div class="quickstats">
+        <div class="row"><span>status</span><span class="v">open to work</span></div>
+        <div class="row"><span>based</span><span class="v">NYC</span></div>
+        <div class="row"><span>cohort</span><span class="v">Pursuit AI-Native</span></div>
+        <div class="row"><span>founder</span><span class="v">Nisaba Capital</span></div>
+        <div class="row"><span>roi (paper)</span><span class="v">+37.06%</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="section-head">
+      <div>
+        <p class="num">01 &middot; About</p>
+        <p class="sub">The rare combination</p>
+      </div>
+      <h2>Software engineer who reads schematics, ships production code, owns outcomes end-to-end.</h2>
+    </div>
+    <div class="about-body">
+      <p>I taught myself <strong>C, C++, and Assembly</strong> in my late teens. Installed Debian Linux on a PlayStation 3 with a custom Wi-Fi driver because I wanted to know if I could &mdash; chipset documentation, low-level debugging, hardware constraints. Followed that with formal Aircraft Mechanic <strong>A&amp;P coursework at Vaughn College</strong> &mdash; methodical troubleshooting, risk awareness, precision under pressure. I had to pause that degree during a family emergency, but the habits remain.</p>
+      <p>I'm now in the inaugural cohort of <strong>Pursuit's AI-Native Builder</strong> program in Long Island City, NY &mdash; a 600+ hour, in-person, 7-month intensive shipping production-grade AI products end-to-end. <strong>Per Scholas IT Support</strong> graduate (October 2025): CompTIA A+, Google IT Support Professional Certificate, ServiceNow ITSM Fundamentals. I have repaired airplanes, rehabilitated end-of-life desktops as network servers, and built PCs since I was a teenager.</p>
+      <p>Before Pursuit I sub-contracted at <strong>Architechne</strong> as Data Analyst and Partnership Coordinator (Sep 2025 &ndash; Mar 2026), building a Python + AI scraper that cut my own manual research workflow by ~50%. Before that I ran a 2.5-year <strong>Airbnb business</strong> solo (2017&ndash;2020) &mdash; listing, marketing, bookkeeping, vendor coordination, guest relations. Same end-to-end ownership discipline I bring to software systems today.</p>
+    </div>
+  </section>
+
+</div>
+
+<section id="founder">
+  <div class="container">
+    <div class="section-head">
+      <div>
+        <p class="num">02 &middot; Founder</p>
+        <p class="sub">Nisaba Capital Charting</p>
+      </div>
+      <h2>A financial intelligence terminal &mdash; at the intersection of astrology and Wall Street.</h2>
+    </div>
+    <div class="nisaba-card">
+      <h3>Nisaba Capital Charting</h3>
+      <p class="quote">
+        "Millionaires don't use astrology. Billionaires do."
+        <span class="cite">&mdash; attributed to J.P. Morgan</span>
+      </p>
+      <p>A Bloomberg-class native-Rust desktop terminal combining rigorous quantitative data (12 APIs, 10 native Rust scrapers, 46 SQLx migrations, axum REST sidecar) with a production-tier Hellenistic astrology engine validated to sub-arcsecond precision via Swiss Ephemeris &mdash; NASA-grade JPL ephemeris data. Shipped solo in 30 days as my Pursuit capstone. The thesis isn't "astrology predicts markets." It's that the best investors in history refused to dismiss data sources just because they were unconventional. <strong>Pre-revenue, pre-incorporation by design</strong> &mdash; legal entity formation and IP filings in progress.</p>
+      <div class="stats-row">
+        <div><span class="v">+37.06%</span>paper-trade ROI</div>
+        <div><span class="v">~25k</span>lines of Rust</div>
+        <div><span class="v">132</span>tests &middot; 0 warn</div>
+        <div><span class="v">v12.2.0</span>installer shipped</div>
+      </div>
+      <a class="cta-link" href="https://nessaisling-lab.github.io/nisaba-site/" target="_blank" rel="noopener">Enter the brand site &middot; grimoire mode &rarr;</a>
+    </div>
+
+    <table class="lineage">
+      <thead>
+        <tr><th>Figure</th><th>Era</th><th>Verified Practice</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>J.P. Morgan</strong></td><td>1890s&ndash;1913</td><td>Kept astrologer Evangeline Adams on retainer (Adams' 1926 autobiography)</td></tr>
+        <tr><td><strong>W.D. Gann</strong></td><td>1878&ndash;1955</td><td>Founded W.D. Gann &amp; Company (1908); <em>Truth of the Stock Tape</em> praised by WSJ</td></tr>
+        <tr><td><strong>Donald Bradley</strong></td><td>1925&ndash;1974</td><td>Published <em>Stock Market Prediction</em> (1948); Bradley Siderograph still tracked today</td></tr>
+        <tr><td><strong>Arch Crawford</strong></td><td>1934&ndash;present</td><td>Predicted 1987 crash to the day; #1 market timer (<em>Hulbert</em>, 2008 &amp; 2009)</td></tr>
+      </tbody>
+    </table>
+
+  </div>
+</section>
+
+<div class="container">
+
+  <section id="projects">
+    <div class="section-head">
+      <div>
+        <p class="num">03 &middot; Projects</p>
+        <p class="sub">Selected &middot; 2025 &rarr; 2026</p>
+      </div>
+      <h2>Built end-to-end &mdash; design system to data pipeline.</h2>
+    </div>
+    <div class="projects-grid">
+
+      <div class="card">
+        <p class="tag">Founder &middot; Capstone</p>
+        <h3>Nisaba Capital Charting</h3>
+        <p>Native-Rust financial intelligence terminal combining Wall Street data with a Hellenistic astrology engine. Solo build, 30 days, Demo Day capstone.</p>
+        <p class="stats">Rust &middot; Iced &middot; axum &middot; SQLx &middot; Swiss Ephemeris &middot; WGSL shaders</p>
+        <a href="https://nessaisling-lab.github.io/nisaba-site/" target="_blank">brand site &rarr;</a>
+      </div>
+
+      <div class="card">
+        <p class="tag">UX/UI &middot; Pursuit Final</p>
+        <h3>Berkshire Hathaway, Reimagined</h3>
+        <p>Redesign of berkshirehathaway.com synthesizing Apple HIG + Buffett's 1996 Owner's Manual into seven paired principles.</p>
+        <p class="stats">Single-file HTML mock &middot; Figma spec &middot; WCAG 2.2 AA &middot; 8-section rationale</p>
+        <a href="https://nessaisling-lab.github.io/Final-Berkshire-Hathaway-redesign/" target="_blank">live demo &rarr;</a>
+      </div>
+
+      <div class="card">
+        <p class="tag">Applied AI &middot; Client work</p>
+        <h3>Interior Designer Web Scraper</h3>
+        <p>Python + AI scraper sourcing luxury-design partner leads across NYC tri-state. Built for Architechne (paid contract); cut manual research workflow by ~50%.</p>
+        <p class="stats">Python &middot; MySQL &middot; AI-assisted &middot; CSV pipeline</p>
+        <a href="https://github.com/nessaisling-lab/Interior-Designer-Web-Scrubber" target="_blank">repository &rarr;</a>
+      </div>
+
+      <div class="card">
+        <p class="tag">Systems &middot; Self-taught</p>
+        <h3>PS3 Debian + Custom Wi-Fi Driver</h3>
+        <p>Installed Debian Linux on a PlayStation 3 and wrote a custom Wi-Fi driver. Chipset documentation, low-level debugging, hardware constraints. Where I learned to bring up unfamiliar systems.</p>
+        <p class="stats">C &middot; Linux device drivers &middot; low-level &middot; self-directed</p>
+        <span style="font-family:'JetBrains Mono',monospace;font-size:0.78rem;color:var(--quiet);">archived &middot; cover-letter detail</span>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="experience">
+    <div class="section-head">
+      <div>
+        <p class="num">04 &middot; Experience</p>
+        <p class="sub">Owner-operator &middot; 2017 &rarr; present</p>
+      </div>
+      <h2>End-to-end ownership across operations and engineering.</h2>
+    </div>
+    <div class="timeline">
+
+      <div class="row">
+        <div class="when">
+          Apr 2026 &ndash; Present<br>
+          <span style="color:var(--brass);">New York, NY</span>
+        </div>
+        <div>
+          <h4>Nisaba Capital Charting &middot; <span class="role">Founder &amp; Builder</span></h4>
+          <p>Solo-built native-Rust financial intelligence platform. ~25k LOC, 132 tests, zero warnings, Windows installer (v12.2.0). Demoed at Pursuit Demo Day (2026-05-06) to Pursuit staff, fellow Builders, and a Fortune 500 industry reviewer. Pre-revenue; legal entity formation and IP filings in progress.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="when">
+          Sep 2025 &ndash; Mar 2026<br>
+          <span style="color:var(--brass);">New York, NY</span>
+        </div>
+        <div>
+          <h4>Architechne &middot; <span class="role">Data Analyst &amp; Partnership Coordinator</span></h4>
+          <p>Built Python + AI scraper for luxury-design partner lead-gen. Designed MySQL territory database. Cut manual research workflow by ~50%.</p>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="when">
+          Jul 2017 &ndash; Jan 2020<br>
+          <span style="color:var(--brass);">Flushing, NY</span>
+        </div>
+        <div>
+          <h4>Airbnb &middot; <span class="role">Self-Employed Property Manager (Owner-Operator)</span></h4>
+          <p>Ran a full short-term rental business solo for 2.5+ years. Bookkeeping, marketing, vendor coordination, guest relations. Same end-to-end ownership discipline I bring to software systems today.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <p class="num">05 &middot; Education</p>
+        <p class="sub">Pursuit &middot; Per Scholas &middot; Vaughn</p>
+      </div>
+      <h2>Self-taught foundation, formally stacked.</h2>
+    </div>
+
+    <div class="ed-row">
+      <div class="left">
+        <h4>Pursuit AI-Native Builder</h4>
+        <div class="when">Mar 2025 &ndash; Present &middot; LIC, NY</div>
+      </div>
+      <p>Inaugural cohort. 600+ hour, in-person, 7-month intensive shipping production-grade AI products end-to-end. Demo Day capstone (Nisaba) presented May 2026 to Pursuit staff + Fortune 500 industry reviewer.</p>
+    </div>
+    <div class="ed-row">
+      <div class="left">
+        <h4>Per Scholas &middot; IT Support</h4>
+        <div class="when">Graduated Oct 2025 &middot; Bronx, NY</div>
+      </div>
+      <p><strong>CompTIA A+</strong> &middot; <strong>Google IT Support Professional Certificate</strong> &middot; <strong>ServiceNow ITSM Fundamentals</strong>. Hardware, networking, and enterprise ITSM workflows.</p>
+    </div>
+    <div class="ed-row">
+      <div class="left">
+        <h4>Vaughn College &middot; A&amp;P</h4>
+        <div class="when">Coursework complete &middot; Flushing, NY</div>
+      </div>
+      <p>Aircraft Mechanic Airframe &amp; Powerplant. All technical coursework toward the FAA A&amp;P Rating Certification completed.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <div>
+        <p class="num">06 &middot; Stack</p>
+        <p class="sub">Languages &middot; Systems &middot; Operations</p>
+      </div>
+      <h2>What's in the toolkit.</h2>
+    </div>
+    <div class="skills-grid">
+      <div class="col">
+        <h4>Languages &amp; Frameworks</h4>
+        <p>Rust (Iced, axum, SQLx), Python, C, C++, Assembly, JavaScript, HTML/CSS, SQL (PostgreSQL, MySQL), REST + LLM APIs, WGSL shaders.</p>
+        <h4>AI Tooling</h4>
+        <p>Claude Code, Cursor, Anthropic + OpenAI APIs, RAG, prompt engineering, agentic workflows, Swiss Ephemeris.</p>
+      </div>
+      <div class="col">
+        <h4>Systems &amp; Embedded</h4>
+        <p>Linux, Windows, Git/GitHub, Linux device drivers, hardware bring-up, EOL system rehab, schematics reading, custom Wi-Fi driver development.</p>
+        <h4>IT &amp; Operations</h4>
+        <p>CompTIA A+, Google IT Support, ServiceNow ITSM, LAN/WLAN/WAN networking, project &amp; financial management, customer relations.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer id="contact">
+  <div class="container">
+    <div class="grid">
+      <div>
+        <h5>Direct</h5>
+        <p>ness.aisling@gmail.com<br>New York, NY 10016</p>
+      </div>
+      <div>
+        <h5>Online</h5>
+        <p>
+          <a href="https://www.linkedin.com/in/stan-leiva-davila/">linkedin/stan-leiva-davila</a><br>
+          <a href="https://github.com/nessaisling-lab">github/nessaisling-lab</a><br>
+          <a href="https://github.com/aislingld-pursuit">github/aislingld-pursuit</a>
+        </p>
+      </div>
+      <div>
+        <h5>Founder</h5>
+        <p>
+          <a href="https://nessaisling-lab.github.io/nisaba-site/">Nisaba Capital Charting</a><br>
+          Pre-revenue &middot; LLC in formation
+        </p>
+      </div>
+    </div>
+    <p class="colophon">&copy; 2026 Stan (Aisling) Leiva-Davila &middot; Builder Portfolio v2 &middot; Source Serif 4 + Inter + JetBrains Mono &middot; Fraunces in founder section &middot; Built solo in NYC.</p>
+  </div>
+</footer>
+
+</body>
+</html>
