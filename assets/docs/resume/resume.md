@@ -1,0 +1,58 @@
+# Stan (Aisling) Leiva-Davila
+
+AI Builder & Founder · New York, NY
+
+ness.aisling@gmail.com · aisling.ld@pursuit.org · 201-471-1178
+[linkedin.com/in/stan-leiva-davila](https://www.linkedin.com/in/stan-leiva-davila/) · [github.com/nessaisling-lab](https://github.com/nessaisling-lab)
+
+## Professional Summary
+
+Self-taught AI Builder and founder who ships production-grade systems solo and on small teams. Built a native-Rust financial-intelligence terminal (+37% paper-trade ROI) and a privacy-first, on-device voice-to-text app — both cross-platform desktop products. Hardware-fluent (Aircraft A&P coursework, CompTIA A+) with end-to-end ownership from systems and data pipelines through UI and go-to-market. Inaugural cohort of Pursuit's AI-Native Builder program.
+
+## Experience
+
+**Nisaba Capital Charting — Founder & Builder** · New York, NY · Apr 2026 – Present
+*Native-Rust financial-intelligence desktop terminal merging market data with a Hellenistic astrology engine.*
+
+- Built a ~25k-line Rust application solo in 30 days — 12 data APIs, 10 native scrapers, 46 SQLx migrations, an axum REST sidecar, and a Swiss Ephemeris engine validated to sub-arcsecond precision; 132 tests, zero warnings, shipped a v12.2.0 Windows installer.
+- Reached +37.06% verified paper-trade ROI; presented at Pursuit Demo Day to staff, fellow Builders, and a Fortune 500 reviewer (legal entity formation and IP filings in progress).
+
+**Architechne — Data Analyst & Partnership Coordinator (1099)** · New York, NY · Sep 2025 – Mar 2026
+*Sourced luxury interior-designer, architect, and residential-developer leads for a NYC design partnership business.*
+
+- Built a Python + AI web scraper across NYC tri-state directories and designed a MySQL territory database, cutting manual research time by ~50%.
+
+**Airbnb — Self-Employed Property Manager (Owner-Operator)** · Flushing, NY · Jul 2017 – Jan 2020
+*Ran a short-term-rental business solo for 2.5+ years.*
+
+- Owned listing, marketing, bookkeeping, vendor coordination, and guest relations end-to-end — the same full-ownership discipline applied to software systems today.
+
+## Technical Projects
+
+**Resona / Wisper — Privacy-First On-Device Voice-to-Text** · 2026 · [repo](https://github.com/aislingld-pursuit/L2-Clone-Prodject)
+*Cross-platform desktop dictation app: live streaming + file/YouTube transcription, 100% on-device via whisper.cpp.*
+
+- Built a real-time pipeline (mic → cpal → energy-VAD → incremental Whisper) plus file and YouTube import with zero cloud STT and no accounts; four selectable GPU backends (CUDA / Vulkan / Metal / CPU) from one Tauri 2 + Rust + React codebase.
+- Designed an Ed25519-signed-license freemium model with correct client-vs-server entitlement gating; hardened SSRF and unsafe-export issues (SEC-001/002); co-developed on a PRD + HEART process and shipped v0.2.0-beta.18 across Windows, macOS, and Linux.
+
+**Nuclear Force — NYC Nuclear-Emergency Escape Router** · 2026 · [repo](https://github.com/aislingld-pursuit/Nightfall-Win-x64)
+*Interactive emergency-preparedness simulator for New York City, packaged as a native desktop app.*
+
+- Built a Leaflet map modeling four blast yields with a nearest-shelter finder over 17 real sites, wind-driven fallout drift, and algorithmic evacuation routing; shipped as a Windows Electron build in a pnpm monorepo.
+
+## Education
+
+**Pursuit — AI-Native Builder (Inaugural Cohort)** · Long Island City, NY · Mar 2025 – Present
+*600+ hour, 7-month in-person intensive shipping production-grade AI products end-to-end.*
+
+- Shipped 10+ end-to-end builds and wrote 8+ PRDs; delivered a capstone (Nisaba) at Demo Day to Pursuit staff and a Fortune 500 industry reviewer.
+
+**Per Scholas — IT Support** · Graduated Oct 2025 — CompTIA A+, Google IT Support, ServiceNow ITSM
+
+**Vaughn College — Aircraft Mechanic Airframe & Powerplant** · Coursework complete · Flushing, NY
+
+## Skills & Tools
+
+- **Languages & Frameworks:** Rust (Iced, axum, SQLx, Tauri 2, whisper-rs, cpal), Python, C, C++, Assembly, JavaScript/TypeScript, React, Node, HTML/CSS, SQL (PostgreSQL, MySQL), REST + LLM APIs, WGSL
+- **AI & Tooling:** Claude Code, Cursor, Anthropic + OpenAI APIs, whisper.cpp, RAG, prompt engineering, agentic workflows, Swiss Ephemeris
+- **Systems & Ops:** Linux, Windows, Git/GitHub, GPU backends (CUDA/Vulkan/Metal), Linux device drivers, hardware bring-up, CompTIA A+, LAN/WLAN networking

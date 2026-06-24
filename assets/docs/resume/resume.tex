@@ -1,0 +1,218 @@
+% ============================================================
+%  Stan (Aisling) Leiva-Davila — Pursuit AI Builder resume
+%  PAPER SIZE: change ONE word on the next line.
+%    letterpaper  -> US Letter (8.5 x 11)  [default for the website button]
+%    legalpaper   -> US Legal  (8.5 x 14)
+%  Margins below use \addtolength (relative), so both sizes work unchanged.
+% ============================================================
+\documentclass[letterpaper,10pt]{article}   % <-- swap letterpaper <-> legalpaper
+
+\usepackage{latexsym}
+\usepackage[empty]{fullpage}
+\usepackage{titlesec}
+\usepackage{marvosym}
+\usepackage[usenames,dvipsnames]{color}
+\usepackage{verbatim}
+\usepackage{enumitem}
+\usepackage[pdftex]{hyperref}
+\usepackage{fancyhdr}
+
+
+\pagestyle{fancy}
+\fancyhf{}
+\fancyfoot{}
+\renewcommand{\headrulewidth}{0pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% Adjust margins
+\addtolength{\oddsidemargin}{-0.5in}
+\addtolength{\evensidemargin}{-.6in}
+\addtolength{\textwidth}{1in}
+\addtolength{\topmargin}{-.4in}
+\addtolength{\textheight}{1in}
+
+\urlstyle{same}
+
+\raggedbottom
+\raggedright
+\setlength{\tabcolsep}{0in}
+
+% Sections formatting
+\titleformat{\section}{
+  \vspace{-4pt}\scshape\raggedright\large
+}{}{0em}{}[\color{black}\titlerule \vspace{-5pt}]
+
+%-------------------------
+% Custom commands
+\newcommand{\resumeItem}[2]{
+  \item\small{
+    \textbf{#1}{#2 \vspace{-2pt}}
+  }
+}
+
+\newcommand{\resumeSubheadingEd}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} &  \small #2\\
+      \textit{\small#3} & \textit{\small #4}\\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubheading}[3]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \small #2 \\
+      \textit{\small#3} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubheadingShort}[2]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \small #2 \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+% Project subheading: name left, year right; description line; then github link right
+\newcommand{\resumeProjectHeading}[4]{
+  \vspace{-1pt}\item
+    \begin{tabular*}{0.97\textwidth}{l@{\extracolsep{\fill}}r}
+      \textbf{#1} & \small #2 \\
+      \textit{\small #3} & \small \href{#4}{\faGithub} \\
+    \end{tabular*}\vspace{-5pt}
+}
+
+\newcommand{\resumeSubItem}[2]{\resumeItem{#1}{#2}\vspace{-4pt}}
+
+\renewcommand{\labelitemii}{$\circ$}
+
+\newcommand{\resumeSubHeadingListStart}{\begin{itemize}[leftmargin=*, label={}]}
+\newcommand{\resumeSubHeadingListEnd}{\end{itemize}}
+\newcommand{\resumeItemListStart}{\begin{itemize}}
+\newcommand{\resumeItemListEnd}{\end{itemize}\vspace{-5pt}}
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=blue,
+    urlcolor=blue,
+}
+
+\usepackage{mathptmx}
+\usepackage{setspace}
+\usepackage{fontawesome}
+
+
+
+%-------------------------------------------
+%%%%%%  CV STARTS HERE  %%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+\begin{document}
+
+%----------HEADING-----------------
+
+\begin{center}{\textwidth}
+  \textbf{{\Huge Stan (Aisling) Leiva-Davila}} \\ \medskip \smallskip
+  {\large {ness.aisling@gmail.com} $|$ {aisling.ld@pursuit.org} $|$ 201-471-1178} \\ \smallskip
+  {\large New York, NY $|$
+  \faLinkedinSquare $ $ \href{https://www.linkedin.com/in/stan-leiva-davila/}{stan-leiva-davila} $|$
+  \faGithub $ $ \href{https://github.com/nessaisling-lab}{nessaisling-lab}}
+\end{center}
+
+%-----------SUMMARY-----------------
+\section{Professional Summary}
+{\small Self-taught AI Builder and founder who ships production-grade systems solo and on small teams. Built a native-Rust financial-intelligence terminal (+37\% paper-trade ROI) and a privacy-first, on-device voice-to-text app — both cross-platform desktop products. Hardware-fluent (Aircraft A\&P coursework, CompTIA A+) with end-to-end ownership from systems and data pipelines through UI and go-to-market. Inaugural cohort of Pursuit's AI-Native Builder program.}
+
+%-----------EXPERIENCE-----------------
+\section{Experience}
+  \resumeSubHeadingListStart
+
+    \resumeSubheadingEd
+      {Nisaba Capital Charting $|$ Founder \& Builder}{Apr. 2026 -- Present}
+      {Native-Rust financial-intelligence desktop terminal merging market data with a Hellenistic astrology engine.}{New York, NY}
+      \resumeItemListStart
+        \resumeItem{}
+            {Built a $\sim$25k-line Rust application solo in 30 days — 12 data APIs, 10 native scrapers, 46 SQLx migrations, an axum REST sidecar, and a Swiss Ephemeris engine validated to sub-arcsecond precision; 132 tests, zero warnings, shipped a v12.2.0 Windows installer}
+        \resumeItem{}
+            {Reached +37.06\% verified paper-trade ROI; presented at Pursuit Demo Day to staff, fellow Builders, and a Fortune 500 reviewer (legal entity formation and IP filings in progress)}
+      \resumeItemListEnd
+      \smallskip
+
+    \resumeSubheadingEd
+      {Architechne $|$ Data Analyst \& Partnership Coordinator (1099)}{Sep. 2025 -- Mar. 2026}
+      {Sourced luxury interior-designer, architect, and residential-developer leads for a NYC design partnership business.}{New York, NY}
+      \resumeItemListStart
+        \resumeItem{}
+            {Built a Python + AI web scraper across NYC tri-state directories and designed a MySQL territory database, cutting manual research time by $\sim$50\%}
+      \resumeItemListEnd
+      \smallskip
+
+    \resumeSubheadingEd
+      {Airbnb $|$ Self-Employed Property Manager (Owner-Operator)}{Jul. 2017 -- Jan. 2020}
+      {Ran a short-term-rental business solo for 2.5+ years.}{Flushing, NY}
+      \resumeItemListStart
+        \resumeItem{}
+            {Owned listing, marketing, bookkeeping, vendor coordination, and guest relations end-to-end — the same full-ownership discipline applied to software systems today}
+      \resumeItemListEnd
+
+  \resumeSubHeadingListEnd
+
+%-----------PROJECTS-----------------
+\section{Technical Projects}
+  \resumeSubHeadingListStart
+    \resumeProjectHeading
+      {Resona / Wisper $|$ Privacy-First On-Device Voice-to-Text}{2026}
+      {Cross-platform desktop dictation app: live streaming + file/YouTube transcription, 100\% on-device via whisper.cpp.}
+      {https://github.com/aislingld-pursuit/L2-Clone-Prodject}
+      \resumeItemListStart
+        \resumeItem{}
+            {Built a real-time pipeline (mic $\rightarrow$ cpal $\rightarrow$ energy-VAD $\rightarrow$ incremental Whisper) plus file and YouTube import with zero cloud STT and no accounts; four selectable GPU backends (CUDA / Vulkan / Metal / CPU) from one Tauri 2 + Rust + React codebase}
+        \resumeItem{}
+            {Designed an Ed25519-signed-license freemium model with correct client-vs-server entitlement gating; hardened SSRF and unsafe-export issues (SEC-001/002); co-developed on a PRD + HEART process and shipped v0.2.0-beta.18 across Windows, macOS, and Linux}
+      \resumeItemListEnd
+      \smallskip
+    \resumeProjectHeading
+      {Nuclear Force $|$ NYC Nuclear-Emergency Escape Router}{2026}
+      {Interactive emergency-preparedness simulator for New York City, packaged as a native desktop app.}
+      {https://github.com/aislingld-pursuit/Nightfall-Win-x64}
+      \resumeItemListStart
+        \resumeItem{}
+            {Built a Leaflet map modeling four blast yields with a nearest-shelter finder over 17 real sites, wind-driven fallout drift, and algorithmic evacuation routing; shipped as a Windows Electron build in a pnpm monorepo}
+      \resumeItemListEnd
+  \resumeSubHeadingListEnd
+
+%-----------EDUCATION-----------------
+\section{Education}
+  \resumeSubHeadingListStart
+
+    \resumeSubheadingEd
+      {Pursuit $|$ AI-Native Builder (Inaugural Cohort)}{Mar. 2025 -- Present}
+      {600+ hour, 7-month in-person intensive shipping production-grade AI products end-to-end.}{Long Island City, NY}
+      \resumeItemListStart
+        \resumeItem{}
+            {Shipped 10+ end-to-end builds and wrote 8+ PRDs; delivered a capstone (Nisaba) at Demo Day to Pursuit staff and a Fortune 500 industry reviewer}
+      \resumeItemListEnd
+      \smallskip
+
+    \resumeSubheadingShort
+      {Per Scholas $|$ IT Support — CompTIA A+, Google IT Support, ServiceNow ITSM}{Grad. Oct. 2025}
+
+    \resumeSubheadingShort
+      {Vaughn College $|$ Aircraft Mechanic Airframe \& Powerplant (coursework complete)}{Flushing, NY}
+
+  \resumeSubHeadingListEnd
+
+%--------SKILLS------------
+\section{Skills \& Tools}
+ \resumeSubHeadingListStart
+   \resumeSubItem{Languages \& Frameworks: }
+     {Rust (Iced, axum, SQLx, Tauri 2, whisper-rs, cpal), Python, C, C++, Assembly, JavaScript/TypeScript, React, Node, HTML/CSS, SQL (PostgreSQL, MySQL), REST + LLM APIs, WGSL}
+   \resumeSubItem{AI \& Tooling: }
+     {Claude Code, Cursor, Anthropic + OpenAI APIs, whisper.cpp, RAG, prompt engineering, agentic workflows, Swiss Ephemeris}
+   \resumeSubItem{Systems \& Ops: }
+     {Linux, Windows, Git/GitHub, GPU backends (CUDA/Vulkan/Metal), Linux device drivers, hardware bring-up, CompTIA A+, LAN/WLAN networking}
+ \resumeSubHeadingListEnd
+
+%-------------------------------------------
+\end{document}
