@@ -35,10 +35,10 @@ Self-taught AI Builder and founder who ships production-grade systems solo and o
 - Built a real-time pipeline (mic → cpal → energy-VAD → incremental Whisper) plus file and YouTube import with zero cloud STT and no accounts; four selectable GPU backends (CUDA / Vulkan / Metal / CPU) from one Tauri 2 + Rust + React codebase.
 - Designed an Ed25519-signed-license freemium model with correct client-vs-server entitlement gating; hardened SSRF and unsafe-export issues (SEC-001/002); co-developed on a PRD + HEART process and shipped v0.2.0-beta.18 across Windows, macOS, and Linux.
 
-**Nuclear Force — NYC Nuclear-Emergency Escape Router** · 2026 · [repo](https://github.com/aislingld-pursuit/Nightfall-Win-x64)
-*Interactive emergency-preparedness simulator for New York City, packaged as a native desktop app.*
+**Berkshire Hathaway, Reimagined — UX/UI Redesign** · 2025 · [repo](https://github.com/nessaisling-lab/Final-Berkshire-Hathaway-redesign)
+*Conceptual redesign of berkshirehathaway.com synthesizing Apple's HIG with Buffett's 1996 Owner's Manual.*
 
-- Built a Leaflet map modeling four blast yields with a nearest-shelter finder over 17 real sites, wind-driven fallout drift, and algorithmic evacuation routing; shipped as a Windows Electron build in a pnpm monorepo.
+- Built a single-file HTML mockup and Figma spec organized around seven paired design principles, meeting WCAG 2.2 AA accessibility with an 8-section written design rationale.
 
 ## Education
 
