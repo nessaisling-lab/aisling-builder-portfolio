@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>THE HUMAN COST — AI & The Creator Economy 2025</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --surface: #111111;
+    --surface2: #181818;
+    --border: #222222;
+    --accent: #e8c547;
+    --accent2: #e84747;
+    --accent3: #47b4e8;
+    --text: #f0ede8;
+    --text-muted: #888884;
+    --text-dim: #555550;
+    --white: #ffffff;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    font-weight: 300;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ─── TYPOGRAPHY ─────────────────────────── */
+  .display { font-family: 'Playfair Display', serif; }
+  .mono    { font-family: 'Space Mono', monospace; }
+
+  h1, h2, h3 { font-family: 'Playfair Display', serif; line-height: 1.15; }
+
+  /* ─── HERO ────────────────────────────────── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+    padding: 80px 40px 60px;
+    text-align: center;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 70% 50% at 50% 20%, rgba(232,197,71,0.08) 0%, transparent 70%),
+      radial-gradient(ellipse 50% 40% at 80% 80%, rgba(232,71,71,0.06) 0%, transparent 60%),
+      repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(255,255,255,0.02) 60px),
+      repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(255,255,255,0.02) 60px);
+  }
+
+  .hero-badge {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--accent);
+    border: 1px solid rgba(232,197,71,0.3);
+    padding: 6px 16px;
+    margin-bottom: 32px;
+  }
+
+  .hero h1 {
+    font-size: clamp(52px, 8vw, 110px);
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    line-height: 0.95;
+    position: relative; z-index: 1;
+  }
+
+  .hero h1 em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-sub {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    margin-top: 24px;
+    max-width: 600px;
+    margin-inline: auto;
+  }
+
+  .hero-divider {
+    width: 60px;
+    height: 1px;
+    background: var(--accent);
+    margin: 32px auto;
+    position: relative; z-index: 1;
+  }
+
+  .hero-tagline {
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2.5vw, 26px);
+    color: var(--text-muted);
+    max-width: 700px;
+    margin-inline: auto;
+    position: relative; z-index: 1;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 32px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .scroll-hint::after {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, var(--accent), transparent);
+    animation: scroll-pulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scroll-pulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(1.2); }
+  }
+
+  /* ─── LAYOUT ──────────────────────────────── */
+  .container {
+    max-width: 1100px;
+    margin-inline: auto;
+    padding-inline: 40px;
+  }
+
+  section {
+    padding-block: 80px;
+    border-top: 1px solid var(--border);
+  }
+
+  /* ─── SECTION LABELS ──────────────────────── */
+  .section-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.4em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 40px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .section-title {
+    font-size: clamp(32px, 4vw, 52px);
+    font-weight: 700;
+    line-height: 1.1;
+    margin-bottom: 24px;
+  }
+
+  .section-intro {
+    font-size: 17px;
+    color: var(--text-muted);
+    max-width: 680px;
+    line-height: 1.8;
+    margin-bottom: 48px;
+  }
+
+  /* ─── STAT BLOCKS ─────────────────────────── */
+  .stat-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-block: 48px;
+  }
+
+  .stat-block {
+    background: var(--surface);
+    padding: 32px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .stat-block::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.6s ease;
+  }
+
+  .stat-block:hover::before { transform: scaleX(1); }
+
+  .stat-number {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(38px, 5vw, 58px);
+    font-weight: 900;
+    line-height: 1;
+    color: var(--accent);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  .stat-number.red { color: var(--accent2); }
+  .stat-number.blue { color: var(--accent3); }
+
+  .stat-label {
+    font-size: 12px;
+    font-family: 'Space Mono', monospace;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    line-height: 1.5;
+  }
+
+  /* ─── DATA BARS ───────────────────────────── */
+  .data-row {
+    display: grid;
+    grid-template-columns: 1fr 200px;
+    gap: 24px;
+    align-items: center;
+    padding-block: 20px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .data-row:last-child { border-bottom: none; }
+
+  .data-label {
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--text);
+  }
+
+  .data-label small {
+    display: block;
+    font-size: 12px;
+    color: var(--text-muted);
+    font-weight: 300;
+    margin-top: 2px;
+  }
+
+  .bar-wrap {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .bar-track {
+    flex: 1;
+    height: 6px;
+    background: var(--surface2);
+    border-radius: 3px;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 3px;
+    background: var(--accent);
+    transform-origin: left;
+    animation: bar-grow 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    transform: scaleX(0);
+  }
+
+  .bar-fill.red { background: var(--accent2); }
+  .bar-fill.blue { background: var(--accent3); }
+
+  @keyframes bar-grow {
+    to { transform: scaleX(1); }
+  }
+
+  .bar-val {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: var(--accent);
+    width: 40px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+
+  /* ─── INCOME TABLE ────────────────────────── */
+  .income-chart {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 40px;
+    margin-block: 48px;
+  }
+
+  .income-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    color: var(--text-dim);
+    text-transform: uppercase;
+    margin-bottom: 32px;
+  }
+
+  .income-tier {
+    display: grid;
+    grid-template-columns: 180px 1fr auto;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .income-range {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+
+  .income-pct {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+  }
+
+  /* ─── CALLOUT QUOTES ──────────────────────── */
+  .pullquote {
+    border-left: 3px solid var(--accent);
+    padding: 24px 32px;
+    margin-block: 40px;
+    background: linear-gradient(to right, rgba(232,197,71,0.04), transparent);
+    font-family: 'Playfair Display', serif;
+    font-style: italic;
+    font-size: clamp(18px, 2vw, 24px);
+    color: var(--text);
+    line-height: 1.5;
+  }
+
+  .pullquote.red { border-color: var(--accent2); background: linear-gradient(to right, rgba(232,71,71,0.04), transparent); }
+  .pullquote.blue { border-color: var(--accent3); background: linear-gradient(to right, rgba(71,180,232,0.04), transparent); }
+
+  /* ─── PROBLEM / SOLUTION CARDS ────────────── */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2px;
+    margin-block: 48px;
+    background: var(--border);
+    border: 1px solid var(--border);
+  }
+
+  .card {
+    background: var(--surface);
+    padding: 32px 28px;
+    position: relative;
+  }
+
+  .card-icon {
+    font-size: 28px;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    line-height: 1.2;
+  }
+
+  .card-body {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .card-tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 8px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    padding: 4px 8px;
+    background: rgba(232,197,71,0.1);
+    color: var(--accent);
+    border: 1px solid rgba(232,197,71,0.2);
+    margin-bottom: 14px;
+  }
+
+  .card-tag.red { background: rgba(232,71,71,0.1); color: var(--accent2); border-color: rgba(232,71,71,0.2); }
+  .card-tag.blue { background: rgba(71,180,232,0.1); color: var(--accent3); border-color: rgba(71,180,232,0.2); }
+
+  /* ─── TIMELINE ────────────────────────────── */
+  .timeline {
+    position: relative;
+    margin-block: 48px;
+    padding-left: 32px;
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 1px;
+    background: linear-gradient(to bottom, var(--accent), var(--accent2), transparent);
+  }
+
+  .timeline-item {
+    position: relative;
+    margin-bottom: 36px;
+    padding-left: 24px;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    left: -37px;
+    top: 7px;
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+  }
+
+  .timeline-year {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--accent);
+    letter-spacing: 0.2em;
+    margin-bottom: 6px;
+  }
+
+  .timeline-text {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  .timeline-text strong {
+    color: var(--text);
+    font-weight: 500;
+  }
+
+  /* ─── RISK TABLE ──────────────────────────── */
+  .risk-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+    margin-block: 40px;
+  }
+
+  .risk-table th {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-align: left;
+    padding: 12px 16px;
+    border-bottom: 1px solid var(--border);
+    background: var(--surface);
+  }
+
+  .risk-table td {
+    padding: 14px 16px;
+    border-bottom: 1px solid var(--border);
+    color: var(--text-muted);
+    vertical-align: top;
+    line-height: 1.6;
+  }
+
+  .risk-table td:first-child { color: var(--text); font-weight: 500; }
+
+  .risk-table tr:hover td { background: rgba(255,255,255,0.02); }
+
+  .severity {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+  }
+
+  .severity.critical { background: rgba(232,71,71,0.12); color: var(--accent2); }
+  .severity.high { background: rgba(232,197,71,0.12); color: var(--accent); }
+  .severity.medium { background: rgba(71,180,232,0.12); color: var(--accent3); }
+
+  /* ─── ACTION FRAMEWORK ────────────────────── */
+  .framework {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-block: 48px;
+  }
+
+  .framework-section {
+    background: var(--surface);
+    padding: 36px 32px;
+  }
+
+  .framework-title {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .framework-title.yellow { color: var(--accent); }
+  .framework-title.red { color: var(--accent2); }
+  .framework-title.blue { color: var(--accent3); }
+  .framework-title.green { color: #5ccf6e; }
+
+  .framework-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .framework-list li {
+    font-size: 14px;
+    color: var(--text-muted);
+    padding-left: 16px;
+    position: relative;
+    line-height: 1.6;
+  }
+
+  .framework-list li::before {
+    content: '→';
+    position: absolute;
+    left: 0;
+    color: var(--accent);
+    font-family: 'Space Mono', monospace;
+  }
+
+  .framework-list.red li::before { color: var(--accent2); }
+  .framework-list.blue li::before { color: var(--accent3); }
+  .framework-list.green li::before { color: #5ccf6e; }
+
+  /* ─── FINAL CTA / ABOUT ───────────────────── */
+  .about-band {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding-block: 60px;
+  }
+
+  .about-inner {
+    max-width: 1100px;
+    margin-inline: auto;
+    padding-inline: 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    align-items: center;
+  }
+
+  .about-heading {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(28px, 3vw, 42px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 16px;
+  }
+
+  .about-heading em { font-style: italic; color: var(--accent); }
+
+  .footer-bar {
+    background: var(--bg);
+    border-top: 1px solid var(--border);
+    padding-block: 28px;
+  }
+
+  .footer-inner {
+    max-width: 1100px;
+    margin-inline: auto;
+    padding-inline: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--accent);
+  }
+
+  .footer-note {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    color: var(--text-dim);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  /* ─── HIGHLIGHT BOX ───────────────────────── */
+  .highlight-box {
+    border: 1px solid rgba(232,197,71,0.3);
+    background: rgba(232,197,71,0.04);
+    padding: 28px 32px;
+    margin-block: 32px;
+  }
+
+  .highlight-box.red {
+    border-color: rgba(232,71,71,0.3);
+    background: rgba(232,71,71,0.04);
+  }
+
+  .highlight-box.blue {
+    border-color: rgba(71,180,232,0.3);
+    background: rgba(71,180,232,0.04);
+  }
+
+  .highlight-box h4 {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+  }
+
+  .highlight-box.red h4 { color: var(--accent2); }
+  .highlight-box.blue h4 { color: var(--accent3); }
+
+  .highlight-box p {
+    font-size: 14px;
+    color: var(--text-muted);
+    line-height: 1.7;
+  }
+
+  /* ─── NAV ─────────────────────────────────── */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 16px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10,10,10,0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+  }
+
+  .nav-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-weight: 700;
+    color: var(--accent);
+    letter-spacing: 0.05em;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--text-dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent); }
+
+  /* ─── PILL TAGS ───────────────────────────── */
+  .pill {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    background: rgba(232,197,71,0.08);
+    color: var(--accent);
+    border: 1px solid rgba(232,197,71,0.2);
+    margin: 3px;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    align-items: start;
+  }
+
+  @media (max-width: 700px) {
+    .two-col, .framework, .about-inner { grid-template-columns: 1fr; }
+    nav .nav-links { display: none; }
+    .income-tier { grid-template-columns: 1fr 1fr; }
+    .data-row { grid-template-columns: 1fr; }
+    body { padding-top: 0; }
+  }
+
+  p + p { margin-top: 14px; }
+
+  strong { color: var(--text); font-weight: 500; }
+
+  a { color: var(--accent); }
+
+  /* animate on scroll (simple version) */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">The Human Cost</div>
+  <ul class="nav-links">
+    <li><a href="#income">Income</a></li>
+    <li><a href="#disruption">Disruption</a></li>
+    <li><a href="#dark-side">Dark Side</a></li>
+    <li><a href="#workflow">Workflow</a></li>
+    <li><a href="#solutions">Solutions</a></li>
+    <li><a href="#ethical-ai">Ethical AI</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div style="position:relative; z-index:1;">
+    <div class="hero-badge">Research Pitch Report · 2025–2026</div>
+    <h1 class="display">THE<br><em>HUMAN</em><br>COST</h1>
+    <div class="hero-divider"></div>
+    <p class="hero-tagline">How Artificial Intelligence Has Reshaped the Livelihoods, Workflows, Mental Health, and Safety of Real Human Influencers & Content Creators</p>
+    <p class="hero-sub" style="margin-top:20px;">Focus: Human-Made Content · Real Interaction · Authentic Influence</p>
+  </div>
+  <div class="scroll-hint">Scroll to explore</div>
+</section>
+
+<!-- EXECUTIVE SUMMARY -->
+<section>
+  <div class="container fade-in">
+    <div class="section-label">00 · Executive Summary</div>
+    <h2 class="section-title">The landscape has fundamentally shifted.</h2>
+    <p class="section-intro">This report examines how the rise of AI-generated content, synthetic personas, and automated engagement has disrupted the creator economy — specifically for real human influencers and content creators who build their brands on authentic interaction.</p>
+
+    <div class="two-col">
+      <div>
+        <p>The creator economy crossed <strong>$23.59 billion in influencer marketing spend</strong> in 2025 — and payments to creators increased by a remarkable 79% year-over-year. On the surface, these numbers tell a success story. But beneath the macro growth lies a fractured, anxious, and increasingly imperiled community of human creators who are competing not just with each other, but with machines that never sleep, never burn out, and never charge day rates.</p>
+        <p style="margin-top:14px;">AI has unleashed two parallel crises for the human creator: <strong>economic displacement</strong> (brand budgets diverted to cheaper AI alternatives) and <strong>ecosystem contamination</strong> (synthetic personas, deepfake scams, and bot-driven fake engagement destroying audience trust at industrial scale).</p>
+        <p style="margin-top:14px;">Those who thrive are adapting — using AI as a creative co-pilot while doubling down on the one thing machines cannot replicate: <em>genuine human connection.</em></p>
+      </div>
+      <div>
+        <div class="highlight-box">
+          <h4>Report Scope</h4>
+          <p>This dataset and analysis <strong>excludes</strong> AI influencers, AI-only content generators, and bot-operated accounts. All data points to real human creators who seek real audience interaction. Sources include The Influencer Marketing Factory 2026 Creator Economy Report, HypeAuditor analysis of 5 million accounts, FTC consumer fraud data, McAfee threat intelligence, FBI IC3 reports, and platform-specific data from YouTube, TikTok, Instagram, and Meta (2024–2026).</p>
+        </div>
+        <div class="highlight-box blue" style="margin-top:0">
+          <h4>The Core Problem</h4>
+          <p>AI and bot makers can now hide behind a <strong>completely fabricated persona</strong>, automate fan engagement, run scams at scale, and flood platforms with synthetic content — making it harder and harder for audiences to know what is real. This is causing creators to retire, scale back, or suffer in silence.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- INCOME DATA -->
+<section id="income">
+  <div class="container fade-in">
+    <div class="section-label">01 · Income & Economics</div>
+    <h2 class="section-title">What the money actually<br>looks like for real creators.</h2>
+    <p class="section-intro">The headline growth numbers mask a deeply unequal distribution. The "creator middle class" is real but fragile, and AI is beginning to erode the income floors that once made mid-tier creation viable.</p>
+
+    <div class="stat-grid">
+      <div class="stat-block">
+        <span class="stat-number">48.7%</span>
+        <span class="stat-label">of creators earn<br>under $10K/year</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number">45.6%</span>
+        <span class="stat-label">earn between<br>$10K–$100K/year</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number blue">5.7%</span>
+        <span class="stat-label">earn above<br>$100K/year</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number">51.5%</span>
+        <span class="stat-label">achieved earnings<br>growth in 2025</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number red">30%</span>
+        <span class="stat-label">of influencer budgets projected<br>to go to AI influencers by 2026</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number">79%</span>
+        <span class="stat-label">increase in payments<br>to creators in 2025</span>
+      </div>
+    </div>
+
+    <div class="income-chart">
+      <div class="income-title">Creator Income Distribution · Real Human Creators · 2025</div>
+      <div class="income-tier">
+        <span class="income-range mono" style="font-size:11px">$0 – $10K / year</span>
+        <div class="bar-track"><div class="bar-fill red" style="width:48.7%; animation-delay:0.1s"></div></div>
+        <span class="income-pct red">48.7%</span>
+      </div>
+      <div class="income-tier">
+        <span class="income-range mono" style="font-size:11px">$10K – $100K / year</span>
+        <div class="bar-track"><div class="bar-fill" style="width:45.6%; animation-delay:0.25s"></div></div>
+        <span class="income-pct">45.6%</span>
+      </div>
+      <div class="income-tier">
+        <span class="income-range mono" style="font-size:11px">$100K+ / year</span>
+        <div class="bar-track"><div class="bar-fill blue" style="width:5.7%; animation-delay:0.4s"></div></div>
+        <span class="income-pct blue">5.7%</span>
+      </div>
+    </div>
+
+    <div class="two-col">
+      <div>
+        <h3 class="display" style="font-size:24px; margin-bottom:16px;">Why income is split, not rising evenly</h3>
+        <p style="color:var(--text-muted); font-size:14px; line-height:1.8">The macro creator economy is booming — yet most of that growth concentrates at the top. The bottom tier (under $10K) faces intensified competition from AI-generated content that brands can deploy at near-zero cost. AI-generated ad models, AI voiceovers, and synthetic UGC (User Generated Content) are replacing contracts that once went to nano and micro-creators.</p>
+        <p style="color:var(--text-muted); font-size:14px; line-height:1.8; margin-top:12px">Meanwhile, <strong>brand deals as a share of creator income are declining</strong> as creators diversify — a defensive move against a market that is becoming less predictable. Product/merch sales and affiliate marketing now make up 21.2% of creator income, up significantly from prior years.</p>
+      </div>
+      <div>
+        <div class="data-row">
+          <div class="data-label">Creators with 1+ income stream<small>Diversification as risk management</small></div>
+          <div class="bar-wrap">
+            <div class="bar-track"><div class="bar-fill" style="width:70%; animation-delay:0.1s"></div></div>
+            <span class="bar-val">~70%</span>
+          </div>
+        </div>
+        <div class="data-row">
+          <div class="data-label">Marketers maintaining/increasing creator budgets<small>Demand side remains healthy</small></div>
+          <div class="bar-wrap">
+            <div class="bar-track"><div class="bar-fill" style="width:95%; animation-delay:0.2s"></div></div>
+            <span class="bar-val">95%</span>
+          </div>
+        </div>
+        <div class="data-row">
+          <div class="data-label">Creators valuing long-term brand alignment<small>Stability over one-off deals</small></div>
+          <div class="bar-wrap">
+            <div class="bar-track"><div class="bar-fill blue" style="width:44.9%; animation-delay:0.3s"></div></div>
+            <span class="bar-val">44.9%</span>
+          </div>
+        </div>
+        <div class="data-row">
+          <div class="data-label">Creators whose only deal is product-for-post<small>Declining as rates rise</small></div>
+          <div class="bar-wrap">
+            <div class="bar-track"><div class="bar-fill red" style="width:30%; animation-delay:0.4s"></div></div>
+            <span class="bar-val">↓</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pullquote" style="margin-top:48px">"Despite headline success stories, the majority of creators still earn modest amounts — most produce fewer than 10 sponsored posts per year and only a small fraction earn six-figure incomes."<br><span style="font-size:13px; font-family:'Space Mono',monospace; color:var(--text-dim); font-style:normal; display:block; margin-top:10px;">— GoViral Global / Influencer Marketing Statistics 2025</span></div>
+  </div>
+</section>
+
+<!-- THE DISRUPTION -->
+<section id="disruption">
+  <div class="container fade-in">
+    <div class="section-label">02 · The AI Disruption</div>
+    <h2 class="section-title">What changed. How fast.<br>Why it hurts.</h2>
+    <p class="section-intro">The disruption did not happen slowly. Within a 24-month window, AI transformed from a creator tool into a creator competitor — and for many, a direct threat to their livelihood.</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-year">2023</div>
+        <div class="timeline-text"><strong>The First Wave:</strong> Generative AI tools (ChatGPT, Midjourney, Runway) become widely accessible. Brands begin experimenting with AI-generated copy, images, and basic video. Creators start feeling the pressure to "post more" to compete with algorithmically optimized synthetic content.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2024</div>
+        <div class="timeline-text"><strong>AI Influencers Go Mainstream:</strong> Characters like Aitana (330K+ followers) and Lu of Magalu enter the commercial mainstream. Oglivy projects AI virtual influencers will capture 30% of influencer marketing budgets by 2026. Real creators begin losing brand deals to lower-cost synthetic alternatives. <strong>FTC reports $12.5 billion in consumer fraud losses</strong> — a 25% year-over-year increase, much driven by AI-powered impersonation scams. Deepfake incidents surge. Taylor Swift deepfake images go viral. Human creators begin reporting their likenesses being used without consent.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2025</div>
+        <div class="timeline-text"><strong>The Breaking Point:</strong> AI-generated deepfake scams rise <strong>700%</strong>. Deepfake videos of influencers on Instagram alone cause an estimated <strong>$450 million in financial losses</strong> to victims. MrBeast publicly calls it "scary times" for creators. iShowSpeed expresses fear about AI cloning his likeness. <strong>AI drove nearly 55,000 U.S. layoffs</strong> — including creative roles. YouTube, TikTok, Instagram, and Meta introduce mandatory AI content labeling policies, creating new compliance burdens for human creators. Voice cloning tools now require as little as <strong>3 seconds of audio</strong> to generate a convincing replica.</div>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-year">2026 →</div>
+        <div class="timeline-text"><strong>The New Normal:</strong> 56.1% of U.S. creators believe AI will significantly change how they work. Platforms continue tightening AI content rules. Human creators who adapt — using AI as a tool while doubling down on authentic community — are establishing competitive moats that AI cannot easily replicate. Those who don't adapt are scaling back or exiting entirely.</div>
+      </div>
+    </div>
+
+    <div class="pullquote red">"On one hand, this year saw a drastic increase in AI influencers... a trend that jeopardizes the livelihood of real-life creators. Both MrBeast and iShowSpeed expressed anxiety around the technology."<br><span style="font-size:13px; font-family:'Space Mono',monospace; color:var(--text-dim); font-style:normal; display:block; margin-top:10px;">— The Wrap, Creator Economy Year in Review 2025</span></div>
+
+    <h3 class="display" style="font-size:26px; margin-bottom:20px; margin-top:40px">Primary income threats from AI</h3>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag red">High Threat</span>
+        <div class="card-title">AI-generated UGC replacing brand deals</div>
+        <div class="card-body">Brands increasingly commission AI-generated product videos and testimonials at a fraction of the cost of a human creator. This directly cuts into the nano and micro-creator deal pipeline — historically the bread-and-butter income for mid-tier creators.</div>
+      </div>
+      <div class="card">
+        <span class="card-tag red">High Threat</span>
+        <div class="card-title">AI models replacing human ad models</div>
+        <div class="card-body">AI has already been used to create ads and replace brand models — a common source of income for many creators. Synthetic faces, AI voiceovers, and generated "people" are increasingly appearing in commercial campaigns in place of paid human talent.</div>
+      </div>
+      <div class="card">
+        <span class="card-tag">Medium Threat</span>
+        <div class="card-title">Audience attention dilution</div>
+        <div class="card-body">With TikTok posts more than tripling in 2025 (much AI-generated), real human content competes in an increasingly saturated feed. Reach per post is declining even as total platform usage grows. Discovery algorithms are optimizing for engagement patterns that AI content can more easily game.</div>
+      </div>
+      <div class="card">
+        <span class="card-tag">Medium Threat</span>
+        <div class="card-title">Brand budget reallocation</div>
+        <div class="card-body">While 95% of marketers are maintaining or increasing total creator budgets, internal reallocation toward AI-powered campaigns and AI-optimized micro-targeting means individual human creators compete for a potentially shrinking slice of a growing pie.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- THE DARK SIDE -->
+<section id="dark-side">
+  <div class="container fade-in">
+    <div class="section-label">03 · The Dark Side</div>
+    <h2 class="section-title">Scams. Deepfakes. Fake personas.<br>The ecosystem is poisoned.</h2>
+    <p class="section-intro">This is the most urgent, least-discussed crisis in the creator economy. AI has industrialized deception — allowing bad actors to weaponize creator identities, manufacture fake influencers, and run scams at a scale previously impossible.</p>
+
+    <div class="stat-grid">
+      <div class="stat-block">
+        <span class="stat-number red">700%</span>
+        <span class="stat-label">Rise in AI deepfake scams in 2025 vs 2024</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number red">$450M</span>
+        <span class="stat-label">Lost to deepfake influencer scams on Instagram alone in 2025</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number red">$12.5B</span>
+        <span class="stat-label">FTC consumer fraud losses in 2024 alone — a 25% increase</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number red">1 in 5</span>
+        <span class="stat-label">Americans have personally encountered a deepfake scam (McAfee)</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number red">3 sec</span>
+        <span class="stat-label">Of audio needed to clone a creator's voice with 85% accuracy</span>
+      </div>
+      <div class="stat-block">
+        <span class="stat-number red">81%</span>
+        <span class="stat-label">Increase in celebrity/influencer deepfake incidents Q1 2025 vs all of 2024</span>
+      </div>
+    </div>
+
+    <div class="pullquote red">"Don't try to detect real versus AI-generated voices or images or video. You will not do it reliably."<br><span style="font-size:13px; font-family:'Space Mono',monospace; color:var(--text-dim); font-style:normal; display:block; margin-top:10px;">— Hany Farid, Professor of Digital Forensics, UC Berkeley</span></div>
+
+    <h3 class="display" style="font-size:26px; margin-bottom:20px; margin-top:40px">The Threat Matrix: How AI Is Being Weaponized Against Creators & Audiences</h3>
+
+    <table class="risk-table">
+      <thead>
+        <tr>
+          <th>Threat Type</th>
+          <th>Mechanism</th>
+          <th>Impact on Creators</th>
+          <th>Impact on Audiences</th>
+          <th>Severity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>Deepfake Impersonation</td>
+          <td>AI-generated video/audio using a creator's likeness to promote fake products, scams, or harmful content</td>
+          <td>Reputation damage, loss of brand deals, legal costs, emotional distress</td>
+          <td>Financial loss, loss of trust in legitimate creators</td>
+          <td><span class="severity critical">● Critical</span></td>
+        </tr>
+        <tr>
+          <td>Voice Cloning</td>
+          <td>3 seconds of audio scraped from public posts is enough to clone a creator's voice convincingly</td>
+          <td>Identity theft, fake endorsements, used in phone scams exploiting fan parasocial bonds</td>
+          <td>Scammed through fake "creator" calls or messages; $1.3B lost to romance/persona scams</td>
+          <td><span class="severity critical">● Critical</span></td>
+        </tr>
+        <tr>
+          <td>Synthetic Persona Accounts</td>
+          <td>AI-generated fake influencer profiles built to accumulate audiences and funnel to scams or product fraud</td>
+          <td>Budget theft — brands pay fake accounts; audience trust eroded across the board</td>
+          <td>Deceived into fake fan relationships; financial scams embedded in parasocial connections</td>
+          <td><span class="severity critical">● Critical</span></td>
+        </tr>
+        <tr>
+          <td>Automated Fake Engagement</td>
+          <td>Bot armies simulate comments, likes, and DMs, making fake accounts appear authentic</td>
+          <td>Real creators' relative engagement metrics look poor vs. inflated fake accounts</td>
+          <td>Curated feeds flooded with inauthentic content; false social proof</td>
+          <td><span class="severity high">● High</span></td>
+        </tr>
+        <tr>
+          <td>AI "Slop" Content Flood</td>
+          <td>Mass-produced AI content with no human input fills platforms at industrial scale</td>
+          <td>Attention dilution; algorithm fatigue; harder to break through organically</td>
+          <td>Degraded content quality; harder to find genuine human content</td>
+          <td><span class="severity high">● High</span></td>
+        </tr>
+        <tr>
+          <td>Non-Consensual Deepfake Imagery</td>
+          <td>AI-generated explicit or defamatory images using creator likenesses, often targeting women</td>
+          <td>Psychological trauma, harassment, chilling effect causing creators to leave platforms</td>
+          <td>Normalization of digital abuse; erosion of online safety for all</td>
+          <td><span class="severity critical">● Critical</span></td>
+        </tr>
+        <tr>
+          <td>AI Chatbot Fan Impersonation</td>
+          <td>Bots pose as a creator in DMs, managing "fan relationships" to extract money or data</td>
+          <td>Trust collapse when discovered; platform bans risk; legal exposure</td>
+          <td>Emotional exploitation of fans who believe they have real relationships with creators</td>
+          <td><span class="severity high">● High</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="highlight-box red">
+      <h4>The "Hidden Behind a Persona" Problem</h4>
+      <p>AI enables bad actors to create <strong>complete false identities</strong> — attractive personas with consistent backstories, detailed personalities, and fake real-world presence (AI influencer Mia Zelu went viral for "attending" Wimbledon in 2025, fooling thousands). These personas build parasocial trust over weeks or months before being deployed for financial fraud. Romance scam losses alone topped <strong>$1.3 billion in 2024–2025</strong>. The problem is: audiences cannot tell the difference — and increasingly, neither can experts.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MENTAL HEALTH & WORKFLOW -->
+<section id="workflow">
+  <div class="container fade-in">
+    <div class="section-label">04 · Mental Health & Workflow</div>
+    <h2 class="section-title">The human toll.<br>What creators stopped doing.</h2>
+    <p class="section-intro">The psychological and operational impact on human creators is significant and underreported. A community built on personal connection is experiencing what can only be described as an identity and trust crisis.</p>
+
+    <div class="two-col">
+      <div>
+        <h3 class="display" style="font-size:22px; margin-bottom:16px;">The Mental Health Reality</h3>
+        <p style="color:var(--text-muted); font-size:14px; line-height:1.8">A 2024 study found that <strong>influencers who spend more time on social media are significantly more likely to feel anxious, emotionally drained, and clinically depressed</strong>. Creators earning under $10K annually report particularly poor mental health outcomes — the work is constant, the rewards uncertain, and the lifestyle relentless.</p>
+        <p style="color:var(--text-muted); font-size:14px; line-height:1.8; margin-top:12px">But AI has added a new dimension to this crisis. Many creators describe feeling <strong>displaced</strong> — not just economically, but existentially. When your authentic voice, face, and personality can be approximated by a machine, what is the value of being human?</p>
+        <p style="color:var(--text-muted); font-size:14px; line-height:1.8; margin-top:12px">Creators who value deep personal connection — those who built communities specifically around realness and intimacy — are disproportionately affected. They feel <strong>abandoned by platforms</strong> that increasingly reward AI-optimized content, and depressed by audiences who struggle to distinguish their authentic work from synthetic imitations.</p>
+
+        <div class="highlight-box" style="margin-top:24px">
+          <h4>What Creators Describe Feeling</h4>
+          <p>Creators report: constantly feeling "on," never truly off the clock, unsure where their real self ends and their online persona begins. The AI threat layer adds fear of identity theft, scam association damage, and the nihilistic question — "what's the point if a machine can do this?"</p>
+        </div>
+      </div>
+      <div>
+        <h3 class="display" style="font-size:22px; margin-bottom:16px;">What Creators Have Stopped Doing</h3>
+
+        <div class="data-row">
+          <div class="data-label">Trusting DMs as authentic fan engagement<small>Fear of bot-driven interactions</small></div>
+          <div class="bar-wrap"><div class="bar-track"><div class="bar-fill red" style="width:65%; animation-delay:0.1s"></div></div><span class="bar-val" style="color:var(--accent2)">↓↓</span></div>
+        </div>
+        <div class="data-row">
+          <div class="data-label">Accepting unsolicited brand sponsorships<small>Rise of fake brand/scam outreach</small></div>
+          <div class="bar-wrap"><div class="bar-track"><div class="bar-fill red" style="width:55%; animation-delay:0.2s"></div></div><span class="bar-val" style="color:var(--accent2)">↓↓</span></div>
+        </div>
+        <div class="data-row">
+          <div class="data-label">Relying on static image content<small>Instagram image posts fell 6.41% in 2025</small></div>
+          <div class="bar-wrap"><div class="bar-track"><div class="bar-fill red" style="width:40%; animation-delay:0.3s"></div></div><span class="bar-val" style="color:var(--accent2)">↓</span></div>
+        </div>
+        <div class="data-row">
+          <div class="data-label">Paying managers/agencies full control<small>Reclaiming brand narrative & income</small></div>
+          <div class="bar-wrap"><div class="bar-track"><div class="bar-fill red" style="width:50%; animation-delay:0.4s"></div></div><span class="bar-val" style="color:var(--accent2)">↓</span></div>
+        </div>
+        <div class="data-row">
+          <div class="data-label">Over-relying on one income stream<small>Forced diversification away from brand deals</small></div>
+          <div class="bar-wrap"><div class="bar-track"><div class="bar-fill red" style="width:70%; animation-delay:0.5s"></div></div><span class="bar-val" style="color:var(--accent2)">↓↓</span></div>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="display" style="font-size:26px; margin-top:56px; margin-bottom:20px;">How Workflows Have Changed</h3>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-tag blue">New Behavior</span>
+        <div class="card-title">AI-assisted ideation, human-led delivery</div>
+        <div class="card-body">83% of creators now use AI in their workflows. The dominant model is AI for brainstorming, scripting drafts, and editing tasks — with humans heavily rewriting and injecting authentic voice. After experimenting with fully AI-written scripts, most YouTubers found they needed substantial rewrites. The "finished product" is still unmistakably human.</div>
+      </div>
+      <div class="card">
+        <span class="card-tag blue">New Behavior</span>
+        <div class="card-title">IRL & community-first strategy</div>
+        <div class="card-body">Creators are increasingly taking communities offline — hosting IRL events, meet-ups, and experiences that AI cannot replicate. This is the emerging competitive moat: physical presence, real memory, real emotional exchange. Brands are recognizing this, with IRL creator activations becoming a major budget line in 2026 campaign planning.</div>
+      </div>
+      <div class="card">
+        <span class="card-tag blue">New Behavior</span>
+        <div class="card-title">Niche depth over broad appeal</div>
+        <div class="card-body">Creators are abandoning generic broad content in favor of hyper-specific expertise and personal narrative. AI can imitate style; it cannot replicate lived experience. Micro and nano-creators with deep niche authority are generating up to 60% more engagement than macro-influencers — because audiences trust their specificity as a signal of human authenticity.</div>
+      </div>
+      <div class="card">
+        <span class="card-tag">Pressure</span>
+        <div class="card-title">Pressure to adopt AI or fall behind</div>
+        <div class="card-body">56.1% of creators believe AI will significantly change their work. Many feel coerced into using tools that conflict with their authentic-creation values. Some describe a "paradox of AI content creation" — simultaneously in awe and horrified, asking "what's the point?" even as they integrate the tools. The pressure is real and the emotional cost is documented.</div>
+      </div>
+      <div class="card">
+        <span class="card-tag">Pressure</span>
+        <div class="card-title">Platform compliance overhead</div>
+        <div class="card-body">New 2025 AI disclosure rules on TikTok, Instagram, YouTube, and Meta have added a compliance layer to every post. Human creators who use any AI assistance (even for captions) now carry disclosure obligations, while bad actors using fully synthetic content simply ignore rules with minimal enforcement consequence.</div>
+      </div>
+      <div class="card">
+        <span class="card-tag red">Crisis</span>
+        <div class="card-title">Identity and creative crisis</div>
+        <div class="card-body">Many creators report a deep identity crisis as AI begins to approximate their voice, appearance, and content style. "I went through a rough patch with AI... it was an emotional response. I think I was terrified... What's the point?" One creator told Alitu in 2025. This nihilism, when left unaddressed, leads to retirement, scaling back, or burnout.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SOLUTIONS -->
+<section id="solutions">
+  <div class="container fade-in">
+    <div class="section-label">05 · Mitigation & Solutions</div>
+    <h2 class="section-title">How to fight back.<br>What actually works.</h2>
+    <p class="section-intro">The good news: there are concrete, effective strategies creators and platforms can employ to protect themselves, authenticate their work, and rebuild trust with audiences.</p>
+
+    <div class="framework">
+      <div class="framework-section">
+        <div class="framework-title yellow">For Creators: Protect Your Identity</div>
+        <ul class="framework-list">
+          <li>Register your name, likeness, and brand voice with Adobe's Content Authenticity Initiative — a blockchain-based provenance system that proves your content is genuinely yours.</li>
+          <li>Use watermarking tools (invisible and visible) on all video, audio, and image content. Document creation dates and behind-the-scenes footage as evidence of authentic origin.</li>
+          <li>Set up Google Alerts and social listening tools for your name and likeness to catch impersonation accounts and deepfakes early.</li>
+          <li>Keep an authentic "proof of life" presence — consistent live-stream appearances that are cryptographically timestamped create an authenticity record AI cannot fabricate retroactively.</li>
+          <li>Never click unknown sponsorship links via email. Use a separate secured email for brand outreach. Platform-verified payment systems only.</li>
+          <li>Report deepfakes and impersonation to platforms immediately. YouTube now has a deepfake identification program. Meta and TikTok have formal removal request channels.</li>
+        </ul>
+      </div>
+      <div class="framework-section">
+        <div class="framework-title red">For Audiences: Recognize the Fake</div>
+        <ul class="framework-list red">
+          <li>Always cross-check influencer accounts independently. A legitimate creator will have a verified presence across multiple platforms with consistent real-world history.</li>
+          <li>Be skeptical of DMs that immediately become emotionally intimate or ask for financial help. Real influencers do not ask fans for money in private messages.</li>
+          <li>Check for AI content labels on TikTok and Instagram — both platforms now auto-apply these in many cases. Unlabeled AI content is a red flag, not a green light.</li>
+          <li>If an "influencer" is promoting an investment, giveaway, or product in urgency-framed language, assume it is a scam until proven otherwise through official channels.</li>
+          <li>Use reverse image search on profile photos. AI-generated faces often fail at ears, teeth edges, and background consistency.</li>
+          <li>Trust IRL and live interaction above everything. Any creator worth trusting will have accessible, verifiable proof of their real existence.</li>
+        </ul>
+      </div>
+      <div class="framework-section">
+        <div class="framework-title blue">For Platforms: Systemic Solutions</div>
+        <ul class="framework-list blue">
+          <li>Mandatory AI content labeling with meaningful enforcement — not just disclosure tools but active, automated detection and labeling of synthetic content.</li>
+          <li>Identity verification tiers: provide verified "human creator" badges with real identity checks that go beyond phone numbers (government ID, biometric live verification).</li>
+          <li>Creator-reported deepfake fast-track removal: 24-hour take-down windows for verified creators reporting their likeness abuse.</li>
+          <li>Algorithmic priority for verified human content in discovery — reduce the competitive disadvantage real creators face against AI content farms.</li>
+          <li>Proactive monitoring for impersonation at account creation — not just after reports.</li>
+          <li>Revenue-sharing guardrails that prevent brands from routing influencer marketing spend to unverified synthetic accounts.</li>
+        </ul>
+      </div>
+      <div class="framework-section">
+        <div class="framework-title green">For the Industry: Policy & Standards</div>
+        <ul class="framework-list green">
+          <li>Push for federal legislation on deepfake non-consensual imagery — 49 U.S. states have bills pending as of 2026, but federal protection remains incomplete.</li>
+          <li>Industry-wide adoption of the C2PA (Coalition for Content Provenance and Authenticity) standard so that every piece of digital content carries cryptographic origin data.</li>
+          <li>Brand accountability: brands that knowingly pay AI persona accounts for "influencer" campaigns should face disclosure and FTC scrutiny similar to undisclosed paid advertising.</li>
+          <li>Creator unions and collective bargaining bodies that can establish minimum standards for AI use in influencer contracts (e.g., right to refuse AI likeness replication).</li>
+          <li>Education campaigns to build audience AI literacy — the best long-term protection is a public that knows how to spot fakes.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ETHICAL AI -->
+<section id="ethical-ai">
+  <div class="container fade-in">
+    <div class="section-label">06 · Ethical AI Use</div>
+    <h2 class="section-title">How to use AI without<br>losing your soul — or your brand.</h2>
+    <p class="section-intro">AI is a tool. Used ethically, it can make human creators more productive, more creative, and more protected. Used recklessly, it erodes exactly what makes you valuable. Here is the framework.</p>
+
+    <div class="two-col" style="margin-bottom:48px">
+      <div>
+        <h3 class="display" style="font-size:22px; margin-bottom:16px;">The Hybrid Model That Works</h3>
+        <p style="color:var(--text-muted); font-size:14px; line-height:1.8">The most effective and ethical approach is <strong>AI as co-pilot, not commander.</strong> Use it to handle the mechanical, repetitive, and time-consuming elements of content production — while keeping human creativity, emotional truth, and authentic voice firmly in the driver's seat.</p>
+        <p style="color:var(--text-muted); font-size:14px; line-height:1.8; margin-top:12px">Studies show this hybrid approach saves creators over <strong>an hour daily</strong> on production tasks. That freed time is reinvested into the human work that matters: community interaction, deep storytelling, live experiences, and building the genuine relationships that AI cannot manufacture.</p>
+        <p style="color:var(--text-muted); font-size:14px; line-height:1.8; margin-top:12px">Critically: <strong>73% of marketing teams use AI daily, but only 42% feel confident maintaining their brand voice.</strong> This gap is the ethical danger zone — where efficiency pressure overrides authenticity. Monthly content audits using a "Sounds Like Us" score help detect voice drift before it erodes trust.</p>
+      </div>
+      <div>
+        <div class="highlight-box blue">
+          <h4>What AI Is Good For (Ethical Use)</h4>
+          <p>✓ Brainstorming content ideas and angles<br>
+          ✓ Drafting captions, scripts, and outlines (heavily edited by you)<br>
+          ✓ SEO optimization and keyword research<br>
+          ✓ Scheduling and content calendar management<br>
+          ✓ Transcription and clip generation from long-form content<br>
+          ✓ Analytics and audience sentiment analysis<br>
+          ✓ Detecting deepfakes and impersonation of your own likeness<br>
+          ✓ Language translation to reach global audiences<br>
+          ✓ A/B testing versions of content for performance</p>
+        </div>
+        <div class="highlight-box red" style="margin-top:0">
+          <h4>What AI Must NOT Do (Red Lines)</h4>
+          <p>✗ Replace your authentic voice or personality entirely<br>
+          ✗ Automate fan engagement to simulate personal relationships<br>
+          ✗ Generate content without disclosure where required by platform rules<br>
+          ✗ Replicate another creator's likeness or style without consent<br>
+          ✗ Be used to generate or spread disinformation<br>
+          ✗ Substitute live interaction or community presence<br>
+          ✗ Be trained on audience data without their consent</p>
+        </div>
+      </div>
+    </div>
+
+    <h3 class="display" style="font-size:26px; margin-bottom:20px;">The Ethical AI Workflow for Human Creators</h3>
+
+    <div class="card-grid">
+      <div class="card">
+        <span class="card-icon">01</span>
+        <span class="card-tag">Plan</span>
+        <div class="card-title">Start with your human intention</div>
+        <div class="card-body">Every piece of content should begin with a genuine human question: What do I actually want to say? What do I know from lived experience? What does my community need from me right now? AI should amplify this intention — never replace it as the starting point.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">02</span>
+        <span class="card-tag">Create</span>
+        <div class="card-title">Use AI for acceleration, not replacement</div>
+        <div class="card-body">Let AI draft, suggest, and organize. Then rewrite, personalize, and inject real emotion and specific detail only you know. The final content should pass what good creators call the "sounds like me" test — if a regular follower read it cold, they'd recognize your voice immediately.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">03</span>
+        <span class="card-tag">Disclose</span>
+        <div class="card-title">Transparency builds trust, not weakness</div>
+        <div class="card-body">Disclose AI use where platforms require it, but also consider voluntary transparency as a brand differentiator. In a landscape flooded with synthetic content, saying "I wrote this myself" or "I used AI to help draft and then heavily rewrote it" is a competitive advantage — not an admission of failure.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">04</span>
+        <span class="card-tag">Protect</span>
+        <div class="card-title">Use AI to monitor and defend your brand</div>
+        <div class="card-body">AI monitoring tools can actively scan for impersonation accounts, unauthorized likeness use, and brand mention sentiment changes. Ironically, AI is your best defense against AI abuse. Set up automated alerts, register with content provenance tools, and maintain an ongoing "identity audit" of your brand presence online.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">05</span>
+        <span class="card-tag">Engage</span>
+        <div class="card-title">Never automate authentic connection</div>
+        <div class="card-body">This is the hard line. AI chatbots can answer FAQs, sort DMs by category, and flag important messages for your personal attention. But the actual human connection — the reply that makes someone feel seen, the live answer to a real question — must come from you. This is your entire value proposition in an AI world.</div>
+      </div>
+      <div class="card">
+        <span class="card-icon">06</span>
+        <span class="card-tag">Audit</span>
+        <div class="card-title">Monthly voice and values check</div>
+        <div class="card-body">Conduct a monthly audit of AI-assisted content using qualitative review: Does this still sound like me? Does it reflect my actual values? Is my brand recognizable without my name or logo? "Voice drift" — a subtle shift in tone caused by over-reliance on AI — can erode audience trust by up to 40% over time without any single obvious failure point.</div>
+      </div>
+    </div>
+
+    <div class="pullquote" style="margin-top:48px">"The content that resonates most deeply will always have human wisdom at its core. Authenticity and trust cannot be automated — they must come from human oversight."<br><span style="font-size:13px; font-family:'Space Mono',monospace; color:var(--text-dim); font-style:normal; display:block; margin-top:10px;">— Solomon Advising / Content Strategy 2026</span></div>
+  </div>
+</section>
+
+<!-- CONCLUSION -->
+<section>
+  <div class="container fade-in">
+    <div class="section-label">07 · Conclusion</div>
+    <h2 class="section-title">The opportunity inside the crisis.</h2>
+    <p class="section-intro">For human creators who understand the landscape, this moment is not just a threat. It is the single greatest opportunity to differentiate authenticity as a premium product in a world drowning in synthetic content.</p>
+
+    <div class="two-col">
+      <div>
+        <p style="color:var(--text-muted); font-size:15px; line-height:1.9">Audiences are not stupid. <strong>55% of consumers are already uneasy about AI media</strong> — worried about privacy, ethics, and misinformation. As synthetic content continues to flood platforms, the scarcity premium on genuinely human content will rise, not fall.</p>
+        <p style="color:var(--text-muted); font-size:15px; line-height:1.9; margin-top:14px">The creators who thrive in this era will be those who use AI as a skilled professional uses any tool — strategically, transparently, and in service of a vision that is irreducibly human. They will double down on live interaction, IRL community, niche depth, and personal narrative — the four pillars that no AI can authentically replicate.</p>
+        <p style="color:var(--text-muted); font-size:15px; line-height:1.9; margin-top:14px">The creators who will suffer are those who either abandon their authentic identity to compete on AI's terms — or who refuse to adapt at all and fall behind operationally. The path forward is neither. <strong>It is becoming more human, on purpose, with AI as the supporting player.</strong></p>
+      </div>
+      <div>
+        <h3 class="display" style="font-size:22px; margin-bottom:20px">Key Takeaways</h3>
+        <div style="display:flex; flex-direction:column; gap:12px">
+          <div style="display:flex; gap:12px; align-items:flex-start">
+            <span style="color:var(--accent); font-family:'Space Mono',monospace; font-size:12px; flex-shrink:0; margin-top:2px">01</span>
+            <p style="color:var(--text-muted); font-size:13px; line-height:1.7">Income growth is real but unequal — the creator middle class is emerging but fragile. 48.7% still earn under $10K.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start">
+            <span style="color:var(--accent); font-family:'Space Mono',monospace; font-size:12px; flex-shrink:0; margin-top:2px">02</span>
+            <p style="color:var(--text-muted); font-size:13px; line-height:1.7">AI-powered scams rose 700% in 2025. Deepfake influencer fraud caused $450M in losses. This is the #1 ecosystem threat.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start">
+            <span style="color:var(--accent); font-family:'Space Mono',monospace; font-size:12px; flex-shrink:0; margin-top:2px">03</span>
+            <p style="color:var(--text-muted); font-size:13px; line-height:1.7">Mental health crisis is real. Creators connected to personal authenticity are being pushed out by an ecosystem that rewards synthetic volume.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start">
+            <span style="color:var(--accent); font-family:'Space Mono',monospace; font-size:12px; flex-shrink:0; margin-top:2px">04</span>
+            <p style="color:var(--text-muted); font-size:13px; line-height:1.7">The hybrid AI workflow (AI for mechanics, human for meaning) is the new operating standard for competitive creators.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start">
+            <span style="color:var(--accent); font-family:'Space Mono',monospace; font-size:12px; flex-shrink:0; margin-top:2px">05</span>
+            <p style="color:var(--text-muted); font-size:13px; line-height:1.7">Identity protection, content provenance, and anti-deepfake tools are now non-negotiable operational infrastructure for any human creator.</p>
+          </div>
+          <div style="display:flex; gap:12px; align-items:flex-start">
+            <span style="color:var(--accent); font-family:'Space Mono',monospace; font-size:12px; flex-shrink:0; margin-top:2px">06</span>
+            <p style="color:var(--text-muted); font-size:13px; line-height:1.7">Authenticity is becoming scarce — and scarcity drives premium. The human creator who survives this era will command a trust premium AI can never earn.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT BAND -->
+<div class="about-band">
+  <div class="about-inner">
+    <div>
+      <h2 class="about-heading">This report was made by a <em>human.</em></h2>
+      <p style="color:var(--text-muted); font-size:14px; line-height:1.8; margin-top:12px">Every analysis in this document is sourced, grounded in real data, and written with the purpose of protecting the rights, livelihoods, and wellbeing of human creators who build real communities with real people.</p>
+      <p style="color:var(--text-muted); font-size:14px; line-height:1.8; margin-top:12px">If you're a creator, a brand, a platform builder, or a policymaker — this problem is your problem. The authenticity of the internet depends on defending the space for human voices.</p>
+    </div>
+    <div>
+      <h3 class="display" style="font-size:18px; margin-bottom:16px; color:var(--text-muted)">Sources & Data Referenced</h3>
+      <p style="font-family:'Space Mono', monospace; font-size:10px; color:var(--text-dim); line-height:2">
+        Influencer Marketing Factory — 2026 Creator Economy Report<br>
+        HypeAuditor — 5M Creator Account Analysis 2025<br>
+        FTC — Consumer Fraud Losses Report 2024<br>
+        McAfee — Deepfake & Romance Scam Report 2025<br>
+        FBI IC3 — AI-Powered Scam Complaint Data 2025<br>
+        Norton / Gen Threat Report Q1 2025<br>
+        GoViral Global — Influencer Marketing Statistics 2025<br>
+        The Wrap — Creator Economy Year in Review 2025<br>
+        Bitdefender — Influencer Mental Health Study 2024<br>
+        Blackbird.AI — Deepfake Narrative Attack Analysis 2025<br>
+        F-Secure — AI Influencer Fraud Threat Intelligence 2025<br>
+        ScamWatchHQ — 2025 Global Scam Landscape Report<br>
+        CAIO Blog — AI Impact on Creator Economy 2025<br>
+        Alitu — The Paradox of AI Content Creation 2025<br>
+        AWISEE — Creator Economy Statistics 2025
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-bar">
+  <div class="footer-inner">
+    <div class="footer-brand">THE HUMAN COST</div>
+    <div class="footer-note">AI Impact · Creator Economy · 2025–2026 Research Pitch Report</div>
+  </div>
+</div>
+
+<script>
+  // Simple scroll-triggered fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('visible');
+        observer.unobserve(e.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

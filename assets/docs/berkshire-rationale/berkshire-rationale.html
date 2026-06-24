@@ -1,0 +1,452 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="pandoc 3.10" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
+  <title>berkshire-rationale</title>
+  <style>
+
+html {
+color: #1a1a1a;
+background-color: #fdfdfd;
+}
+body {
+margin: 0 auto;
+max-width: 36em;
+padding-left: 50px;
+padding-right: 50px;
+padding-top: 50px;
+padding-bottom: 50px;
+hyphens: auto;
+overflow-wrap: break-word;
+text-rendering: optimizeLegibility;
+font-kerning: normal;
+}
+@media (max-width: 600px) {
+body {
+font-size: 0.9em;
+padding: 12px;
+}
+h1 {
+font-size: 1.8em;
+}
+}
+@media print {
+html {
+background-color: white;
+}
+body {
+background-color: transparent;
+color: black;
+font-size: 12pt;
+}
+p, h2, h3 {
+orphans: 3;
+widows: 3;
+}
+h2, h3, h4 {
+page-break-after: avoid;
+}
+}
+p {
+margin: 1em 0;
+}
+a {
+color: #1a1a1a;
+}
+a:visited {
+color: #1a1a1a;
+}
+img {
+max-width: 100%;
+}
+svg {
+height: auto;
+max-width: 100%;
+}
+h1, h2, h3, h4, h5, h6 {
+margin-top: 1.4em;
+}
+h5, h6 {
+font-size: 1em;
+font-style: italic;
+}
+h6 {
+font-weight: normal;
+}
+ol, ul {
+padding-left: 1.7em;
+margin-top: 1em;
+}
+li > ol, li > ul {
+margin-top: 0;
+}
+blockquote {
+margin: 1em 0 1em 1.7em;
+padding-left: 1em;
+border-left: 2px solid #e6e6e6;
+color: #606060;
+}
+code {
+white-space: pre-wrap;
+font-family: Menlo, Monaco, Consolas, 'Lucida Console', monospace;
+font-size: 85%;
+margin: 0;
+hyphens: manual;
+}
+pre {
+margin: 1em 0;
+overflow: auto;
+}
+pre code {
+padding: 0;
+overflow: visible;
+overflow-wrap: normal;
+}
+.sourceCode {
+background-color: transparent;
+overflow: visible;
+}
+hr {
+border: none;
+border-top: 1px solid #1a1a1a;
+height: 1px;
+margin: 1em 0;
+}
+table {
+margin: 1em 0;
+border-collapse: collapse;
+width: 100%;
+overflow-x: auto;
+display: block;
+font-variant-numeric: lining-nums tabular-nums;
+}
+table caption {
+margin-bottom: 0.75em;
+}
+tbody {
+margin-top: 0.5em;
+border-top: 1px solid #1a1a1a;
+border-bottom: 1px solid #1a1a1a;
+}
+th {
+border-top: 1px solid #1a1a1a;
+padding: 0.25em 0.5em 0.25em 0.5em;
+}
+td {
+padding: 0.125em 0.5em 0.25em 0.5em;
+}
+header {
+margin-bottom: 4em;
+text-align: center;
+}
+#TOC li {
+list-style: none;
+}
+#TOC ul {
+padding-left: 1.3em;
+}
+#TOC > ul {
+padding-left: 0;
+}
+#TOC a:not(:hover) {
+text-decoration: none;
+}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+
+ul.task-list[class]{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+font-size: inherit;
+width: 0.8em;
+margin: 0 0.8em 0.2em -1.6em;
+vertical-align: middle;
+}
+.display.math{display: block; text-align: center; margin: 0.5rem auto;}
+</style>
+</head>
+<body>
+<p><strong>Principles</strong></p>
+<p><em>A synthesis of Apple&#39;s design philosophy and</em></p>
+<p><em>Warren Buffett&#39;s business philosophy, translated</em></p>
+<p><em>into interface for berkshirehathaway.com.</em></p>
+<p>Prepared for Aisling</p>
+<p>April 2026</p>
+<p><em>Opening</em></p>
+<p><strong>The premise.</strong></p>
+<p><em>Apple&#39;s Human Interface Guidelines and Warren Buffett&#39;s Owner&#39;s
+Manual are, for long stretches, the same document written by two
+different people.</em></p>
+<p>Both are about restraint. Both demand that the thing serve the
+reader, not the author. Both treat clarity as a kind of honesty and
+ornamentation as a kind of lie. Both are patient. Both are allergic to
+fashion. Both are built to survive the next thirty years without needing
+to be redrawn.</p>
+<p>What follows is not a style guide. It is a set of seven paired
+principles — one side borrowed from Cupertino, one side borrowed from
+Omaha — and the concrete interface behavior each pair demands. Every
+design decision made for berkshirehathaway.com should, ultimately, be
+traceable to one of these seven.</p>
+<p>The house style that emerges is specific: a site that looks and reads
+more like the Berkshire Annual Report than a fintech dashboard. Apple&#39;s
+restraint, Buffett&#39;s paper. Long-term thinking as the anchor. Time as
+the hero.</p>
+<p><em>Principle 01 — The anchor</em></p>
+<p><strong>Time is the hero.</strong></p>
+<p><strong>THE APPLE SIDE</strong></p>
+<p>Apple designs on a ten-year horizon. Its visual language is
+deliberately resistant to trend — San Francisco was drawn to still feel
+current in 2035. Durability is a design goal, not an accident.</p>
+<p><strong>THE BUFFETT SIDE</strong></p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr>
+<th><p><em>“Our favorite holding period is forever.”</em></p>
+<p>— Warren E. Buffett, 1988 letter to shareholders</p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>WHAT THIS MEANS FOR THE INTERFACE</strong></p>
+<p>Time is promoted to the homepage&#39;s primary visual element. The hero
+is not today&#39;s stock price — it is a sixty-year chart of book value per
+share, scrubbable by decade. The annual letter archive is a timeline,
+not a list. Every number on the site is given its long context: not
+“$182B in cash,” but “$182B in cash — up from $12B in 1998.” The visual
+language itself is chosen for longevity: a serif body face, letterpress
+rules, no ornament that reads as ‘2026-trendy.’</p>
+<p><strong>THE TEST</strong></p>
+<p>If a user spends ten seconds on the homepage and leaves with the
+impression that this company measures itself in decades rather than
+quarters, the principle is working.</p>
+<p><em>Principle 02</em></p>
+<p><strong>A circle of competence, drawn visibly.</strong></p>
+<p><strong>THE APPLE SIDE</strong></p>
+<p>“Clarity” is the first word in Apple&#39;s HIG. Interface elements should
+be immediately legible. Interactions should never require a manual. If a
+user has to ask what something does, the design has failed.</p>
+<p><strong>THE BUFFETT SIDE</strong></p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr>
+<th><p><em>“Never invest in a business you cannot understand.”</em></p>
+<p>— Warren E. Buffett, 1996 letter to shareholders</p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>WHAT THIS MEANS FOR THE INTERFACE</strong></p>
+<p>Every operating company gets a one-sentence description a
+tenth-grader could read. No sector-speak. No acronyms without their
+expansion. Every number on the site is paired with a plain-language
+gloss. “Float: $174B” is followed by “insurance premiums we hold before
+claims are paid.”</p>
+<p>A secondary consequence: the site does not pretend to be for
+everyone. It addresses the shareholder — or a future shareholder willing
+to read — and no one else. There is no lifestyle imagery, no onboarding
+tour, no targeted copy. The circle of competence is publicly drawn.</p>
+<p><em>Principle 03</em></p>
+<p><strong>Margin of safety, in a hundred small places.</strong></p>
+<p><strong>THE APPLE SIDE</strong></p>
+<p>Apple&#39;s HIG: “The best error is the one the user never made.”
+Destructive actions require confirmation. Defaults are conservative.
+Undo is omnipresent.</p>
+<p><strong>THE BUFFETT SIDE</strong></p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr>
+<th><p><em>“Rule No. 1: never lose money. Rule No. 2: never forget Rule
+No. 1.”</em></p>
+<p>— Warren E. Buffett, attributed in many letters</p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>WHAT THIS MEANS FOR THE INTERFACE</strong></p>
+<p>Every form validates before submit, with plain errors next to the
+field, never as a summary at the top. Dates are written out (“April 18,
+2026”), not encoded (“4/18/26”). Dollar figures include the unit. The
+fraud warning is a persistent homepage element, not a buried PDF. Any
+action that cannot be undone — changing dividend-election preferences,
+submitting a vote — is preceded by a confirmation step and followed by a
+written receipt.</p>
+<p>The principle as a design discipline: every interaction is audited
+for the question, “what is the worst mistake a tired user can make here,
+and how do we make it harder to make?”</p>
+<p><em>Principle 04</em></p>
+<p><strong>Intrinsic value over market price.</strong></p>
+<p><strong>THE APPLE SIDE</strong></p>
+<p>Deference to content. UI should recede so the underlying thing — the
+photograph, the message, the document — becomes the subject. Chrome is
+thin. Color is punctuation.</p>
+<p><strong>THE BUFFETT SIDE</strong></p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr>
+<th><p><em>“Price is what you pay. Value is what you get.”</em></p>
+<p>— Warren E. Buffett, 2008 letter to shareholders</p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>WHAT THIS MEANS FOR THE INTERFACE</strong></p>
+<p>The site resists the treadmill of live quotes. A small, calm ticker
+at the foot of the homepage shows BRK.A and BRK.B — but above it, given
+far more space, sits the long chart of book value. Every news item on
+the homepage is paired with a “Why it matters” gloss of two sentences or
+fewer, distinguishing signal from noise. The annual letter is surfaced
+more prominently than any press release.</p>
+<p>A design rule follows from this: no element of the UI should ever
+animate or pulse for its own sake. Motion is a form of cost, and cost
+must be earned.</p>
+<p><em>Principle 05</em></p>
+<p><strong>Candor, treated as the house voice.</strong></p>
+<p><strong>THE APPLE SIDE</strong></p>
+<p>Apple&#39;s HIG asks that digital materials behave like honest physical
+ones: a button that looks tappable must be tappable; a surface that
+looks scrollable must scroll. No deception in the materials.</p>
+<p><strong>THE BUFFETT SIDE</strong></p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr>
+<th><p><em>“We will be candid in our reporting to you, emphasizing the
+pluses and minuses important in appraising business value. Our guideline
+is to tell you the business facts that we would want to know if our
+positions were reversed.”</em></p>
+<p>— Warren E. Buffett, An Owner&#39;s Manual, Principle 7</p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>WHAT THIS MEANS FOR THE INTERFACE</strong></p>
+<p>No marketing language anywhere on the site. No “world-class,”
+“industry-leading,” “innovative.” Losses are displayed at the same
+weight and size as gains. Operating company descriptions include the
+fact that Berkshire owns them, not softer euphemisms like “part of the
+family.” If a letter is written by Warren, it is signed “Warren.” If a
+regulatory risk is material, it is on the homepage, not in a
+footnote.</p>
+<p>The typographic consequence: no bold for emphasis except where the
+reader genuinely needs it. Italic is used for titles, not for shouting.
+The whole page is set at one gentle reading volume.</p>
+<p><em>Principle 06</em></p>
+<p><strong>Frugality, read as style.</strong></p>
+<p><strong>THE APPLE SIDE</strong></p>
+<p>Reduction. If a thing does not earn its place, it is removed. Every
+Apple product begins with an argument about what to subtract, not what
+to add.</p>
+<p><strong>THE BUFFETT SIDE</strong></p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr>
+<th><p><em>“We will reject interesting opportunities rather than
+over-leverage our balance sheet. This conservatism has penalized our
+results but it is the only behavior that leaves us
+comfortable.”</em></p>
+<p>— Warren E. Buffett, An Owner&#39;s Manual, Principle 10</p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>WHAT THIS MEANS FOR THE INTERFACE</strong></p>
+<p>No gradient that isn&#39;t doing work. No icon set that isn&#39;t type-set.
+No decoration that could be removed without loss. The site reads as if
+it were typeset on a single press in Omaha — one serif for display and
+body, one sans for numerics, one gold-leaf accent used sparingly. The
+palette has three ink tones, not thirty.</p>
+<p>In plain terms: if a quarterly designer review cannot justify an
+element&#39;s cost in attention, the element is cut before the next release.
+Frugality as an ongoing editorial practice, not a launch-day pose.</p>
+<p><em>Principle 07</em></p>
+<p><strong>Partnership voice, not corporate voice.</strong></p>
+<p><strong>THE APPLE SIDE</strong></p>
+<p>Apple&#39;s writing style is direct, warm, and addressed to a single
+reader, not a segment. “Your Mac.” “Your photos.” Copy is
+first-person-reader, not corporate.</p>
+<p><strong>THE BUFFETT SIDE</strong></p>
+<table>
+<colgroup>
+<col style="width: 100%" />
+</colgroup>
+<thead>
+<tr>
+<th><p><em>“Although our form is corporate, our attitude is partnership.
+Charlie Munger and I think of our shareholders as owner-partners, and of
+ourselves as managing partners.”</em></p>
+<p>— Warren E. Buffett, An Owner&#39;s Manual, Principle 1</p></th>
+</tr>
+</thead>
+<tbody>
+</tbody>
+</table>
+<p><strong>WHAT THIS MEANS FOR THE INTERFACE</strong></p>
+<p>Copy throughout the site addresses the reader as a co-owner. “Your
+companies,” not “Our portfolio.” Shareholder-services language is
+first-person plural, not passive-voice corporate. Signed communications
+carry a real person&#39;s name — Warren, Greg, the transfer agent — not a
+faceless “Berkshire Hathaway Investor Relations.”</p>
+<p>This is the principle that gives the site its distinctive warmth.
+Everything else on this list is about discipline; this one is about
+tone. It is what separates a serious site from a cold one.</p>
+<p><em>A note on tactility</em></p>
+<p><strong>Paper, not leather.</strong></p>
+<p>There is a trap in translating Buffett&#39;s analog sensibility into UI:
+skeuomorphism. The instinct to make a digital surface imitate stitched
+leather, brass rivets, wood grain. This must be avoided. It reads as
+kitsch and it is not what Buffett&#39;s aesthetic actually is.</p>
+<p>His aesthetic is editorial craft — the quiet authority of a
+well-printed newspaper, a bound annual report, a hand-typed memo. The
+tactility to pursue, therefore, is the tactility of the page: a warm
+off-white ground (paper, not screen), a serif body face (books, not
+apps), a narrow reading measure of roughly sixty-eight to seventy
+characters, letterpress-thin ruled lines, numerals set in tabular
+columns as they appear in the printed financial pages of the Wall Street
+Journal.</p>
+<p>Apple itself does this when the content calls for it. Look at the
+legal fine-print pages on apple.com, at the iBooks reader, at the
+published version of any Apple keynote transcript. Restraint and
+editorial craft are a dialect of Apple&#39;s design language, not a
+departure from it. This is the dialect the Berkshire site should
+speak.</p>
+<p><em>Closing</em></p>
+<p><strong>The test.</strong></p>
+<p>A site built on these principles should meet, at any moment, one
+simple standard: a shareholder reading the site in 2035 should find it
+has not been replaced, redesigned in panic, or chased by the prevailing
+aesthetic of 2031. The site should look, in its ninth year, like a more
+confident version of itself, with a longer chart.</p>
+<p>Everything else is a consequence of that standard.</p>
+<p>¶</p>
+</body>
+</html>
