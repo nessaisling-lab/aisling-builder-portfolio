@@ -1,0 +1,52 @@
+WEBVTT
+
+00:00:00.700 --> 00:00:02.510
+This is a private dictation app.
+
+00:00:02.600 --> 00:00:04.970
+Every word is transcribed on your own computer,
+
+00:00:05.020 --> 00:00:07.230
+so the recording never has to leave it.
+
+00:00:08.960 --> 00:00:13.990
+You can record from the microphone, choose a file, or paste a link to a video.
+
+00:00:14.160 --> 00:00:17.710
+Here, I'm choosing a short audio clip from my computer.
+
+00:00:19.610 --> 00:00:24.240
+It transcribes on the graphics card, and the app tells you so: no network.
+
+00:00:26.060 --> 00:00:27.050
+So I checked.
+
+00:00:27.100 --> 00:00:28.730
+While it was transcribing,
+
+00:00:28.860 --> 00:00:32.690
+I sampled every network connection held by the app and its web view.
+
+00:00:32.740 --> 00:00:35.230
+The app's own process opened none.
+
+00:00:35.280 --> 00:00:38.650
+The one connection came from Microsoft's web view runtime,
+
+00:00:38.840 --> 00:00:43.390
+the browser engine that draws the interface, and it went to a Microsoft address.
+
+00:00:44.710 --> 00:00:49.120
+Every word gets its own timestamp, and the whole transcript is editable.
+
+00:00:49.190 --> 00:00:52.640
+Whisper heard one name wrong, so I fix it right in place.
+
+00:00:54.300 --> 00:01:00.350
+Then it exports to plain text, subtitles, Word, PDF, or one zip file of everything.
+
+00:01:01.860 --> 00:01:06.390
+One Rust core, four backends, and three desktop platforms.
+
+00:01:06.440 --> 00:01:08.150
+I built it with Jimmy Ong.

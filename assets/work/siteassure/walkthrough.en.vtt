@@ -1,0 +1,115 @@
+WEBVTT
+
+00:00:00.700 --> 00:00:03.430
+This is a safety log for construction crews.
+
+00:00:03.480 --> 00:00:08.370
+It works offline, it's driven by voice, and nothing in it can be quietly changed.
+
+00:00:10.070 --> 00:00:11.880
+A field note starts at the mic.
+
+00:00:11.930 --> 00:00:14.940
+This build transcribes it on the laptop's own graphics card,
+
+00:00:14.990 --> 00:00:18.060
+with no network, so the note never leaves the device.
+
+00:00:18.230 --> 00:00:20.120
+Here's one from a highway job.
+
+00:00:20.170 --> 00:00:21.340
+I'll start recording.
+
+00:00:22.120 --> 00:00:26.250
+Crew was on the shoulder next to live traffic, setting up a lane closure.
+
+00:00:26.480 --> 00:00:27.950
+Flagger was in position.
+
+00:00:28.000 --> 00:00:31.990
+We had an open trench along the median, with no shoring in yet.
+
+00:00:32.590 --> 00:00:35.660
+When I stop, it comes back as text in about three seconds,
+
+00:00:35.710 --> 00:00:37.300
+without leaving this laptop.
+
+00:00:38.840 --> 00:00:40.170
+Every word came through.
+
+00:00:40.220 --> 00:00:43.810
+The raw transcript is kept untouched, beside the cleaned-up version,
+
+00:00:43.860 --> 00:00:47.730
+and any summary is shown alongside it, never in place of it.
+
+00:00:47.780 --> 00:00:51.750
+I set the trade to highway and bridge, and confirm the details.
+
+00:00:53.270 --> 00:00:57.860
+Two flags: work-zone traffic control, and an open trench.
+
+00:00:57.930 --> 00:01:01.320
+For highway work, forty-one percent of inspections are cited,
+
+00:01:01.370 --> 00:01:04.780
+at about twenty-one thousand seven hundred dollars each.
+
+00:01:04.950 --> 00:01:07.180
+I accept both, and save.
+
+00:01:08.200 --> 00:01:11.290
+The record is saved, and its audit verifies.
+
+00:01:11.460 --> 00:01:16.010
+Resolving the trench flag takes a note, appended to the chain as a new version.
+
+00:01:16.060 --> 00:01:17.890
+And the note can be spoken, too.
+
+00:01:19.400 --> 00:01:21.750
+Shoring box dropped in at two p.m.
+
+00:01:21.800 --> 00:01:23.770
+The competent person signed off.
+
+00:01:25.300 --> 00:01:29.870
+A couple of seconds later, it's in the note field, and I resolve with proof.
+
+00:01:29.920 --> 00:01:31.610
+The fix lands as version two,
+
+00:01:31.660 --> 00:01:35.210
+above the original record, which stays exactly as it was.
+
+00:01:35.260 --> 00:01:36.790
+Nothing is overwritten.
+
+00:01:38.470 --> 00:01:42.100
+Every change is chained and hash-verified: the record,
+
+00:01:42.150 --> 00:01:46.340
+its audio, and the fix, three entries under one head hash.
+
+00:01:46.390 --> 00:01:49.260
+The same records feed a trade-risk dashboard,
+
+00:01:49.310 --> 00:01:53.320
+benchmarked against two years of OSHA enforcement in the New York area,
+
+00:01:53.370 --> 00:01:55.660
+with open flags counted by site.
+
+00:01:57.050 --> 00:01:59.720
+Each entry's hash includes the one before it,
+
+00:01:59.770 --> 00:02:02.660
+so nothing can be silently altered or removed.
+
+00:02:02.710 --> 00:02:07.260
+HouseCheck's export uses this same chain, two cycles later.
+
+00:02:07.310 --> 00:02:09.000
+It was proven here first.

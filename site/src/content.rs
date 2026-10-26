@@ -325,13 +325,14 @@ pub const BUILDS: &[Build] = &[
             Link { label: "Source", href: "https://github.com/aislingld-pursuit/L2-Clone-Prodject" },
         ],
         media: Some(Media {
-            video: "assets/work/resona/workflow.mp4",
-            poster: "assets/work/resona/workflow-poster.jpg",
-            alt: "Resona: checking the machine and choosing a speech model size",
-            w: 500,
-            h: 940,
-            captions: None,
-            autoplay: true,
+            video: "assets/work/resona/walkthrough.mp4",
+            poster: "assets/work/resona/walkthrough-poster.jpg",
+            alt: "Narrated walkthrough: the installed app transcribing a file on the GPU, a network check taken during \
+                  that transcription, the editable transcript, and its export formats",
+            w: 1280,
+            h: 720,
+            captions: Some("assets/work/resona/walkthrough.en.vtt"),
+            autoplay: false,
         }),
         sections: &[
             Section {
@@ -376,7 +377,11 @@ pub const BUILDS: &[Build] = &[
             },
         ],
         verify: None,
-        note: None,
+        note: Some(
+            "Recorded from the installed app. The network check in the video is unedited: Resona's own process \
+             opened no connections while transcribing; Microsoft's WebView2 runtime, which draws the \
+             interface, made one, to Microsoft. Narrated in a synthetic clone of my own voice, made on my machine; made with Claude Code.",
+        ),
         featured: true,
     },
     Build {
@@ -456,13 +461,14 @@ pub const BUILDS: &[Build] = &[
         stack: &["Rust", "cross-platform desktop", "GitHub Actions"],
         links: &[Link { label: "Source (siteassure/)", href: "https://github.com/nessaisling-lab/L2-C2-Solution" }],
         media: Some(Media {
-            video: "assets/work/siteassure/workflow.mp4",
-            poster: "assets/work/siteassure/workflow-poster.jpg",
-            alt: "SiteAssure: daily log, records, trade-risk dashboard and audit trail",
-            w: 436,
-            h: 918,
-            captions: None,
-            autoplay: true,
+            video: "assets/work/siteassure/walkthrough.mp4",
+            poster: "assets/work/siteassure/walkthrough-poster.jpg",
+            alt: "Narrated walkthrough: a field note, its safety flags and what they cost, a resolution appended to \
+                  the audit chain, and the trade-risk dashboard",
+            w: 1280,
+            h: 720,
+            captions: Some("assets/work/siteassure/walkthrough.en.vtt"),
+            autoplay: false,
         }),
         sections: &[
             Section {
@@ -496,7 +502,12 @@ pub const BUILDS: &[Build] = &[
             },
         ],
         verify: None,
-        note: None,
+        note: Some(
+            "Recorded from v0.1.4, built from source with CUDA, on an empty database. The field note and the \
+             resolution note are spoken into the app's mic input through a virtual audio cable, and the app \
+             transcribes both on the GPU. Narration and notes are a synthetic clone of my own voice, made on my \
+             machine; made with Claude Code.",
+        ),
         featured: false,
     },
     Build {
@@ -519,13 +530,14 @@ pub const BUILDS: &[Build] = &[
         stack: &["Rust", "Dioxus", "axum", "Postgres", "MCP", "ANISE / JPL ephemeris", "local models"],
         links: &[Link { label: "Source", href: "https://github.com/nessaisling-lab/Ziqpu-L2-Cycle-3" }],
         media: Some(Media {
-            video: "assets/work/ziqpu/workflow.mp4",
-            poster: "assets/work/ziqpu/workflow-poster.jpg",
-            alt: "Ziqpu: benchmarking the machine and recommending a local model",
-            w: 1100,
-            h: 798,
-            captions: None,
-            autoplay: true,
+            video: "assets/work/ziqpu/walkthrough.mp4",
+            poster: "assets/work/ziqpu/walkthrough-poster.jpg",
+            alt: "Narrated walkthrough: first run with invented birth data, the machine benchmark, template \
+                  readings for five IPOs, and the measures behind them",
+            w: 1280,
+            h: 720,
+            captions: Some("assets/work/ziqpu/walkthrough.en.vtt"),
+            autoplay: false,
         }),
         sections: &[
             Section {
@@ -566,7 +578,10 @@ pub const BUILDS: &[Build] = &[
             },
         ],
         verify: None,
-        note: None,
+        note: Some(
+            "Recorded from v1.6.1 on a clean profile, with invented birth data; the readings shown come from the \
+             local template. Narrated in a synthetic clone of my own voice, made on my machine; made with Claude Code.",
+        ),
         featured: false,
     },
     Build {
@@ -595,7 +610,16 @@ pub const BUILDS: &[Build] = &[
             Link { label: "Live demo", href: "https://nessaisling-lab.github.io/Excalidraw-L3-Cycle-2-Features-Pitch/?arm=nudge" },
             Link { label: "Source", href: "https://github.com/nessaisling-lab/Excalidraw-L3-Cycle-2-Features-Pitch" },
         ],
-        media: None,
+        media: Some(Media {
+            video: "assets/work/excalidraw/walkthrough.mp4",
+            poster: "assets/work/excalidraw/walkthrough-poster.jpg",
+            alt: "Narrated walkthrough: the live demo's control arm, then the nudge arm's save button, one-time \
+                  prompt, format picker, and keyboard focus in the dark theme",
+            w: 1280,
+            h: 720,
+            captions: Some("assets/work/excalidraw/walkthrough.en.vtt"),
+            autoplay: false,
+        }),
         sections: &[
             Section {
                 title: "What it is",
@@ -623,7 +647,10 @@ pub const BUILDS: &[Build] = &[
             },
         ],
         verify: None,
-        note: None,
+        note: Some(
+            "Recorded from the live demo with its default timings; the 15-second wait before the prompt is cut \
+             and labelled. A pitch prototype, not affiliated with Excalidraw. Narrated in a synthetic clone of my own voice, made on my machine; made with Claude Code.",
+        ),
         featured: false,
     },
 ];

@@ -1,0 +1,79 @@
+WEBVTT
+
+00:00:00.700 --> 00:00:04.050
+This is a client pitch for an open-source whiteboard app.
+
+00:00:04.100 --> 00:00:06.390
+Two features, built as working code,
+
+00:00:06.440 --> 00:00:09.750
+to get new visitors to save their first drawing.
+
+00:00:11.400 --> 00:00:12.070
+Right now,
+
+00:00:12.120 --> 00:00:16.030
+the empty canvas tells a new visitor that their drawing lives in the browser,
+
+00:00:16.080 --> 00:00:18.130
+and that they should save it to a file.
+
+00:00:18.180 --> 00:00:19.970
+But the moment they start drawing,
+
+00:00:20.020 --> 00:00:23.190
+that message disappears, and nothing takes its place.
+
+00:00:23.240 --> 00:00:25.490
+Saving is tucked away in the main menu.
+
+00:00:26.900 --> 00:00:29.170
+So our team of four built two features against
+
+00:00:29.220 --> 00:00:32.430
+one number: new visitors who save their first drawing.
+
+00:00:32.480 --> 00:00:35.810
+The first is a Save to file button that's always on screen.
+
+00:00:37.400 --> 00:00:39.370
+The second is a one-time prompt.
+
+00:00:39.420 --> 00:00:43.070
+It waits for a real shape, fifteen seconds of visible time,
+
+00:00:43.120 --> 00:00:46.130
+and two seconds of stillness, so it never interrupts a stroke.
+
+00:00:46.180 --> 00:00:49.570
+Screen readers announce it, and it never steals focus.
+
+00:00:50.780 --> 00:00:52.750
+Both of them open the same picker.
+
+00:00:52.800 --> 00:00:58.170
+The editable file is recommended, with PNG and SVG right beside it.
+
+00:00:58.220 --> 00:01:02.030
+Once you've saved, the prompt never comes back, but the button stays.
+
+00:01:03.320 --> 00:01:06.450
+Every colour pair meets the accessibility contrast standard,
+
+00:01:06.500 --> 00:01:08.490
+in light mode and in dark.
+
+00:01:08.540 --> 00:01:11.770
+And if you open the picker from the keyboard and close it,
+
+00:01:11.920 --> 00:01:13.890
+focus goes right back to the button.
+
+00:01:15.480 --> 00:01:20.690
+I made twenty-two of the twenty-seven commits on main, across six tagged releases.
+
+00:01:20.800 --> 00:01:24.870
+The test is sized at three thousand one hundred thirty-five users per arm,
+
+00:01:24.920 --> 00:01:28.530
+but it never ran on real traffic, so there's no result to claim.

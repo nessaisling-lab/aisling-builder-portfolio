@@ -1,0 +1,76 @@
+WEBVTT
+
+00:00:00.700 --> 00:00:04.350
+This is an astrology decision tool with two agents.
+
+00:00:04.460 --> 00:00:09.290
+One measures, the other interprets, and keeping them apart is what keeps it honest.
+
+00:00:10.810 --> 00:00:14.420
+There's no account, no email, and no password.
+
+00:00:14.490 --> 00:00:17.940
+You get an anonymous chart-self, kept on this machine.
+
+00:00:18.010 --> 00:00:21.040
+A hosted reader is optional, and I'm skipping it.
+
+00:00:21.980 --> 00:00:24.630
+This birth moment is made up for the video.
+
+00:00:24.680 --> 00:00:26.130
+With no birth time,
+
+00:00:26.180 --> 00:00:30.350
+the app holds back the rising sign and the midheaven instead of guessing them,
+
+00:00:30.400 --> 00:00:32.270
+and it says what that costs.
+
+00:00:32.340 --> 00:00:36.230
+The birthplace resolves offline, down to its time zone.
+
+00:00:37.580 --> 00:00:39.590
+It gives me an anonymous handle.
+
+00:00:39.640 --> 00:00:43.010
+Then it benchmarks this laptop and recommends the largest
+
+00:00:43.060 --> 00:00:47.630
+local model that will actually fit: a fourteen-billion-parameter model.
+
+00:00:47.680 --> 00:00:49.870
+Nothing downloads until you say so.
+
+00:00:50.890 --> 00:00:54.140
+Before any reading, I switch the source to the local template,
+
+00:00:54.190 --> 00:00:56.620
+so nothing is written by a hosted model.
+
+00:00:56.810 --> 00:01:00.400
+Then I run the seeded demo: five real companies,
+
+00:01:00.450 --> 00:01:03.960
+each scored against the chart from the day it went public.
+
+00:01:04.010 --> 00:01:07.180
+Every reading carries a badge naming what wrote it.
+
+00:01:08.410 --> 00:01:13.720
+Backstage is the measurer's work: every aspect between the two charts, with its orb,
+
+00:01:13.770 --> 00:01:18.620
+and the order the tools ran in, which is fixed in code, not left to a model.
+
+00:01:18.670 --> 00:01:21.200
+The interpreter only reads those measures back,
+
+00:01:21.250 --> 00:01:24.140
+and if you ask whether to buy, it won't tell you.
+
+00:01:25.620 --> 00:01:29.990
+One agent measures, the other interprets, and neither does the other's job.
+
+00:01:30.100 --> 00:01:32.770
+It's for reflection, not advice.
