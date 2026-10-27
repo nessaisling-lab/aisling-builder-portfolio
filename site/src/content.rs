@@ -245,8 +245,8 @@ pub const BUILDS: &[Build] = &[
                     "Staff app: gala setup, sponsorship levels, a ticketing-platform import, orders \
                      with a payment ledger, tables, badges, a staff-approved email queue, CSV reports \
                      and a change log.",
-                    "Sponsor portal: a private link per order, in four languages, where a sponsor \
-                     names and edits their guests until the deadline. No account needed.",
+                    "Sponsor portal: a private link per order, where a sponsor names and edits their \
+                     guests until the deadline. No account needed.",
                     "iPad check-in: A-to-Z search, QR e-ticket scanning, walk-ins, and check-in that \
                      keeps working when the Wi-Fi drops and syncs when it returns.",
                 ],
@@ -294,7 +294,8 @@ pub const BUILDS: &[Build] = &[
         note: Some(
             "Re-recorded for this portfolio on a private local copy with invented data: the app's \
              code is unchanged, and the client's name and logo are replaced at recording time with a \
-             neutral stand-in. Narrated with local text-to-speech voices; made with Claude Code.",
+             neutral stand-in. Narrated in a synthetic clone of my own voice, made on my machine; made \
+             with Claude Code.",
         ),
         featured: true,
     },

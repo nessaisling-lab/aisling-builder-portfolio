@@ -1,194 +1,235 @@
 WEBVTT
 
-1
-00:00:00.800 --> 00:00:07.260
-Narrator: One gala, start to finish. Four people at a nonprofit and one sponsor, on the real app, with invented data.
+00:00:00.800 --> 00:00:05.910
+This is the gala guest list tool my team of four built for a New York nonprofit.
 
-2
-00:00:11.860 --> 00:00:14.400
-Mei: Seven months to the gala. Let's set it up.
+00:00:05.960 --> 00:00:07.350
+I led the backend.
 
-3
-00:00:14.850 --> 00:00:19.930
-Narrator: Mei, the gala admin, signs in with a six-digit code from her email. No passwords.
+00:00:07.400 --> 00:00:11.030
+Here's one gala, start to finish, on invented data.
 
-4
-00:00:25.830 --> 00:00:28.580
-Mei: Sponsors name their guests by April twenty-third.
+00:00:12.380 --> 00:00:14.590
+Chapter one: setting up the gala.
 
-5
-00:00:29.030 --> 00:00:35.560
-Narrator: Gala information holds the date, the venue and the deadlines. Emails and the sponsor portal read them from here.
+00:00:15.610 --> 00:00:20.440
+Mei, the gala admin, signs in with a six-digit code from her email.
 
-6
-00:00:37.160 --> 00:00:39.550
-Mei: Every package says how many seats come with it.
+00:00:20.490 --> 00:00:24.760
+There are no passwords, and only people on the staff list get in.
 
-7
-00:00:40.000 --> 00:00:44.030
-Narrator: Each sponsorship level has its price, and how many guests it includes.
+00:00:25.920 --> 00:00:29.630
+Gala information holds the date, the venue, and the deadlines.
 
-8
-00:00:45.630 --> 00:00:49.020
-Mei: Give Lively sold more overnight. One upload and they're in.
+00:00:30.000 --> 00:00:32.830
+Emails and the sponsor portal read them from here.
 
-9
-00:00:49.470 --> 00:00:57.830
-Narrator: Mei uploads last night's export, links its pages and ticket types once, and imports. Twenty-seven new orders. The close calls wait for a person.
+00:00:33.990 --> 00:00:38.200
+Each sponsorship level has its price, and how many guests come with it.
 
-10
-00:01:08.480 --> 00:01:13.540
-Daniel: Acme still owes twenty-five thousand dollars, and five seats have no names.
+00:00:40.020 --> 00:00:42.730
+Give Lively, the ticketing site, sold more overnight.
 
-11
-00:01:13.990 --> 00:01:18.170
-Narrator: Daniel is a relationship manager: the role Pursuit testers sign in as.
+00:00:42.780 --> 00:00:45.170
+Mei uploads last night's export,
 
-12
-00:01:19.770 --> 00:01:22.670
-Daniel: Jordan's check came in the mail. Recording it.
+00:00:45.220 --> 00:00:49.690
+then links each of its pages and ticket types to a sponsorship package, once.
 
-13
-00:01:23.120 --> 00:01:29.950
-Narrator: Check ten forty-two, for twelve thousand five hundred dollars, with the day it arrived. No card or bank details, ever.
+00:00:49.740 --> 00:00:50.750
+Then she imports.
 
-14
-00:01:35.040 --> 00:01:38.860
-Daniel: Every email waits for a person. This one's right. Send.
+00:00:50.800 --> 00:00:56.010
+Twenty-seven new orders come in, and twenty-one guest names are filled in for her.
 
-15
-00:01:39.310 --> 00:01:44.150
-Narrator: The guest list reminder was drafted on its own. It goes out only when staff approve it.
+00:00:56.160 --> 00:00:59.850
+The close calls, like a possible duplicate guest or a refund,
 
-16
-00:01:48.550 --> 00:01:50.040
-Jordan: There's our link.
+00:00:59.900 --> 00:01:01.470
+wait for a person to decide.
 
-17
-00:01:50.490 --> 00:01:55.700
-Narrator: Jordan, at Acme, gets the reminder. The button opens Acme's private sponsor portal.
+00:01:02.800 --> 00:01:06.430
+Chapter two: a sponsor pays, and gets their link.
 
-18
-00:01:57.300 --> 00:01:59.900
-Jordan: Our seats, and the check already shows.
+00:01:07.430 --> 00:01:09.580
+Daniel is a relationship manager.
 
-19
-00:02:00.350 --> 00:02:04.660
-Narrator: Five of ten guests named so far, and the payment shows as partially paid.
+00:01:09.630 --> 00:01:14.620
+Acme still owes twenty-five thousand dollars, and five of its seats have no names.
 
-20
-00:02:06.260 --> 00:02:08.690
-Jordan: Avery's coming. Vegetarian.
+00:01:15.780 --> 00:01:17.570
+Acme's check came in the mail.
 
-21
-00:02:09.140 --> 00:02:13.490
-Narrator: A name, the organization for the badge, an email, and food and access needs.
+00:01:17.620 --> 00:01:21.190
+Daniel records it: twelve thousand five hundred dollars,
 
-22
-00:02:21.140 --> 00:02:24.490
-Jordan: Seven named. The last three by April twenty-third.
+00:01:21.240 --> 00:01:23.550
+the check number, and the day it arrived.
 
-23
-00:02:24.940 --> 00:02:27.350
-Narrator: Riley Chen too. Seven of ten named.
+00:01:23.600 --> 00:01:26.670
+The app never takes card or bank details.
 
-24
-00:02:37.690 --> 00:02:40.340
-Daniel: Names and titles check out. Reviewed.
+00:01:28.160 --> 00:01:30.830
+A guest list reminder was drafted on its own.
 
-25
-00:02:40.790 --> 00:02:46.910
-Narrator: Staff review every name a sponsor adds. In the portal, Jordan now sees: confirmed by the Nonprofit.
+00:01:30.880 --> 00:01:33.470
+It goes out only when staff approve it.
 
-26
-00:02:52.020 --> 00:02:53.880
-Daniel: Acme's guests sit together.
+00:01:34.720 --> 00:01:37.350
+Chapter three: the sponsor names their guests.
 
-27
-00:02:54.330 --> 00:02:58.060
-Narrator: Avery and Riley at the same table, and their badges marked ready.
+00:01:38.550 --> 00:01:41.000
+Jordan, at Acme, gets the reminder.
 
-28
-00:03:06.690 --> 00:03:09.340
-Daniel: The E.D. invited Sam. Comp seat.
+00:01:41.050 --> 00:01:45.740
+The button opens Acme's private sponsor portal, with no account needed.
 
-29
-00:03:09.790 --> 00:03:14.360
-Narrator: Sam Ortega, the Executive Director's guest. No payment, and no sponsor.
+00:01:46.900 --> 00:01:51.810
+Five of ten guests are named so far, and the check already shows as partially paid.
 
-30
-00:03:21.840 --> 00:03:23.670
-Daniel: Sam shows this at the door.
+00:01:53.430 --> 00:01:55.140
+Jordan adds Avery Kim.
 
-31
-00:03:24.120 --> 00:03:30.930
-Narrator: Daniel reads the invitation, then sends it. Sam's QR code is for one seat, and works until the morning after the gala.
+00:01:55.190 --> 00:01:58.320
+Each guest gets a name, a title for the badge,
 
-32
-00:03:43.810 --> 00:03:45.240
-Mei: Badges, off to print.
+00:01:58.370 --> 00:02:01.480
+an email, and any food or access needs.
 
-33
-00:03:45.690 --> 00:03:47.500
-Narrator: One file for the badge printer.
+00:02:02.150 --> 00:02:05.300
+Avery is vegetarian, with no access needs.
 
-34
-00:03:54.110 --> 00:03:56.390
-Kenji: Doors at six. The iPad's ready.
+00:02:06.630 --> 00:02:11.220
+Then Riley Chen, Director of Partnerships, with no dietary restrictions.
 
-35
-00:03:56.840 --> 00:04:03.350
-Narrator: Kenji, a volunteer, signs the iPad in with his own code. Five hundred seventy-seven guests, synced live.
+00:02:11.630 --> 00:02:13.960
+Seven of ten seats are named now.
 
-36
-00:04:10.720 --> 00:04:11.830
-Kenji: Welcome, Avery!
+00:02:14.010 --> 00:02:16.800
+The last three are due by April twenty-third,
 
-37
-00:04:12.280 --> 00:04:15.650
-Narrator: Search, tap, checked in. Undo stays up for ten seconds.
+00:02:16.850 --> 00:02:19.540
+and Jordan can edit any of them until then.
 
-38
-00:04:19.850 --> 00:04:21.090
-Kenji: Scanned. You're all set.
+00:02:20.700 --> 00:02:23.930
+Chapter four: staff get everyone ready.
 
-39
-00:04:21.540 --> 00:04:25.830
-Narrator: Sam holds up the ticket. The iPad's camera reads it, and says who came in.
+00:02:25.090 --> 00:02:29.320
+Back in the staff app, Daniel reviews every name a sponsor adds,
 
-40
-00:04:27.430 --> 00:04:29.200
-Kenji: Not on the list, but Mei says yes.
+00:02:29.510 --> 00:02:31.300
+starting with Avery and Riley.
 
-41
-00:04:29.650 --> 00:04:32.530
-Narrator: A walk-in, added as an exception, with who approved it.
+00:02:32.920 --> 00:02:36.910
+The guest list works like a spreadsheet, and every change is timestamped.
 
-42
-00:04:40.340 --> 00:04:41.940
-Kenji: No Wi-Fi? Keep going.
+00:02:36.960 --> 00:02:39.810
+A search for Acme finds its seven guests.
 
-43
-00:04:42.390 --> 00:04:47.100
-Narrator: With the Wi-Fi down, check-ins wait on the iPad, and send themselves once it's back.
+00:02:39.860 --> 00:02:43.130
+Daniel seats Avery and Riley together at table eight.
 
-44
-00:04:57.570 --> 00:04:58.620
-Mei: Everyone's in.
+00:02:43.180 --> 00:02:46.870
+Then he goes back to Acme's order and marks both badges ready.
 
-45
-00:04:59.070 --> 00:05:01.590
-Narrator: The dashboard counts arrivals live from the door.
+00:02:48.520 --> 00:02:53.230
+The Executive Director has invited Sam Ortega, from a local arts collective.
 
-46
-00:05:03.190 --> 00:05:04.450
-Mei: For the thank-you notes.
+00:02:53.320 --> 00:02:57.530
+Daniel adds Sam as a relationship guest: a complimentary seat,
 
-47
-00:05:04.900 --> 00:05:09.380
-Narrator: Who came, one row per guest. Gala admins only, since it holds emails.
+00:02:57.580 --> 00:03:00.030
+with no payment and no sponsor.
 
-48
-00:05:14.260 --> 00:05:20.920
-Narrator: Everyone here is invented. Try it yourself: the Gala Tester Quickstart has your sign-in, and five task cards.
+00:03:00.100 --> 00:03:02.150
+A note says who invited them.
 
+00:03:03.590 --> 00:03:08.640
+Daniel previews Sam's invitation: the date, the venue, and when the doors open.
+
+00:03:08.690 --> 00:03:12.020
+A new personal QR code is made only when it sends,
+
+00:03:12.070 --> 00:03:14.520
+and the database keeps only its hash.
+
+00:03:14.570 --> 00:03:19.060
+The code is for Sam alone, and it works until the morning after the gala.
+
+00:03:20.420 --> 00:03:23.770
+Mei exports every badge as one file for the printer.
+
+00:03:25.390 --> 00:03:28.580
+Chapter five: gala night, at the door.
+
+00:03:29.610 --> 00:03:30.580
+Gala night.
+
+00:03:30.770 --> 00:03:34.800
+Kenji, a volunteer, signs in on the iPad with his own code.
+
+00:03:34.850 --> 00:03:38.880
+He sees the door list and nothing else: five hundred seventy-seven guests,
+
+00:03:38.930 --> 00:03:40.040
+synced live.
+
+00:03:41.940 --> 00:03:46.010
+He searches for Avery, taps check in, and Avery's in.
+
+00:03:46.160 --> 00:03:48.210
+Undo stays up for ten seconds.
+
+00:03:50.270 --> 00:03:51.760
+Sam holds up the ticket.
+
+00:03:51.810 --> 00:03:54.900
+The camera reads it, and the iPad says who came in.
+
+00:03:55.910 --> 00:03:58.720
+Jamie Walker isn't on the list, but Mei says yes.
+
+00:03:58.910 --> 00:04:00.860
+Kenji adds a walk-in as an exception,
+
+00:04:00.910 --> 00:04:03.900
+with the sponsor and a note on who approved it.
+
+00:04:03.950 --> 00:04:06.400
+It stays pending until staff confirm it.
+
+00:04:07.530 --> 00:04:10.780
+At the top, the iPad shows it's synced, live.
+
+00:04:10.830 --> 00:04:12.300
+Then the Wi-Fi drops.
+
+00:04:12.450 --> 00:04:17.040
+Kenji searches for Riley Chen and taps check in anyway, with no connection at all.
+
+00:04:17.090 --> 00:04:21.640
+The check-in waits on the iPad, and when the Wi-Fi is back, it sends itself.
+
+00:04:21.690 --> 00:04:25.940
+If two iPads check in the same guest, the first arrival wins.
+
+00:04:27.110 --> 00:04:29.760
+Chapter six: after the doors close.
+
+00:04:31.120 --> 00:04:35.150
+Back on the dashboard, arrivals count up live from the door.
+
+00:04:36.260 --> 00:04:39.970
+And for the thank-you notes: who came, one row per guest.
+
+00:04:40.020 --> 00:04:44.130
+Only gala admins can download it, because it holds emails.
+
+00:04:45.850 --> 00:04:49.160
+My part was the backend: who can see and change what,
+
+00:04:49.210 --> 00:04:52.180
+the private links and tickets, and the sync behind the door.
+
+00:04:52.230 --> 00:04:54.800
+Every person and record here is invented.
