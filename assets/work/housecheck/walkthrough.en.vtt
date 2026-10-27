@@ -1,91 +1,94 @@
 WEBVTT
 
-00:00:00.800 --> 00:00:01.910
-HouseCheck.
+00:00:00.700 --> 00:00:04.930
+This is a Carfax for New York apartments: a building's public record,
 
-00:00:01.960 --> 00:00:05.350
-Carfax for New York apartments, built in Rust.
+00:00:04.980 --> 00:00:07.030
+on one card, built in Rust.
 
-00:00:07.330 --> 00:00:08.760
+00:00:08.750 --> 00:00:10.200
 Before you sign a lease,
 
-00:00:08.810 --> 00:00:12.480
-the information that says whether a building is maintained is already public.
+00:00:10.250 --> 00:00:14.100
+the records that show whether a building is cared for are already public.
 
-00:00:12.570 --> 00:00:15.200
-It's just spread across four agency websites.
+00:00:14.150 --> 00:00:16.700
+They're just spread across four city agencies.
 
-00:00:15.250 --> 00:00:19.460
-HouseCheck asks what matters to you, then puts it on one card.
+00:00:16.890 --> 00:00:21.440
+First, it asks what matters to you, and those sections move to the top.
 
-00:00:20.960 --> 00:00:21.670
-Type an address.
+00:00:22.640 --> 00:00:25.250
+I type an address and pick it from the suggestions.
 
-00:00:21.720 --> 00:00:25.690
-Two hundred fifty Brooklyn buildings, served live.
+00:00:25.420 --> 00:00:30.150
+The app covers two hundred fifty Brooklyn buildings, and it's served live.
 
-00:00:29.390 --> 00:00:31.560
-A score out of a hundred, across condition,
+00:00:31.320 --> 00:00:34.070
+Thirty-nine out of one hundred, across condition,
 
-00:00:31.730 --> 00:00:34.980
-legal protection, neighborhood and accessibility.
+00:00:34.120 --> 00:00:37.530
+legal protection, neighborhood, and accessibility.
 
-00:00:35.330 --> 00:00:37.920
+00:00:37.580 --> 00:00:40.910
 Every number links back to the city dataset it came from.
 
-00:00:39.520 --> 00:00:43.690
-The violations are in the city's own words, with how long each has been open.
+00:00:41.940 --> 00:00:46.950
+Condition scores zero: one hundred eight hazardous violations are open.
 
-00:00:44.100 --> 00:00:47.550
-Repair speed is the one measure of behavior, not just state.
+00:00:47.040 --> 00:00:51.910
+Each one is listed in the city's own words, with how long it's been open.
 
-00:00:54.320 --> 00:00:55.890
-And you can take the record with you.
+00:00:51.960 --> 00:00:56.550
+How fast repairs happen is the one measure of behavior, not just state.
 
-00:00:56.000 --> 00:00:58.750
+00:00:57.840 --> 00:01:00.530
+There are three hundred open violations here.
+
+00:01:00.580 --> 00:01:04.530
+And you can take the record with you: print it, or download the file.
+
+00:01:04.580 --> 00:01:07.270
 The downloaded file is the verifiable one.
 
-00:01:04.490 --> 00:01:05.860
-Here's that exact file.
+00:01:08.380 --> 00:01:13.530
+Here's that exact file, checked offline with HouseCheck's own verification code.
 
-00:01:05.910 --> 00:01:09.080
-I check it offline with HouseCheck's own verification code.
+00:01:13.580 --> 00:01:16.910
+The hash chain recomputes, the signature is valid,
 
-00:01:09.130 --> 00:01:13.680
-The hash chain recomputes, the Ed25519 signature is valid,
+00:01:16.960 --> 00:01:19.790
+and the key matches the one the site publishes.
 
-00:01:13.730 --> 00:01:16.440
-and the key matches the one published at slash meta.
-
-00:01:16.570 --> 00:01:17.740
+00:01:19.840 --> 00:01:21.070
 Signed and intact.
 
-00:01:18.430 --> 00:01:22.880
+00:01:21.820 --> 00:01:25.790
 Change one character in one violation, and it's caught, down to the row.
 
-00:01:24.410 --> 00:01:26.000
+00:01:26.840 --> 00:01:28.850
 But signing alone wasn't enough.
 
-00:01:26.050 --> 00:01:28.960
+00:01:28.900 --> 00:01:32.390
 A forger can rewrite a row, rebuild the whole chain,
 
-00:01:29.010 --> 00:01:31.980
+00:01:32.440 --> 00:01:36.110
 and sign it with their own key, and it still checks out as intact.
 
-00:01:32.090 --> 00:01:34.400
+00:01:36.180 --> 00:01:39.090
 I found that hole while verifying it in production.
 
-00:01:35.220 --> 00:01:39.330
+00:01:39.810 --> 00:01:43.820
 That's why the signing key is published apart from the documents it signs.
 
-00:01:39.520 --> 00:01:42.690
+00:01:44.050 --> 00:01:47.340
 Compare against it, and the forgery is exposed.
 
-00:01:45.350 --> 00:01:48.260
-A hundred seventy-six tests, clippy clean, live.
+00:01:48.910 --> 00:01:52.720
+One hundred seventy-six tests, lint-clean, and running live.
 
-00:01:48.310 --> 00:01:52.180
+00:01:52.770 --> 00:01:57.480
 Two hundred fifty buildings, about a tenth of a percent of the city.
 
-00:01:52.230 --> 00:01:54.420
+00:01:57.530 --> 00:02:00.400
 It's a signal, not a legal ruling.
