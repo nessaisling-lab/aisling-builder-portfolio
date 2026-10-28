@@ -841,39 +841,10 @@ pub const DOCS: &[Doc] = &[
         files: &[
             ("PDF · Letter", "assets/docs/resume/resume-letter.pdf"),
             ("PDF · Legal", "assets/docs/resume/resume-legal.pdf"),
-            ("Word · Letter", "assets/docs/resume/resume.docx"),
-            ("Word · Legal", "assets/docs/resume/resume-legal.docx"),
-            ("Plain text", "assets/docs/resume/resume.txt"),
         ],
     },
-    Doc {
-        name: "Cover letter",
-        files: &[
-            ("PDF", "assets/docs/cover-letter/cover-letter.pdf"),
-            ("Word", "assets/docs/cover-letter/cover-letter.docx"),
-        ],
-    },
-    Doc {
-        name: "Berkshire redesign: design rationale",
-        files: &[
-            ("PDF", "assets/docs/berkshire-rationale/berkshire-rationale.pdf"),
-            ("Word", "assets/docs/berkshire-rationale/berkshire-rationale.docx"),
-        ],
-    },
-    Doc {
-        name: "AI and the creator economy: impact report",
-        files: &[
-            ("PDF", "assets/docs/ai-creator-impact/ai-creator-impact.pdf"),
-            ("Word", "assets/docs/ai-creator-impact/ai-creator-impact.docx"),
-        ],
-    },
-    Doc {
-        name: "WRC AI presentation",
-        files: &[
-            ("PDF", "assets/docs/wrc-ai-deck/wrc-ai-deck.pdf"),
-            ("PowerPoint", "assets/docs/wrc-ai-deck/wrc-ai-deck.pptx"),
-        ],
-    },
+    Doc { name: "Cover letter", files: &[("PDF", "assets/docs/cover-letter/cover-letter.pdf")] },
+    Doc { name: "Berkshire redesign: design rationale", files: &[("PDF", "assets/docs/berkshire-rationale/berkshire-rationale.pdf")] },
 ];
 
 #[cfg(test)]

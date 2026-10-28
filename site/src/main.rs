@@ -668,10 +668,9 @@ fn Resume(root: String) -> Element {
         section { class: "wrap page-head",
             Label { prompt: "$".to_string(), text: "ls resume/".to_string() }
             h1 { "Résumé" }
-            p { class: "deck", "One page, in Letter or Legal. Also as Word and plain text, built from the same source." }
+            p { class: "deck", "One page, in Letter or Legal." }
             div { class: "actions",
                 a { class: "btn", href: "{root}assets/docs/resume/resume-letter.pdf", "Download PDF (Letter)" }
-                a { class: "btn ghost", href: "{root}assets/docs/resume/resume.docx", "Word (Letter)" }
             }
         }
         section { class: "wrap block",
