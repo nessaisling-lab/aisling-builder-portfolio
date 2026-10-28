@@ -452,7 +452,7 @@ pub const BUILDS: &[Build] = &[
         line: "A tamper-evident, offline-first OSHA compliance logger, driven by voice.",
         stat: "18 commands · zero stubs · 3-OS CI",
         role: "Builder",
-        team: &[Person { name: "Jimmy Ong", handle: "jimmyronin", role: "co-author of the clone it grew from" }],
+        team: &[Person { name: "Raphael Ribot", handle: "raphaelribot-pursuit", role: "UI revisions" }],
         status: "Feature-complete · build from source",
         figs: &[
             Fig { v: "18", k: "commands, zero stubs" },
