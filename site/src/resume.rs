@@ -161,7 +161,7 @@ pub const EDUCATION: &[Entry] = &[
     Entry {
         org: "Pursuit",
         role: "AI-Native Builder (Inaugural Cohort)",
-        when: "Mar. 2025 – Present",
+        when: "May 2026 – Present",
         desc: "600+ hour, 7-month in-person intensive: 10+ end-to-end builds, 8+ PRDs; client capstone \
                Demo Day Nov. 10, 2026.",
         place: "Long Island City, NY",

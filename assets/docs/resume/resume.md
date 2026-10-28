@@ -53,7 +53,7 @@ Jul. 2017 – Jan. 2020
 
 ## Education
 
-- Pursuit, AI-Native Builder (Inaugural Cohort), Long Island City, NY (Mar. 2025 – Present) -- 600+ hour, 7-month in-person intensive: 10+ end-to-end builds, 8+ PRDs; client capstone Demo Day Nov. 10, 2026.
+- Pursuit, AI-Native Builder (Inaugural Cohort), Long Island City, NY (May 2026 – Present) -- 600+ hour, 7-month in-person intensive: 10+ end-to-end builds, 8+ PRDs; client capstone Demo Day Nov. 10, 2026.
 - Per Scholas, IT Support — CompTIA A+, Google IT Support, ServiceNow ITSM (Grad. Oct. 2025)
 - Vaughn College, Aircraft Mechanic Airframe & Powerplant (coursework complete), Flushing, NY
 

@@ -796,7 +796,7 @@ pub const JOBS: &[Job] = &[
 
 pub const SCHOOLS: &[Job] = &[
     Job {
-        when: "Mar 2025 – now",
+        when: "May 2026 – now",
         org: "Pursuit",
         role: "AI-Native Builder, inaugural cohort",
         body: "600+ hour, 7-month in-person intensive: 10+ end-to-end builds and 8+ PRDs. Client \
