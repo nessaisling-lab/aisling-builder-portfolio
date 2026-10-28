@@ -60,7 +60,7 @@ fn main() -> std::io::Result<()> {
 
     let resume = rsx! { Resume { root: "../".to_string() } };
     write(&out.join("resume/index.html"), &page("../", "resume/", "Résumé",
-        "Résumé as PDF (Letter, Legal), Word and plain text, plus writing samples.",
+        "Résumé as PDF (Letter, Legal), plus writing samples.",
         resume), &mut written)?;
 
     // GitHub Pages serves 404.html at whatever path was missed, so relative links would
