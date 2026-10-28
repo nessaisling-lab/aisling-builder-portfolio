@@ -1,0 +1,91 @@
+WEBVTT
+
+00:00:00.800 --> 00:00:05.910
+This is the gala guest list tool my team of four built for a New York nonprofit.
+
+00:00:05.960 --> 00:00:07.350
+I led the backend.
+
+00:00:07.400 --> 00:00:11.030
+Here's one gala, start to finish, on invented data.
+
+00:00:12.380 --> 00:00:17.210
+Mei, the gala admin, signs in with a six-digit code from her email.
+
+00:00:17.260 --> 00:00:21.530
+There are no passwords, and only people on the staff list get in.
+
+00:00:22.690 --> 00:00:25.140
+Ticket sales come in from Give Lively.
+
+00:00:25.190 --> 00:00:28.920
+Each ticket type is linked to a sponsorship package once.
+
+00:00:29.030 --> 00:00:33.240
+Then one import adds twenty-seven new orders and twenty-one guest names,
+
+00:00:33.290 --> 00:00:38.160
+and close calls, like a possible duplicate or a refund, wait for a person.
+
+00:00:39.320 --> 00:00:41.110
+Acme's check came in the mail.
+
+00:00:41.160 --> 00:00:44.730
+Daniel records it: twelve thousand five hundred dollars,
+
+00:00:44.780 --> 00:00:47.090
+the check number, and the day it arrived.
+
+00:00:47.140 --> 00:00:50.210
+The app never takes card or bank details.
+
+00:00:51.700 --> 00:00:55.190
+Jordan, at Acme, gets a reminder email.
+
+00:00:55.240 --> 00:00:59.830
+Its button opens Acme's private sponsor portal, with no account needed,
+
+00:00:59.880 --> 00:01:02.890
+where sponsors name their guests until the deadline.
+
+00:01:04.100 --> 00:01:09.310
+Staff can also invite guests directly, like Sam, a guest of the Executive Director.
+
+00:01:09.440 --> 00:01:12.870
+Each QR ticket is made only when the invitation sends,
+
+00:01:12.920 --> 00:01:17.850
+the database keeps only its hash, and it works until the morning after the gala.
+
+00:01:18.940 --> 00:01:21.970
+On gala night, Sam holds up the ticket at the door.
+
+00:01:22.020 --> 00:01:25.130
+The iPad's camera reads it and says who came in.
+
+00:01:26.080 --> 00:01:29.330
+At the top, the iPad shows it's synced, live.
+
+00:01:29.380 --> 00:01:30.850
+Then the Wi-Fi drops.
+
+00:01:31.000 --> 00:01:35.590
+Kenji searches for Riley Chen and taps check in anyway, with no connection at all.
+
+00:01:35.640 --> 00:01:40.190
+The check-in waits on the iPad, and when the Wi-Fi is back, it sends itself.
+
+00:01:40.240 --> 00:01:44.490
+If two iPads check in the same guest, the first arrival wins.
+
+00:01:45.660 --> 00:01:49.690
+Back on the dashboard, arrivals count up live from the door.
+
+00:01:51.250 --> 00:01:54.560
+My part was the backend: who can see and change what,
+
+00:01:54.610 --> 00:01:57.580
+the private links and tickets, and the sync behind the door.
+
+00:01:57.630 --> 00:02:00.200
+Every person and record here is invented.
