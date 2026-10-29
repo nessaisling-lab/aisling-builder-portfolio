@@ -31,6 +31,15 @@
 }
 
 
+/* Self-hosted Latin subsets (SIL OFL, licences beside the files). Plex is Google's own
+   subset, unmodified: "Plex" is a Reserved Font Name. Newsreader is cut to the weights used. */
+@font-face{font-family:"Newsreader";font-style:normal;font-weight:400 500;font-display:swap;src:url(fonts/newsreader.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Newsreader";font-style:italic;font-weight:400;font-display:swap;src:url(fonts/newsreader-italic.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Sans";font-style:normal;font-weight:400 600;font-display:swap;src:url(fonts/plex-sans.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Sans";font-style:italic;font-weight:400;font-display:swap;src:url(fonts/plex-sans-italic.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:400;font-display:swap;src:url(fonts/plex-mono-400.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"IBM Plex Mono";font-style:normal;font-weight:500;font-display:swap;src:url(fonts/plex-mono-500.woff2) format("woff2");unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+
 *,*::before,*::after{box-sizing:border-box}
 *{margin:0;padding:0}
 html{-webkit-text-size-adjust:100%;scroll-padding-top:5rem}
@@ -175,6 +184,7 @@ a.earlier-name{color:var(--accent);text-underline-offset:.2em}
 .spec-dl dd{font-size:.92rem}
 .spec-dl a{color:var(--accent);text-underline-offset:.15em}
 .stack-chips{display:flex;flex-wrap:wrap;gap:.35rem}
+.spec-more>summary{display:none}
 .spec-links{display:flex;flex-direction:column;align-items:flex-start;gap:.5rem;padding-top:1rem}
 
 .media{margin-bottom:2.5rem}
@@ -287,6 +297,8 @@ a.earlier-name{color:var(--accent);text-underline-offset:.2em}
      verify command is one unbreakable line. This lets the <pre> scroll inside itself. */
   .case-grid{grid-template-columns:minmax(0,1fr)}
   .spec{grid-column:1;grid-row:1;position:static}
+  .spec-links{flex-flow:row wrap}
+  .spec-more>summary{display:list-item;cursor:pointer;padding:.85rem 0;font:500 .78rem/1.3 var(--mono);color:var(--accent);border-bottom:1px solid var(--rule)}
   .case-body{grid-row:2}
   .rules,.contact,.foot-in{grid-template-columns:1fr}
   .docs li{grid-template-columns:1fr}

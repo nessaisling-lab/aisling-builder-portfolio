@@ -16,9 +16,6 @@ use std::path::{Path, PathBuf};
 
 const STYLE: &str = include_str!("../assets/style.css");
 const SCRIPT: &str = include_str!("../assets/site.js");
-const FONTS: &str = "https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500\
-&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400\
-&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap";
 const SITE_URL: &str = "https://nessaisling-lab.github.io/aisling-builder-portfolio/";
 const EMAIL: &str = "ness.aisling@gmail.com";
 /// Web3Forms public access key. It is designed to sit in page source.
@@ -150,6 +147,11 @@ fn page(root: &str, path: &str, title: &str, desc: &str, body: Element) -> Strin
     let (t, d) = (esc(&full_title), esc(desc));
     let canonical = if path == "404" { SITE_URL.to_string() } else { format!("{SITE_URL}{path}") };
     let robots = if path == "404" { "<meta name=\"robots\" content=\"noindex\">\n" } else { "" };
+    // Case studies share their own card (tools/og-cards.mjs); every other page, the site's.
+    let og = match path.strip_prefix("work/").map(|s| s.trim_end_matches('/')) {
+        Some(slug) if !slug.is_empty() => format!("assets/og/{slug}.png"),
+        _ => "assets/og-image.png".to_string(),
+    };
     let header = dioxus_ssr::render_element(rsx! { Top { root: root.to_string(), here: path.to_string() } });
     let footer = dioxus_ssr::render_element(rsx! { Foot { root: root.to_string() } });
     format!(
@@ -165,7 +167,7 @@ fn page(root: &str, path: &str, title: &str, desc: &str, body: Element) -> Strin
          <meta property=\"og:title\" content=\"{t}\">\n\
          <meta property=\"og:description\" content=\"{d}\">\n\
          <meta property=\"og:url\" content=\"{canonical}\">\n\
-         <meta property=\"og:image\" content=\"{SITE_URL}assets/og-image.png\">\n\
+         <meta property=\"og:image\" content=\"{SITE_URL}{og}\">\n\
          <meta name=\"twitter:card\" content=\"summary_large_image\">\n\
          <meta name=\"theme-color\" content=\"#F4F1E9\" media=\"(prefers-color-scheme: light)\">\n\
          <meta name=\"theme-color\" content=\"#121417\" media=\"(prefers-color-scheme: dark)\">\n\
@@ -173,9 +175,6 @@ fn page(root: &str, path: &str, title: &str, desc: &str, body: Element) -> Strin
          <link rel=\"icon\" href=\"{root}assets/favicon-32.png\" sizes=\"32x32\">\n\
          <link rel=\"apple-touch-icon\" href=\"{root}assets/apple-touch-icon.png\">\n\
          <script>try{{var m=localStorage.getItem('theme');if(m)document.documentElement.dataset.theme=m}}catch(e){{}}</script>\n\
-         <link rel=\"preconnect\" href=\"https://fonts.googleapis.com\">\n\
-         <link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin>\n\
-         <link href=\"{FONTS}\" rel=\"stylesheet\">\n\
          <link rel=\"stylesheet\" href=\"{root}assets/site.css\">\n\
          </head>\n\
          <body>\n\
@@ -284,7 +283,7 @@ fn Home(root: String) -> Element {
             }
             figure { class: "portrait",
                 img {
-                    src: "{root}assets/portrait-placeholder.jpg",
+                    src: "{root}assets/portrait.jpg",
                     alt: "Portrait of Stan (Aisling) Leiva-Davila",
                     width: "440",
                     height: "550",
@@ -310,7 +309,7 @@ fn Home(root: String) -> Element {
         section { class: "wrap block now",
             Label { prompt: "$".to_string(), text: "cat now.txt".to_string() }
             dl { class: "now-list",
-                div { dt { "Nov 10" } dd { "Client capstone presents at Pursuit Demo Day. I'm the backend lead and repo admin." } }
+                div { dt { "Demo Day" } dd { "Client capstone presents at Pursuit Demo Day, November 2026. I'm the backend lead and repo admin." } }
                 div { dt { "Looking" } dd { "Rust, security and privacy, AI, and backend roles in New York, on-site or hybrid." } }
                 div { dt { "Recently" } dd { "Found and closed a forgery path in HouseCheck's signed export by writing an independent verifier." } }
             }
@@ -450,6 +449,9 @@ fn Case(root: String, i: usize) -> Element {
                             }
                         }
                     }
+                    // Open by default; site.js folds it on phones so the video comes first.
+                    details { class: "spec-more", open: "open",
+                    summary { if b.team.is_empty() { "Role and stack" } else { "Role, team and stack" } }
                     dl { class: "spec-dl",
                         div { dt { "Role" } dd { "{b.role}" } }
                         if !b.team.is_empty() {
@@ -465,6 +467,7 @@ fn Case(root: String, i: usize) -> Element {
                         div { dt { "Stack" } dd { class: "stack-chips",
                             for s in b.stack { span { class: "chip", "{s}" } }
                         } }
+                    }
                     }
                     if !b.links.is_empty() {
                         div { class: "spec-links",
@@ -682,6 +685,7 @@ fn About(root: String) -> Element {
                         a { class: "text-link", href: "https://github.com/nessaisling-lab", "github.com/nessaisling-lab" }
                         " · "
                         a { class: "text-link", href: "https://github.com/aislingld-pursuit", "github.com/aislingld-pursuit" }
+                        " (Pursuit cohort work)"
                     }
                 }
                 form { class: "form", id: "contactForm", action: "https://api.web3forms.com/submit", method: "POST",

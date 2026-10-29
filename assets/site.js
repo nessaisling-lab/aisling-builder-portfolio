@@ -47,6 +47,15 @@
     vids.forEach(function (v) { io.observe(v); });
   }
 
+  // Phones: fold role, team and stack so the video comes first. Without JS they stay open.
+  var more = document.querySelectorAll('details.spec-more');
+  if (more.length) {
+    var narrow = matchMedia('(max-width: 52rem)');
+    var fold = function () { more.forEach(function (d) { d.open = !narrow.matches; }); };
+    fold();
+    narrow.addEventListener('change', fold);
+  }
+
   // Contact form: send in place and say what happened. Without JS it posts normally.
   var form = document.getElementById('contactForm');
   if (form) {

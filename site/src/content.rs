@@ -196,7 +196,7 @@ pub const BUILDS: &[Build] = &[
             Person { name: "Cornell Robertson", handle: "CodeToTheCore", role: "backend" },
             Person { name: "Antonin Lesov", handle: "antoninlesov", role: "frontend, UI/UX" },
         ],
-        status: "Prototype in client review · Demo Day Nov 10, 2026",
+        status: "Prototype in client review · Pursuit Demo Day, November 2026",
         figs: &[
             Fig { v: "150 / 189", k: "merged PRs authored" },
             Fig { v: "~2,375", k: "automated checks per run" },
@@ -800,7 +800,7 @@ pub const SCHOOLS: &[Job] = &[
         org: "Pursuit",
         role: "AI-Native Builder, inaugural cohort",
         body: "600+ hour, 7-month in-person intensive: 10+ end-to-end builds and 8+ PRDs. Client \
-               capstone Demo Day: November 10, 2026.",
+               capstone Demo Day: November 2026.",
     },
     Job {
         when: "Oct 2025",
@@ -896,6 +896,11 @@ mod tests {
         paths.extend(GALLERY.iter().map(|s| s.src));
         for p in paths {
             assert!(root().join(p).is_file(), "missing asset: {p}");
+        }
+        // Link-preview cards, one per case study; regenerate with tools/og-cards.mjs.
+        for b in BUILDS {
+            let p = format!("assets/og/{}.png", b.slug);
+            assert!(root().join(&p).is_file(), "missing asset: {p}");
         }
     }
 

@@ -9,7 +9,7 @@ Single-file static HTML site. No build step. Editorial Tech Hybrid design (Mocku
 ```
 index.html                   — single-page portfolio (v2)
 assets/                      — drop photos here
-  portrait-placeholder.jpg   — replace with your portrait
+  portrait.jpg               — the hero portrait
 README.md                    — this file
 ```
 
@@ -28,7 +28,7 @@ python -m http.server 8080
 
 ## Add your portrait
 
-Drop a portrait photo into `assets/` named `portrait-placeholder.jpg` (or update the path in `index.html`). 4:5 aspect ratio recommended. The hero photo area is sized for portrait orientation.
+Drop a portrait photo into `assets/` named `portrait.jpg` (the path lives in `site/src/main.rs`). 4:5 aspect ratio recommended. The hero photo area is sized for portrait orientation.
 
 ## Deploy to BOTH GitHubs (one push, two destinations)
 
