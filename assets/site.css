@@ -78,6 +78,7 @@ a{color:inherit}
 .top nav a[aria-current=page]{color:var(--accent);border-bottom-color:var(--accent)}
 .theme{width:2rem;height:2rem;border:1px solid var(--rule);border-radius:50%;background:var(--sheet);cursor:pointer;display:grid;place-items:center;color:var(--ink)}
 .theme:hover{border-color:var(--ink)}
+.theme[hidden]{display:none}
 .theme-ic{width:.85rem;height:.85rem;border-radius:50%;background:linear-gradient(90deg,var(--ink) 50%,transparent 50%);border:1.5px solid var(--ink)}
 
 /* ── shared type ─────────────────────────────────────────── */
@@ -156,8 +157,8 @@ a.earlier-name{color:var(--accent);text-underline-offset:.2em}
 /* ── case study ──────────────────────────────────────────── */
 .case{padding-top:clamp(2rem,5vw,3.5rem)}
 .crumbs{font:400 .78rem/1 var(--mono);color:var(--quiet)}
-.crumbs a{color:var(--accent);text-decoration:none}
-.crumbs a:hover{text-decoration:underline}
+.crumbs a{color:var(--accent);text-underline-offset:.2em}
+.crumbs a:hover{text-decoration-thickness:2px}
 .case-head{margin-top:1.75rem;padding-bottom:2rem;border-bottom:1px solid var(--ink)}
 .kicker{font:500 .78rem/1 var(--mono);color:var(--accent);letter-spacing:.03em}
 .case-head h1{margin-top:.75rem}
@@ -178,6 +179,10 @@ a.earlier-name{color:var(--accent);text-underline-offset:.2em}
 
 .media{margin-bottom:2.5rem}
 .media video{background:var(--sheet);border:1px solid var(--rule);padding:.5rem}
+.media:has(+ .transcript){margin-bottom:1rem}
+.transcript{margin-bottom:2.5rem;padding:.75rem 1rem;background:var(--sheet);border:1px solid var(--rule)}
+.transcript summary{font:500 .78rem/1.4 var(--mono);letter-spacing:.04em;color:var(--accent);cursor:pointer}
+.transcript p{margin-top:.8rem;font-size:.95rem}
 .media.tall video{max-height:34rem;width:auto}
 .gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1.25rem;margin-bottom:2.5rem}
 .gallery img{background:var(--sheet);border:1px solid var(--rule);padding:.35rem}
@@ -225,7 +230,9 @@ a.earlier-name{color:var(--accent);text-underline-offset:.2em}
 .contact-mail a{color:var(--accent);text-underline-offset:.15em}
 .form{display:flex;flex-direction:column;gap:.4rem;background:var(--sheet);border:1px solid var(--rule);padding:1.25rem}
 .form label{font:500 .74rem/1 var(--mono);letter-spacing:.04em;margin-top:.6rem}
-.form input,.form textarea{font:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1px solid var(--rule);border-radius:3px;padding:.65rem .75rem}
+/* Field borders use --quiet, not --rule: WCAG 1.4.11 wants a field's edge at 3:1, and
+   theme.rs already holds quiet to 4.5:1 on both the form's sheet and the field's paper. */
+.form input,.form textarea{font:inherit;font-size:1rem;color:var(--ink);background:var(--paper);border:1px solid var(--quiet);border-radius:3px;padding:.65rem .75rem}
 .form input:focus,.form textarea:focus{border-color:var(--accent);outline:none;box-shadow:0 0 0 3px color-mix(in srgb,var(--accent) 25%,transparent)}
 .form .btn{align-self:flex-start;margin-top:1rem}
 .form .hp{display:none}

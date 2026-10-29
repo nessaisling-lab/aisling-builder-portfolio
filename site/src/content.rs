@@ -843,7 +843,6 @@ pub const DOCS: &[Doc] = &[
             ("PDF · Legal", "assets/docs/resume/resume-legal.pdf"),
         ],
     },
-    Doc { name: "Cover letter", files: &[("PDF", "assets/docs/cover-letter/cover-letter.pdf")] },
     Doc { name: "Berkshire redesign: design rationale", files: &[("PDF", "assets/docs/berkshire-rationale/berkshire-rationale.pdf")] },
 ];
 

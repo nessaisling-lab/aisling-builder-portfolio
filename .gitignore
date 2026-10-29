@@ -8,3 +8,9 @@ node_modules/
 
 # Rust build output for site/
 site/target/
+
+# Résumé copies for application forms: built locally by tools/build-resume.sh, not published (Oct 28, 2026).
+assets/docs/resume/resume.docx
+assets/docs/resume/resume-legal.docx
+assets/docs/resume/resume.txt
+assets/docs/resume/resume.html

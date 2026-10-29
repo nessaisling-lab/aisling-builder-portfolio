@@ -14,15 +14,22 @@
   }
 
   // Theme: follow the system until the reader picks; remember the pick if storage works.
+  // The button ships hidden, because without this script it would do nothing.
   var btn = document.querySelector('.theme');
   if (btn) {
+    var system = matchMedia('(prefers-color-scheme: dark)');
+    var isDark = function () {
+      return root.dataset.theme ? root.dataset.theme === 'dark' : system.matches;
+    };
+    var sync = function () { btn.setAttribute('aria-pressed', String(isDark())); };
+    btn.hidden = false;
+    sync();
+    system.addEventListener('change', sync);
     btn.addEventListener('click', function () {
-      var dark = root.dataset.theme
-        ? root.dataset.theme === 'dark'
-        : matchMedia('(prefers-color-scheme: dark)').matches;
-      var next = dark ? 'light' : 'dark';
+      var next = isDark() ? 'light' : 'dark';
       root.dataset.theme = next;
       try { localStorage.setItem('theme', next); } catch (e) {}
+      sync();
     });
   }
 

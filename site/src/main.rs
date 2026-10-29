@@ -24,8 +24,13 @@ const EMAIL: &str = "ness.aisling@gmail.com";
 /// Web3Forms public access key. It is designed to sit in page source.
 const FORM_KEY: &str = "a0888a12-c951-4b99-bc7c-fe8da519a5f6";
 
+/// The repository root, where the pages are written and the assets live.
+fn site_root() -> PathBuf {
+    Path::new(env!("CARGO_MANIFEST_DIR")).join("..")
+}
+
 fn main() -> std::io::Result<()> {
-    let out = Path::new(env!("CARGO_MANIFEST_DIR")).join("..");
+    let out = site_root();
     let mut written = Vec::new();
 
     write(&out.join("assets/site.css"), &css(), &mut written)?;
@@ -98,6 +103,37 @@ fn css() -> String {
     STYLE.replace("/*@PALETTES@*/", &palettes)
 }
 
+/// A WebVTT file's spoken text as paragraphs: cue text joined in order, with a new
+/// paragraph where the narration pauses for a second or more after a full stop.
+/// ponytail: no cue tags (<v>, <i>) or entities are handled; the walkthrough captions
+/// have none. Strip them here if a captions file ever gains them.
+fn transcript(vtt: &str) -> Vec<String> {
+    let secs = |ts: &str| ts.split(':').fold(0.0, |acc, p| acc * 60.0 + p.parse::<f64>().unwrap_or(0.0));
+    let mut paras = vec![String::new()];
+    let mut last_end = None;
+    for block in vtt.replace("\r\n", "\n").split("\n\n") {
+        // Skips the WEBVTT header, NOTE blocks and cue identifiers: text starts after the timing line.
+        let mut lines = block.lines().skip_while(|l| !l.contains("-->"));
+        let Some(timing) = lines.next() else { continue };
+        let mut times = timing.split("-->").map(|t| secs(t.split_whitespace().next().unwrap_or("")));
+        let (start, end) = (times.next().unwrap_or(0.0), times.next().unwrap_or(0.0));
+        let text = lines.map(str::trim).collect::<Vec<_>>().join(" ");
+        let cur = paras.last().expect("never empty");
+        let sentence_done = cur.trim_end_matches(['"', '\u{201D}', ')']).ends_with(['.', '!', '?']);
+        if last_end.is_some_and(|e: f64| start - e >= 1.0) && sentence_done {
+            paras.push(String::new());
+        }
+        let cur = paras.last_mut().expect("never empty");
+        if !cur.is_empty() {
+            cur.push(' ');
+        }
+        cur.push_str(&text);
+        last_end = Some(end);
+    }
+    paras.retain(|p| !p.is_empty());
+    paras
+}
+
 fn esc(s: &str) -> String {
     s.replace('&', "&amp;").replace('<', "&lt;").replace('>', "&gt;").replace('"', "&quot;")
 }
@@ -113,6 +149,7 @@ fn page(root: &str, path: &str, title: &str, desc: &str, body: Element) -> Strin
     };
     let (t, d) = (esc(&full_title), esc(desc));
     let canonical = if path == "404" { SITE_URL.to_string() } else { format!("{SITE_URL}{path}") };
+    let robots = if path == "404" { "<meta name=\"robots\" content=\"noindex\">\n" } else { "" };
     let header = dioxus_ssr::render_element(rsx! { Top { root: root.to_string(), here: path.to_string() } });
     let footer = dioxus_ssr::render_element(rsx! { Foot { root: root.to_string() } });
     format!(
@@ -123,7 +160,7 @@ fn page(root: &str, path: &str, title: &str, desc: &str, body: Element) -> Strin
          <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\
          <title>{t}</title>\n\
          <meta name=\"description\" content=\"{d}\">\n\
-         <link rel=\"canonical\" href=\"{canonical}\">\n\
+         {robots}<link rel=\"canonical\" href=\"{canonical}\">\n\
          <meta property=\"og:type\" content=\"website\">\n\
          <meta property=\"og:title\" content=\"{t}\">\n\
          <meta property=\"og:description\" content=\"{d}\">\n\
@@ -168,10 +205,13 @@ fn Top(root: String, here: String) -> Element {
                     a { href: "{root}work/", "aria-current": cur("work/"), "Work" }
                     a { href: "{root}about/", "aria-current": cur("about/"), "About" }
                     a { href: "{root}resume/", "aria-current": cur("resume/"), "Résumé" }
+                    // Hidden until site.js runs, since only the script can switch the theme.
+                    // A toggle's name stays fixed; site.js sets aria-pressed to say whether it is on.
                     button {
                         class: "theme",
                         "type": "button",
-                        "aria-label": "Switch between light and dark theme",
+                        "aria-label": "Dark theme",
+                        hidden: "hidden",
                         span { class: "theme-ic", "aria-hidden": "true" }
                     }
                 }
@@ -377,6 +417,12 @@ fn Case(root: String, i: usize) -> Element {
     let b = &BUILDS[i];
     let prev = &BUILDS[(i + BUILDS.len() - 1) % BUILDS.len()];
     let next = &BUILDS[(i + 1) % BUILDS.len()];
+    // The video is fig. 1 when there is one, so the stills number on from it.
+    let first_still = if b.media.is_some() { 2 } else { 1 };
+    // Read when the page renders, from the same committed file the <track> serves.
+    let spoken = b.media.as_ref().and_then(|m| m.captions).map(|c| {
+        transcript(&std::fs::read_to_string(site_root().join(c)).expect("captions file exists"))
+    });
     rsx! {
         article { class: "wrap case",
             nav { class: "crumbs", "aria-label": "Breadcrumb",
@@ -439,10 +485,12 @@ fn Case(root: String, i: usize) -> Element {
                                     poster: "{root}{m.poster}",
                                     width: "{m.w}",
                                     height: "{m.h}",
-                                    controls: true,
-                                    muted: true,
-                                    "loop": "true",
-                                    playsinline: true,
+                                    // Boolean attributes take their own name as the value: dioxus-ssr
+                                    // writes a Rust `true` as `controls=true`, which HTML does not allow.
+                                    controls: "controls",
+                                    muted: "muted",
+                                    "loop": "loop",
+                                    playsinline: "playsinline",
                                     preload: "none",
                                     "aria-label": "{m.alt}",
                                     "data-autoplay": "true",
@@ -454,22 +502,31 @@ fn Case(root: String, i: usize) -> Element {
                                     poster: "{root}{m.poster}",
                                     width: "{m.w}",
                                     height: "{m.h}",
-                                    controls: true,
-                                    playsinline: true,
+                                    controls: "controls",
+                                    playsinline: "playsinline",
                                     preload: "none",
                                     "aria-label": "{m.alt}",
                                     if let Some(c) = m.captions {
-                                        track { kind: "captions", src: "{root}{c}", srclang: "en", label: "English", default: true }
+                                        track { kind: "captions", src: "{root}{c}", srclang: "en", label: "English", default: "default" }
                                     }
                                 }
                             }
                             figcaption { "fig. 1 · {m.alt}" }
                         }
                     }
+                    // The narration as text, for readers who can't or won't play the video.
+                    if let Some(paras) = &spoken {
+                        details { class: "transcript",
+                            summary { "Transcript" }
+                            for para in paras {
+                                p { "{para}" }
+                            }
+                        }
+                    }
                     if GALLERY.iter().any(|s| s.slug == b.slug) {
                         div { class: "gallery",
                             for (n, s) in GALLERY.iter().filter(|s| s.slug == b.slug).enumerate() {
-                                GalleryFig { n: n + 1, src: format!("{root}{}", s.src), alt: s.alt.to_string(), caption: s.caption.to_string() }
+                                GalleryFig { n: n + first_still, src: format!("{root}{}", s.src), alt: s.alt.to_string(), caption: s.caption.to_string() }
                             }
                         }
                     }
@@ -480,7 +537,10 @@ fn Case(root: String, i: usize) -> Element {
                         div { class: "verify",
                             Label { prompt: "$".to_string(), text: "verify it yourself".to_string() }
                             p { "{lead}" }
-                            pre { code { "{cmd}" } }
+                            // Focusable and named because it scrolls sideways on narrow screens.
+                            pre { tabindex: "0", role: "region", "aria-label": "Command to verify it yourself",
+                                code { "{cmd}" }
+                            }
                         }
                     }
                     if let Some(n) = b.note {
@@ -507,7 +567,8 @@ fn Case(root: String, i: usize) -> Element {
 fn GalleryFig(n: usize, src: String, alt: String, caption: String) -> Element {
     rsx! {
         figure {
-            a { href: "{src}", "aria-label": "Open figure {n} full size",
+            // No aria-label: the image's alt text is the link's name.
+            a { href: "{src}",
                 img { src: "{src}", alt: "{alt}", width: "1600", height: "900", loading: "lazy", decoding: "async" }
             }
             figcaption { "fig. {n} · {caption}" }
@@ -580,7 +641,7 @@ fn About(root: String) -> Element {
         }
 
         section { class: "wrap block",
-            Label { prompt: "#".to_string(), text: "how I work".to_string() }
+            h2 { class: "block-h", "How I work" }
             div { class: "rules",
                 for r in RULES {
                     div { class: "rule",
@@ -629,11 +690,11 @@ fn About(root: String) -> Element {
                     input { "type": "hidden", name: "from_name", value: "Portfolio" }
                     input { class: "hp", "type": "checkbox", name: "botcheck", tabindex: "-1", autocomplete: "off" }
                     label { r#for: "cf-name", "Name" }
-                    input { id: "cf-name", "type": "text", name: "name", autocomplete: "name", required: true }
+                    input { id: "cf-name", "type": "text", name: "name", autocomplete: "name", required: "required" }
                     label { r#for: "cf-email", "Email" }
-                    input { id: "cf-email", "type": "email", name: "email", autocomplete: "email", required: true }
+                    input { id: "cf-email", "type": "email", name: "email", autocomplete: "email", required: "required" }
                     label { r#for: "cf-msg", "Message" }
-                    textarea { id: "cf-msg", name: "message", rows: "5", required: true }
+                    textarea { id: "cf-msg", name: "message", rows: "5", required: "required" }
                     button { class: "btn", "type": "submit", "Send" }
                     p { class: "form-status", id: "formStatus", role: "status", "aria-live": "polite" }
                 }
@@ -766,5 +827,24 @@ fn NotFound(root: String) -> Element {
                 a { class: "btn ghost", href: "{root}work/", "Work" }
             }
         }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::transcript;
+
+    /// Header, NOTE and cue ids are dropped; a pause after a full stop starts a paragraph,
+    /// a pause mid-sentence does not.
+    #[test]
+    fn transcript_joins_cues_into_paragraphs() {
+        let vtt = "WEBVTT\r\n\r\nNOTE made by hand\r\n\r\n1\r\n00:00:00.500 --> 00:00:02.000\r\nRight now,\r\n\r\n\
+                   00:00:03.500 --> 00:00:05.000 line:90%\r\nit is one sentence.\r\n\r\n\
+                   00:00:05.050 --> 00:00:06.000\r\nStill the first.\r\n\r\n\
+                   00:01:07.000 --> 00:01:08.000\r\nA new beat\r\non two lines.\r\n";
+        assert_eq!(
+            transcript(vtt),
+            ["Right now, it is one sentence. Still the first.", "A new beat on two lines."]
+        );
     }
 }
