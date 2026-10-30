@@ -96,7 +96,9 @@ pub const BUILDS: &[Build] = &[
             Fig { v: "250", k: "buildings served live" },
             Fig { v: "26,343", k: "violations stored" },
             Fig { v: "2.51 MB", k: "whole data artifact" },
-            Fig { v: "137–157 ms", k: "search, warm" },
+            // Measured 2026-10-30: 50 warm GET /search calls over 5 addresses, median round trip
+            // from New York to the live API (p10-p90: 49-81 ms).
+            Fig { v: "60 ms", k: "search round trip, warm" },
             Fig { v: "9.89×", k: "description compression" },
         ],
         stack: &["Rust", "axum", "SQLite", "ed25519-dalek", "sha2", "TypeScript", "Docker", "Fly.io", "Vercel"],
