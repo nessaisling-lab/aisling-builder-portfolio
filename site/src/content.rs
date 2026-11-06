@@ -191,20 +191,22 @@ pub const BUILDS: &[Build] = &[
         group: Group::Team,
         line: "One guest list for a NYC nonprofit's annual gala: a staff app, a private sponsor \
                portal, and an iPad check-in that keeps working offline.",
-        stat: "150 of 189 PRs · 787 access-rule checks",
-        role: "Backend lead & repo admin",
+        stat: "176 of 219 PRs · 791 access-rule checks",
+        role: "Technical lead & repo admin",
         team: &[
-            Person { name: "Natalie Walker", handle: "wsvdesign", role: "product lead, UI/UX" },
-            Person { name: "Cornell Robertson", handle: "CodeToTheCore", role: "backend" },
-            Person { name: "Antonin Lesov", handle: "antoninlesov", role: "frontend, UI/UX" },
+            Person { name: "Natalie Walker", handle: "wsvdesign", role: "product lead" },
+            Person { name: "Antonin Lesov", handle: "antoninlesov", role: "UX/UI" },
+            Person { name: "Cornell Robertson", handle: "CodeToTheCore", role: "quality assurance" },
         ],
-        status: "Prototype in client review · Pursuit Demo Day, November 2026",
+        status: "Stable build · Pursuit Demo Day, November 2026",
+        // Re-measured 2026-11-05 on the team repo's main: PRs from its history; checks from running
+        // the access-rule suite (791), the import engine (157) and the app tests (156).
         figs: &[
-            Fig { v: "150 / 189", k: "merged PRs authored" },
-            Fig { v: "~2,375", k: "automated checks per run" },
-            Fig { v: "787", k: "access-rule checks" },
-            Fig { v: "~24k", k: "lines, TS · SQL · JS · Python" },
-            Fig { v: "98", k: "dated decisions logged" },
+            Fig { v: "176 / 219", k: "merged PRs authored" },
+            Fig { v: "1,100+", k: "automated checks" },
+            Fig { v: "791", k: "access-rule checks" },
+            Fig { v: "15.6k", k: "lines in the build, generated files excluded" },
+            Fig { v: "102", k: "dated decisions logged" },
             Fig { v: "3 · 2", k: "apps · environments" },
         ],
         stack: &[
@@ -217,6 +219,7 @@ pub const BUILDS: &[Build] = &[
             "Vitest",
             "Playwright",
             "Cloudflare Pages + Access",
+            "Salesforce REST API",
             "Claude Code",
         ],
         links: &[],
@@ -255,7 +258,7 @@ pub const BUILDS: &[Build] = &[
             },
             Section {
                 title: "The hard part",
-                lead: "My part was the backend, and most of it is about who can do what.",
+                lead: "As technical lead I owned the backend, and most of it is about who can do what.",
                 points: &[
                     "Row-level security in Postgres for three staff roles, a sign-in hook that admits \
                      only the staff list, and 6-digit email codes instead of passwords.",
@@ -268,6 +271,25 @@ pub const BUILDS: &[Build] = &[
                     "When the team ran out of GitHub Actions minutes, a local CI fast lane: a full \
                      seven-stage run marks the commit on GitHub, so every PR still gets the complete \
                      check.",
+                ],
+            },
+            Section {
+                title: "Getting data in and out",
+                lead: "Guests arrive from a ticketing platform and leave for Salesforce, and nobody \
+                       retypes a list on the way.",
+                points: &[
+                    "A ticketing-platform import engine that matches each purchase to an existing \
+                     record, keeps staff corrections through the next import, and records where every \
+                     record came from.",
+                    "A direct Salesforce sync over its REST API: one Account per sponsor, one \
+                     Opportunity per order in the gala's Campaign, check, ACH and wire payments, and \
+                     each guest as a Contact and Campaign Member, matched by email so none is \
+                     duplicated.",
+                    "Tested against a stand-in Salesforce org that refuses what Salesforce refuses. \
+                     The client chose import files for now, so its Salesforce partner reviews every \
+                     change first.",
+                    "In progress, not in the stable build: Opportunity Products, the client's own \
+                     record types, ticket purchases arriving on their own, and a settings page.",
                 ],
             },
             Section {
@@ -287,8 +309,10 @@ pub const BUILDS: &[Build] = &[
                 points: &[
                     "Every record in testing and in the walkthrough is invented. Production hosting \
                      and real data are the client's decision after Demo Day.",
+                    "The Salesforce sync has run only against a stand-in org, never the client's real \
+                     Salesforce.",
                     "The repository is private and the apps sit behind a sign-in gate, so there is no \
-                     public link. Numbers are as of October 2026.",
+                     public link. Numbers are as of November 2026.",
                 ],
             },
         ],
@@ -768,10 +792,11 @@ pub const JOBS: &[Job] = &[
     Job {
         when: "Sep 2026 – now",
         org: "Pursuit client capstone (NYC nonprofit)",
-        role: "Backend lead & repo admin",
+        role: "Technical lead & repo admin",
         body: "Gala guest list, sponsor portal and offline iPad check-in on a team of four. Postgres \
-               row-level security, hashed single-purpose tokens, an append-only change log; 150 of the \
-               team's 189 merged pull requests.",
+               row-level security, hashed single-purpose tokens, an append-only change log, a \
+               ticketing-platform import and a Salesforce sync tested against a stand-in org; 176 of \
+               the team's 219 merged pull requests.",
     },
     Job {
         when: "Apr 2026 – now",
@@ -818,6 +843,42 @@ pub const SCHOOLS: &[Job] = &[
     },
 ];
 
+/// One kind of data-integration work: what it covers, and what the team is left holding.
+pub struct Capability {
+    pub title: &'static str,
+    pub covers: &'static str,
+    pub leaves: &'static str,
+}
+
+/// Data integration, shown as what I build rather than an offer: no prices, no availability.
+pub const INTEGRATION: &[Capability] = &[
+    Capability {
+        title: "Migrate and clean up",
+        covers: "Spreadsheets, old CRMs and duplicate records, moved into Salesforce.",
+        leaves: "A dry run on a copy first, then the import, with every record traced to its source.",
+    },
+    Capability {
+        title: "Sync an outside app into Salesforce",
+        covers: "Ticketing, donations, events or forms, into Accounts, Opportunities, payments, \
+                 Contacts and Campaign Members.",
+        leaves: "A tested sync, plus import files a Salesforce partner can review before anything \
+                 changes.",
+    },
+    Capability {
+        title: "Keep it running",
+        covers: "Watching syncs after launch, fixing what breaks, and making small changes.",
+        leaves: "An alert when a job stops, and a written log of every change.",
+    },
+];
+
+/// How the integration work is done. Each is a rule the gala capstone already runs on.
+pub const INTEGRATION_RULES: &[&str] = &[
+    "Tested on invented data before anything touches yours.",
+    "Keys stay on the server, never in a browser or a spreadsheet.",
+    "No email or record goes out without your approval.",
+    "Built with Claude Code; no AI inside the app unless you ask for it.",
+];
+
 pub struct Row {
     pub dt: &'static str,
     pub dd: &'static str,
@@ -827,6 +888,7 @@ pub const STACK: &[Row] = &[
     Row { dt: "Rust", dd: "axum · SQLx · rusqlite · Tauri 2 · Dioxus · Iced · whisper-rs · cpal" },
     Row { dt: "Integrity", dd: "Ed25519 · SHA-256 hash chains · Postgres row-level security · hashed tokens · gitleaks · egress allowlists" },
     Row { dt: "Web", dd: "TypeScript · React · Vite · Tailwind · Supabase" },
+    Row { dt: "Integration", dd: "Salesforce REST API and data model · SOQL · import pipelines with record provenance" },
     Row { dt: "Also", dd: "Python · C · C++ · Assembly · SQL (Postgres, MySQL) · WGSL" },
     Row { dt: "AI", dd: "Claude Code · Anthropic + OpenAI APIs · MCP · whisper.cpp · local models · tool-calling with grounding" },
     Row { dt: "Ops", dd: "GitHub admin · Actions (3-OS matrix) · Docker · Fly.io · Vercel · Cloudflare Pages + Access" },

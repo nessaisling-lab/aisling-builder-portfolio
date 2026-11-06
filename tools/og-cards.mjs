@@ -1,7 +1,8 @@
 // Renders one 1200x630 link-preview card per case study into assets/og/{slug}.png.
 // Reads the facts from site/src/content.rs, so a card never says something the page doesn't.
 // Text only: the video posters are title cards, so cropping one beside the text repeats it.
-// Run after changing a build's name, kicker, line or stat:
+// Also renders the site-wide card, assets/og-image.png, from the hero portrait.
+// Run after changing a build's name, kicker, line or stat, or the portrait:
 //   NODE_PATH=<dir with playwright> node tools/og-cards.mjs
 // Commit the PNGs; the site build only links to them.
 import { readFileSync, mkdirSync } from 'node:fs';
@@ -57,4 +58,31 @@ for (const b of builds) {
   await page.screenshot({ path: join(root, 'assets/og', `${b.slug}.png`) });
   console.log(`assets/og/${b.slug}.png`);
 }
+
+// The site-wide card (every page that isn't a case study): name, line and the hero portrait.
+const photo = `data:image/jpeg;base64,${readFileSync(join(root, 'assets/portrait@2x.jpg')).toString('base64')}`;
+await page.setContent(`<!doctype html><meta charset="utf-8"><style>
+@font-face{font-family:N;font-weight:400 500;src:url(${font('newsreader.woff2')})}
+@font-face{font-family:N;font-style:italic;font-weight:400;src:url(${font('newsreader-italic.woff2')})}
+@font-face{font-family:M;font-weight:400;src:url(${font('plex-mono-400.woff2')})}
+@font-face{font-family:M;font-weight:500;src:url(${font('plex-mono-500.woff2')})}
+*{margin:0;box-sizing:border-box}
+body{width:1200px;height:630px;display:flex;background:#F4F1E9;color:#171A1F;overflow:hidden}
+.t{flex:1;padding:64px 72px;display:flex;flex-direction:column}
+.k{font:500 21px/1 M;letter-spacing:.06em;text-transform:uppercase;color:#9A4012}
+h1{font:500 76px/1.04 N;letter-spacing:-.015em;margin-top:34px}
+h1 em{font-style:italic;font-weight:400;color:#9A4012}
+.r{width:90px;height:3px;background:#9A4012;margin:30px 0 24px}
+.l{font:400 30px/1.3 N}
+.s{margin-top:16px;font:400 19px/1.5 M;color:#585C63}
+.u{margin-top:auto;font:400 19px/1 M;color:#9A4012}
+.p{width:430px;border-left:6px solid #9A4012;background:url(${photo}) center 30%/cover}
+</style><body><div class="t">
+<p class="k">Builder portfolio · New York</p><h1>Stan <em>(Aisling)</em><br>Leiva-Davila</h1><div class="r"></div>
+<p class="l">Software engineer, Rust-first</p>
+<p class="s">Verifiable systems · On-device AI · Data integration</p>
+<p class="u">nessaisling-lab.github.io/aisling-builder-portfolio</p></div><div class="p"></div></body>`, { waitUntil: 'load' });
+await page.evaluate(() => document.fonts.ready);
+await page.screenshot({ path: join(root, 'assets/og-image.png') });
+console.log('assets/og-image.png');
 await browser.close();

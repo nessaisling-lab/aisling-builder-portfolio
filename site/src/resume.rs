@@ -61,18 +61,23 @@ on small teams, with Claude Code. Inaugural cohort, Pursuit AI-Native Builder.";
 pub const EXPERIENCE: &[Entry] = &[
     Entry {
         org: "Pursuit Client Capstone (NYC Nonprofit)",
-        role: "Backend Lead & Repo Admin",
+        role: "Technical Lead & Repo Admin",
         when: "Sep. 2026 – Present",
         desc: "Gala guest list, private sponsor portal, and offline-first iPad check-in (React + \
-               TypeScript on Supabase); team of 4.",
+               TypeScript on Postgres/Supabase); team of 4; authored 70% of commits and 80% of merged \
+               PRs.",
         place: "New York, NY",
         bullets: &[
             "Led the Postgres backend: row-level security for 3 staff roles, an append-only change \
              log, and sponsor links and QR e-tickets on 128-bit random tokens stored only as SHA-256 \
-             hashes; 787 access-rule checks in ~2,375 per run",
-            "As repo admin, authored 150 of the team's 189 merged PRs, enforced branch protection and \
-             gitleaks secret scanning, and built a local CI fast lane that kept full checks on every \
-             PR after GitHub Actions minutes ran out",
+             hashes; 791 access-rule checks",
+            "Built the data integrations: a ticketing-platform import engine that keeps staff \
+             corrections across re-imports, and a Salesforce sync (Accounts, Opportunities, payments, \
+             Contacts, Campaign Members) tested against a stand-in org, with import files for \
+             partner review",
+            "As repo admin, wrote 13,000+ lines of tests, enforced branch protection and a secret \
+             scan on every change, and built a local CI fast lane that kept full checks on every PR \
+             after GitHub Actions minutes ran out",
         ],
         compact: false,
     },
@@ -163,7 +168,7 @@ pub const EDUCATION: &[Entry] = &[
         role: "AI-Native Builder (Inaugural Cohort)",
         when: "May 2026 – Present",
         desc: "600+ hour, 7-month in-person intensive: 10+ end-to-end builds, 8+ PRDs; client capstone \
-               Demo Day Nov. 10, 2026.",
+               Demo Day November 2026.",
         place: "Long Island City, NY",
         bullets: &[],
         compact: false,
@@ -191,6 +196,7 @@ pub const EDUCATION: &[Entry] = &[
 pub const SKILLS: &[(&str, &str)] = &[
     ("Languages & Frameworks", "Rust (axum, SQLx, Tauri 2, Dioxus, Iced), Python, C, C++, Assembly, TypeScript/React, SQL (Postgres, MySQL)"),
     ("Security & Integrity", "Ed25519 signatures, SHA-256 hash chains, Postgres row-level security, hashed bearer tokens, gitleaks, SSRF hardening"),
+    ("Data Integration", "Salesforce data model and REST API, SOQL, ETL/import pipelines, Postgres/Supabase"),
     ("AI & Tooling", "Claude Code, Cursor, Anthropic + OpenAI APIs, MCP, whisper.cpp, RAG, agentic workflows"),
     ("Systems & Ops", "Linux, Windows, GitHub admin (branch protection, CI), Supabase, Cloudflare Pages + Access, Fly.io, CUDA/Vulkan/Metal"),
 ];

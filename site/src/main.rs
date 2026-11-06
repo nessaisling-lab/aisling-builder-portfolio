@@ -55,6 +55,11 @@ fn main() -> std::io::Result<()> {
         write(&out.join(&path).join("index.html"), &page("../../", &path, b.name, b.line, body), &mut written)?;
     }
 
+    let integration = rsx! { Integration { root: "../".to_string() } };
+    write(&out.join("integration/index.html"), &page("../", "integration/", "Data integration",
+        "Data integration for small teams: migrations into Salesforce, app-to-Salesforce syncs, and keeping them running.",
+        integration), &mut written)?;
+
     let about = rsx! { About { root: "../".to_string() } };
     write(&out.join("about/index.html"), &page("../", "about/", "About",
         "Self-taught in C, C++ and Assembly; A&P coursework; Pursuit AI-Native Builder, inaugural cohort.",
@@ -202,6 +207,7 @@ fn Top(root: String, here: String) -> Element {
                 }
                 nav { "aria-label": "Site",
                     a { href: "{root}work/", "aria-current": cur("work/"), "Work" }
+                    a { href: "{root}integration/", "aria-current": cur("integration/"), "Integration" }
                     a { href: "{root}about/", "aria-current": cur("about/"), "About" }
                     a { href: "{root}resume/", "aria-current": cur("resume/"), "Résumé" }
                     // Hidden until site.js runs, since only the script can switch the theme.
@@ -272,8 +278,8 @@ fn Home(root: String) -> Element {
                 p { class: "deck",
                     "Rust-first software engineer with a C, C++ and Assembly foundation. Signed,
                      hash-chained exports a stranger can verify offline; speech-to-text where the audio
-                     never leaves the machine; the Postgres backend for a nonprofit client's gala. I ship
-                     end-to-end, solo and on small teams, with Claude Code."
+                     never leaves the machine; the Postgres backend and data integrations for a nonprofit
+                     client's gala. I ship end-to-end, solo and on small teams, with Claude Code."
                 }
                 div { class: "actions",
                     a { class: "btn", href: "{root}assets/docs/resume/resume-letter.pdf", "Résumé (PDF)" }
@@ -284,6 +290,7 @@ fn Home(root: String) -> Element {
             figure { class: "portrait",
                 img {
                     src: "{root}assets/portrait.jpg",
+                    srcset: "{root}assets/portrait.jpg 1x, {root}assets/portrait@2x.jpg 2x",
                     alt: "Portrait of Stan (Aisling) Leiva-Davila",
                     width: "440",
                     height: "550",
@@ -306,10 +313,27 @@ fn Home(root: String) -> Element {
             }
         }
 
+        section { class: "wrap block",
+            Label { prompt: "$".to_string(), text: "cat integration.txt".to_string() }
+            h2 { class: "block-h", "Data integration for small teams." }
+            p { class: "deck", "I connect the systems a team already pays for, so nobody retypes a list again." }
+            div { class: "rules",
+                for c in INTEGRATION {
+                    div { class: "rule",
+                        h3 { "{c.title}" }
+                        p { "{c.covers}" }
+                    }
+                }
+            }
+            p { class: "more",
+                a { class: "text-link", href: "{root}integration/", "How I approach integration work →" }
+            }
+        }
+
         section { class: "wrap block now",
             Label { prompt: "$".to_string(), text: "cat now.txt".to_string() }
             dl { class: "now-list",
-                div { dt { "Demo Day" } dd { "Client capstone presents at Pursuit Demo Day, November 2026. I'm the backend lead and repo admin." } }
+                div { dt { "Demo Day" } dd { "Client capstone presents at Pursuit Demo Day, November 2026. I'm the technical lead and repo admin." } }
                 div { dt { "Looking" } dd { "Rust, security and privacy, AI, and backend roles in New York, on-site or hybrid." } }
                 div { dt { "Recently" } dd { "Found and closed a forgery path in HouseCheck's signed export by writing an independent verifier." } }
             }
@@ -613,6 +637,62 @@ fn CaseSection(i: usize, k: usize) -> Element {
     }
 }
 
+// ── integration ──────────────────────────────────────────────────────────────
+
+#[component]
+fn Integration(root: String) -> Element {
+    rsx! {
+        section { class: "wrap page-head",
+            Label { prompt: "$".to_string(), text: "man integration".to_string() }
+            h1 { "Data integration" }
+            p { class: "deck",
+                "I connect the systems a team already pays for, so nobody retypes a list again. The proof
+                 so far is a nonprofit's gala; the same work fits any small team that runs on Salesforce."
+            }
+        }
+
+        section { class: "wrap block",
+            h2 { class: "block-h", "The work" }
+            div { class: "rules",
+                for c in INTEGRATION {
+                    div { class: "rule",
+                        h3 { "{c.title}" }
+                        p { "{c.covers}" }
+                        p { "{c.leaves}" }
+                    }
+                }
+            }
+        }
+
+        section { class: "wrap block",
+            h2 { class: "block-h", "How I work" }
+            ul { class: "integration-rules",
+                for r in INTEGRATION_RULES {
+                    li { "{r}" }
+                }
+            }
+        }
+
+        section { class: "wrap block",
+            h2 { class: "block-h", "Proof" }
+            p { class: "deck",
+                "The gala capstone: a ticketing-platform import that keeps staff corrections, and a
+                 Salesforce sync tested against a stand-in org."
+            }
+            p { class: "more",
+                a { class: "text-link", href: "{root}work/gala-guest-list/", "Read the gala case study →" }
+            }
+        }
+
+        section { class: "wrap block cta",
+            h2 { class: "block-h", "Have systems that don't talk to each other?" }
+            div { class: "actions",
+                a { class: "btn", href: "{root}about/#contact", "Talk about a project" }
+            }
+        }
+    }
+}
+
 // ── about ────────────────────────────────────────────────────────────────────
 
 #[component]
@@ -621,6 +701,15 @@ fn About(root: String) -> Element {
         section { class: "wrap page-head",
             Label { prompt: "$".to_string(), text: "whoami".to_string() }
             h1 { "About" }
+            figure { class: "portrait about-photo",
+                img {
+                    src: "{root}assets/portrait-about.jpg",
+                    srcset: "{root}assets/portrait-about.jpg 1x, {root}assets/portrait-about@2x.jpg 2x",
+                    alt: "Stan (Aisling) Leiva-Davila, smiling",
+                    width: "320",
+                    height: "320",
+                }
+            }
             div { class: "prose",
                 p {
                     "I taught myself C, C++ and Assembly in my late teens, and installed Debian on a

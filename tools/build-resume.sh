@@ -37,11 +37,16 @@ cp "$TMP/resume-letter.pdf" "$D/resume-letter.pdf"
 cp "$TMP/resume-legal.pdf"  "$D/resume-legal.pdf"
 rm -rf "$TMP"
 
-# career-ops reads the same Markdown as its cv.md. Only when the hub layout is present.
+# career-ops' cv.md started as a copy of resume.md but is now the fuller master CV (projects and
+# figures the one-page résumé leaves out), so an existing one is never overwritten.
 CAREER_OPS="$ROOT/../career-ops"
 if [ -d "$CAREER_OPS" ]; then
-  cp "$D/resume.md" "$CAREER_OPS/cv.md"
-  echo "==> refreshed $CAREER_OPS/cv.md"
+  if [ -f "$CAREER_OPS/cv.md" ]; then
+    echo "==> left $CAREER_OPS/cv.md alone; carry résumé changes into it by hand"
+  else
+    cp "$D/resume.md" "$CAREER_OPS/cv.md"
+    echo "==> seeded $CAREER_OPS/cv.md from resume.md"
+  fi
 fi
 
 echo "==> done. Formats in $D:"

@@ -203,9 +203,13 @@ a.earlier-name{color:var(--accent);text-underline-offset:.2em}
 .cs-n{font:500 .8rem/1 var(--mono);color:var(--accent)}
 .cs-lead{font-size:1.08rem}
 .cs-lead.first{font:400 1.25rem/1.55 var(--serif)}
-.cs ul{margin-top:1rem;padding-left:0;list-style:none}
-.cs li{position:relative;padding-left:1.4rem;margin-top:.7rem}
-.cs li::before{content:"›";position:absolute;left:.2rem;color:var(--accent);font-family:var(--mono)}
+.cs ul,.integration-rules{margin-top:1rem;padding-left:0;list-style:none}
+.cs li,.integration-rules li{position:relative;padding-left:1.4rem;margin-top:.7rem}
+.cs li::before,.integration-rules li::before{content:"›";position:absolute;left:.2rem;color:var(--accent);font-family:var(--mono)}
+.integration-rules{max-width:var(--measure)}
+.rule p+p{margin-top:.6rem;color:var(--ink)}
+.about-photo{max-width:12rem;margin:1.5rem 0}
+.about-photo img{aspect-ratio:1}
 .verify{margin-top:1rem;padding:1.25rem;background:var(--sheet);border:1px solid var(--rule)}
 .verify pre{margin-top:.8rem;overflow-x:auto;font:400 .85rem/1.5 var(--mono);background:var(--paper);border:1px solid var(--rule);padding:.8rem 1rem}
 .note{margin-top:1.5rem;padding-left:1rem;border-left:2px solid var(--rule);color:var(--quiet);font-size:.95rem}
@@ -306,7 +310,9 @@ a.earlier-name{color:var(--accent);text-underline-offset:.2em}
 }
 @media (max-width:30rem){
   .brand-tag{display:none}
-  .top nav{gap:.8rem}
+  /* Five nav items don't fit beside the name on a phone: the nav takes its own row. */
+  .top-in{flex-wrap:wrap;row-gap:0;padding-block:.4rem}
+  .top nav{gap:.8rem;width:100%;justify-content:space-between}
   .figs{grid-template-columns:1fr 1fr}
 }
 
