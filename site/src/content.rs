@@ -191,22 +191,22 @@ pub const BUILDS: &[Build] = &[
         group: Group::Team,
         line: "One guest list for a NYC nonprofit's annual gala: a staff app, a private sponsor \
                portal, and an iPad check-in that keeps working offline.",
-        stat: "176 of 219 PRs · 791 access-rule checks",
-        role: "Technical lead & repo admin",
+        stat: "180 of 223 PRs · 791 access-rule checks",
+        role: "Technical director & repo admin",
         team: &[
-            Person { name: "Natalie Walker", handle: "wsvdesign", role: "product lead" },
-            Person { name: "Antonin Lesov", handle: "antoninlesov", role: "UX/UI" },
+            Person { name: "Natalie Walker", handle: "wsvdesign", role: "product lead, UI/UX lead" },
+            Person { name: "Antonin Lesov", handle: "antoninlesov", role: "front end, UI/UX" },
             Person { name: "Cornell Robertson", handle: "CodeToTheCore", role: "quality assurance" },
         ],
-        status: "Stable build · Pursuit Demo Day, November 2026",
-        // Re-measured 2026-11-05 on the team repo's main: PRs from its history; checks from running
-        // the access-rule suite (791), the import engine (157) and the app tests (156).
+        status: "Stable build · presented at Pursuit Demo Day, Nov 9, 2026",
+        // Re-measured 2026-11-10 on the team repo's main: PRs from its history; checks from running
+        // the access-rule suite (791), the app tests (315) and the import engine (157). Lines: Nov 5.
         figs: &[
-            Fig { v: "176 / 219", k: "merged PRs authored" },
-            Fig { v: "1,100+", k: "automated checks" },
+            Fig { v: "180 / 223", k: "merged PRs authored" },
+            Fig { v: "1,250+", k: "automated checks" },
             Fig { v: "791", k: "access-rule checks" },
             Fig { v: "15.6k", k: "lines in the build, generated files excluded" },
-            Fig { v: "102", k: "dated decisions logged" },
+            Fig { v: "107", k: "dated decisions logged" },
             Fig { v: "3 · 2", k: "apps · environments" },
         ],
         stack: &[
@@ -258,7 +258,7 @@ pub const BUILDS: &[Build] = &[
             },
             Section {
                 title: "The hard part",
-                lead: "As technical lead I owned the backend, and most of it is about who can do what.",
+                lead: "As technical director I owned the backend, and most of it is about who can do what.",
                 points: &[
                     "Row-level security in Postgres for three staff roles, a sign-in hook that admits \
                      only the staff list, and 6-digit email codes instead of passwords.",
@@ -288,8 +288,26 @@ pub const BUILDS: &[Build] = &[
                     "Tested against a stand-in Salesforce org that refuses what Salesforce refuses. \
                      The client chose import files for now, so its Salesforce partner reviews every \
                      change first.",
-                    "In progress, not in the stable build: Opportunity Products, the client's own \
-                     record types, ticket purchases arriving on their own, and a settings page.",
+                    "In progress on a private build, not part of the handoff: Opportunity Products, \
+                     the client's own record types, ticket purchases arriving on their own, and a \
+                     settings page.",
+                ],
+            },
+            Section {
+                title: "Demo Day and the handoff",
+                lead: "Presented at Pursuit Demo Day at Scandinavia House on November 9, 2026, with the \
+                       code and docs handed to the client on November 10.",
+                points: &[
+                    "Four plain-language study guides, for the backend, staff app, sponsor portal and \
+                     iPad check-in, so anyone on the team can explain the build without overclaiming. \
+                     Each has a map of the parts, step-by-step tours and a self-test, and each was \
+                     fact-checked against the code.",
+                    "The Demo Day deck: the team's animated HTML deck rendered frame by frame and \
+                     encoded at 1080p into Google Slides with the videos inside, so every take is \
+                     identical, at the rehearsed 3:34 and in a 3:00 cut.",
+                    "A team slide of offline QR contact cards: one code per teammate that saves a full \
+                     contact with no internet needed.",
+                    "Supported the technical review by the client's web agency.",
                 ],
             },
             Section {
@@ -308,11 +326,11 @@ pub const BUILDS: &[Build] = &[
                 lead: "A working prototype, not production.",
                 points: &[
                     "Every record in testing and in the walkthrough is invented. Production hosting \
-                     and real data are the client's decision after Demo Day.",
+                     and real data are the client's decision after the handoff.",
                     "The Salesforce sync has run only against a stand-in org, never the client's real \
                      Salesforce.",
-                    "The repository is private and the apps sit behind a sign-in gate, so there is no \
-                     public link. Numbers are as of November 2026.",
+                    "The apps sit behind a sign-in gate and the client stays unnamed here, so there is \
+                     no public link. Numbers are as of November 2026.",
                 ],
             },
         ],
@@ -790,13 +808,13 @@ pub struct Job {
 
 pub const JOBS: &[Job] = &[
     Job {
-        when: "Sep 2026 – now",
+        when: "Sep – Nov 2026",
         org: "Pursuit client capstone (NYC nonprofit)",
-        role: "Technical lead & repo admin",
+        role: "Technical director & repo admin",
         body: "Gala guest list, sponsor portal and offline iPad check-in on a team of four. Postgres \
                row-level security, hashed single-purpose tokens, an append-only change log, a \
-               ticketing-platform import and a Salesforce sync tested against a stand-in org; 176 of \
-               the team's 219 merged pull requests.",
+               ticketing-platform import and a Salesforce sync tested against a stand-in org; 180 of \
+               the team's 223 merged pull requests.",
     },
     Job {
         when: "Apr 2026 – now",
@@ -827,7 +845,7 @@ pub const SCHOOLS: &[Job] = &[
         org: "Pursuit",
         role: "AI-Native Builder, inaugural cohort",
         body: "600+ hour, 7-month in-person intensive: 10+ end-to-end builds and 8+ PRDs. Client \
-               capstone Demo Day: November 2026.",
+               capstone Demo Day: November 9, 2026.",
     },
     Job {
         when: "Oct 2025",

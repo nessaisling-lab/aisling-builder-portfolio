@@ -333,7 +333,7 @@ fn Home(root: String) -> Element {
         section { class: "wrap block now",
             Label { prompt: "$".to_string(), text: "cat now.txt".to_string() }
             dl { class: "now-list",
-                div { dt { "Demo Day" } dd { "Client capstone presents at Pursuit Demo Day, November 2026. I'm the technical lead and repo admin." } }
+                div { dt { "Capstone" } dd { "Presented at Pursuit Demo Day on Nov 9, 2026, then handed the code and docs to the client. I was technical director and repo admin." } }
                 div { dt { "Looking" } dd { "Rust, security and privacy, AI, and backend roles in New York, on-site or hybrid." } }
                 div { dt { "Recently" } dd { "Found and closed a forgery path in HouseCheck's signed export by writing an independent verifier." } }
             }

@@ -61,11 +61,10 @@ on small teams, with Claude Code. Inaugural cohort, Pursuit AI-Native Builder.";
 pub const EXPERIENCE: &[Entry] = &[
     Entry {
         org: "Pursuit Client Capstone (NYC Nonprofit)",
-        role: "Technical Lead & Repo Admin",
-        when: "Sep. 2026 – Present",
+        role: "Technical Director & Repo Admin",
+        when: "Sep. – Nov. 2026",
         desc: "Gala guest list, private sponsor portal, and offline-first iPad check-in (React + \
-               TypeScript on Postgres/Supabase); team of 4; authored 70% of commits and 80% of merged \
-               PRs.",
+               TypeScript on Supabase); team of 4.",
         place: "New York, NY",
         bullets: &[
             "Led the Postgres backend: row-level security for 3 staff roles, an append-only change \
@@ -75,9 +74,11 @@ pub const EXPERIENCE: &[Entry] = &[
              corrections across re-imports, and a Salesforce sync (Accounts, Opportunities, payments, \
              Contacts, Campaign Members) tested against a stand-in org, with import files for \
              partner review",
-            "As repo admin, wrote 13,000+ lines of tests, enforced branch protection and a secret \
-             scan on every change, and built a local CI fast lane that kept full checks on every PR \
-             after GitHub Actions minutes ran out",
+            "As repo admin, authored 180 of the team's 223 merged PRs and 70% of commits, wrote \
+             13,000+ lines of tests, enforced branch protection and a secret scan on every change, \
+             and built a local CI fast lane after GitHub Actions minutes ran out",
+            "Presented at Pursuit Demo Day and handed code and docs to the client, with four \
+             fact-checked study guides so anyone on the team can explain the build",
         ],
         compact: false,
     },
@@ -168,7 +169,7 @@ pub const EDUCATION: &[Entry] = &[
         role: "AI-Native Builder (Inaugural Cohort)",
         when: "May 2026 – Present",
         desc: "600+ hour, 7-month in-person intensive: 10+ end-to-end builds, 8+ PRDs; client capstone \
-               Demo Day November 2026.",
+               Demo Day Nov. 9, 2026.",
         place: "Long Island City, NY",
         bullets: &[],
         compact: false,

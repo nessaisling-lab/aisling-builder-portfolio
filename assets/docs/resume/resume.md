@@ -15,13 +15,14 @@ Self-taught software engineer and AI-native builder, Rust-first with a C, C++, a
 
 ### Pursuit Client Capstone (NYC Nonprofit) -- New York, NY
 
-**Technical Lead & Repo Admin**
-Sep. 2026 – Present
+**Technical Director & Repo Admin**
+Sep. – Nov. 2026
 
-- Gala guest list, private sponsor portal, and offline-first iPad check-in (React + TypeScript on Postgres/Supabase); team of 4; authored 70% of commits and 80% of merged PRs
+- Gala guest list, private sponsor portal, and offline-first iPad check-in (React + TypeScript on Supabase); team of 4
 - Led the Postgres backend: row-level security for 3 staff roles, an append-only change log, and sponsor links and QR e-tickets on 128-bit random tokens stored only as SHA-256 hashes; 791 access-rule checks
 - Built the data integrations: a ticketing-platform import engine that keeps staff corrections across re-imports, and a Salesforce sync (Accounts, Opportunities, payments, Contacts, Campaign Members) tested against a stand-in org, with import files for partner review
-- As repo admin, wrote 13,000+ lines of tests, enforced branch protection and a secret scan on every change, and built a local CI fast lane that kept full checks on every PR after GitHub Actions minutes ran out
+- As repo admin, authored 180 of the team's 223 merged PRs and 70% of commits, wrote 13,000+ lines of tests, enforced branch protection and a secret scan on every change, and built a local CI fast lane after GitHub Actions minutes ran out
+- Presented at Pursuit Demo Day and handed code and docs to the client, with four fact-checked study guides so anyone on the team can explain the build
 
 ### Nisaba Capital Charting -- New York, NY
 
@@ -54,7 +55,7 @@ Jul. 2017 – Jan. 2020
 
 ## Education
 
-- Pursuit, AI-Native Builder (Inaugural Cohort), Long Island City, NY (May 2026 – Present) -- 600+ hour, 7-month in-person intensive: 10+ end-to-end builds, 8+ PRDs; client capstone Demo Day November 2026.
+- Pursuit, AI-Native Builder (Inaugural Cohort), Long Island City, NY (May 2026 – Present) -- 600+ hour, 7-month in-person intensive: 10+ end-to-end builds, 8+ PRDs; client capstone Demo Day Nov. 9, 2026.
 - Per Scholas, IT Support — CompTIA A+, Google IT Support, ServiceNow ITSM (Grad. Oct. 2025)
 - Vaughn College, Aircraft Mechanic Airframe & Powerplant (coursework complete), Flushing, NY
 
