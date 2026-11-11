@@ -181,7 +181,7 @@ pub const BUILDS: &[Build] = &[
              the file it downloaded: the terminal output is real. Narrated in a synthetic clone of my \
              own voice, made on my machine; made with Claude Code.",
         ),
-        featured: true,
+        featured: false,
     },
     Build {
         slug: "gala-guest-list",
@@ -553,7 +553,7 @@ pub const BUILDS: &[Build] = &[
              transcribes both on the GPU. Narration and notes are a synthetic clone of my own voice, made on my \
              machine; made with Claude Code.",
         ),
-        featured: false,
+        featured: true,
     },
     Build {
         slug: "ziqpu",
@@ -627,7 +627,7 @@ pub const BUILDS: &[Build] = &[
             "Recorded from v1.6.1 on a clean profile, with invented birth data; the readings shown come from the \
              local template. Narrated in a synthetic clone of my own voice, made on my machine; made with Claude Code.",
         ),
-        featured: false,
+        featured: true,
     },
     Build {
         slug: "excalidraw",
@@ -742,6 +742,20 @@ pub const GALLERY: &[Still] = &[
         caption: "After the doors close: money, seats and arrivals on one screen.",
     },
 ];
+
+/// The Library model on each project's plate (brand/library/, by Kenney, CC0), with what it
+/// shows. HouseCheck keeps its own look (built with a teammate) and Nisaba has no 3D, so
+/// neither has one; a plate without a model shows its number alone.
+pub const PLATE_MODELS: &[(&str, &str, &str)] = &[
+    ("gala-guest-list", "racing-kit--tent", "an event tent"),
+    ("resona", "furniture-kit--radio", "a vintage radio"),
+    ("siteassure", "city-kit-roads--construction-cone", "a traffic cone"),
+    ("ziqpu", "nature-kit--crops-wheatstageb", "ripe ears of wheat, for Spica, the ear of grain"),
+];
+
+pub fn plate_model(slug: &str) -> Option<(&'static str, &'static str)> {
+    PLATE_MODELS.iter().find(|m| m.0 == slug).map(|m| (m.1, m.2))
+}
 
 /// Earlier work, listed on the Work page without a case study of its own.
 pub struct Earlier {
@@ -907,7 +921,7 @@ pub const STACK: &[Row] = &[
     Row { dt: "Integrity", dd: "Ed25519 · SHA-256 hash chains · Postgres row-level security · hashed tokens · gitleaks · egress allowlists" },
     Row { dt: "Web", dd: "TypeScript · React · Vite · Tailwind · Supabase" },
     Row { dt: "Integration", dd: "Salesforce REST API and data model · SOQL · import pipelines with record provenance" },
-    Row { dt: "Also", dd: "Python · C · C++ · Assembly · SQL (Postgres, MySQL) · WGSL" },
+    Row { dt: "Also", dd: "Python · SQL (Postgres, MySQL) · WGSL" },
     Row { dt: "AI", dd: "Claude Code · Anthropic + OpenAI APIs · MCP · whisper.cpp · local models · tool-calling with grounding" },
     Row { dt: "Ops", dd: "GitHub admin · Actions (3-OS matrix) · Docker · Fly.io · Vercel · Cloudflare Pages + Access" },
 ];
@@ -948,10 +962,11 @@ mod tests {
         }
     }
 
-    /// Home shows exactly three. Two looks thin; four is a list, not a selection.
+    /// The laptop on the home desk holds four plates, one per project world Aisling named
+    /// (Nov 11): a 2 x 2 screen. A fifth would wrap onto a lonely row.
     #[test]
-    fn three_featured_builds() {
-        assert_eq!(BUILDS.iter().filter(|b| b.featured).count(), 3);
+    fn four_builds_on_the_laptop() {
+        assert_eq!(BUILDS.iter().filter(|b| b.featured).count(), 4);
     }
 
     #[test]
@@ -976,6 +991,8 @@ mod tests {
             }
         }
         paths.extend(GALLERY.iter().map(|s| s.src));
+        let models: Vec<String> = PLATE_MODELS.iter().map(|m| format!("brand/library/{}-matte.webp", m.1)).collect();
+        paths.extend(models.iter().map(String::as_str));
         for p in paths {
             assert!(root().join(p).is_file(), "missing asset: {p}");
         }

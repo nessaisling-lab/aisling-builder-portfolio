@@ -1,9 +1,11 @@
-//! The site palette, as data with its invariants attached.
+//! The home world's colours, as data with their invariants attached.
 //!
-//! Carried over from the L2 portfolio: `contrast_x100` is a `const fn`, so a colour
-//! pairing that falls below WCAG on its own background is a compile error rather than
-//! something a person has to notice. The light theme is the lab notebook (warm paper,
-//! ink, oxide accent); the dark theme is the terminal (graphite, paper-white, ember).
+//! The brand kit (`brand/ness.css`) owns the page colours and checks them in its own build.
+//! What the kit doesn't have is this site's world: the warm desk and the city through the
+//! window. Those live here. `contrast_x100` is a `const fn`, so a desk colour that makes
+//! the kit's text hard to read is a compile error rather than something a person has to
+//! notice. Day is light brass and clay; evening is the same desk with the lamp off and the
+//! city's windows lit.
 
 /// A colour, kept as three channels so contrast can be computed from it.
 #[derive(Clone, Copy, PartialEq)]
@@ -82,90 +84,110 @@ macro_rules! assert_readable {
     };
 }
 
-// ── the palettes ─────────────────────────────────────────────────────────────
+// ── the worlds ───────────────────────────────────────────────────────────────
 
-pub struct Palette {
+pub struct World {
     pub name: &'static str,
-    /// Page ground.
-    pub paper: Rgb,
-    /// Raised surfaces: spec sheets, readouts, code.
-    pub sheet: Rgb,
+    /// The kit's text colours, mirrored from brand/ness.css (oklch converted to sRGB) so
+    /// they can be checked against the desk. If the kit's ink changes, change it here too.
     pub ink: Rgb,
-    /// Secondary text: captions, metadata, annotations.
-    pub quiet: Rgb,
-    /// Links, prompts, the one colour that means "act here".
+    pub ink_2: Rgb,
+    pub muted: Rgb,
     pub accent: Rgb,
-    /// Hairlines and the notebook grid. Decorative, so not contrast-checked.
-    pub rule: Rgb,
-    pub grid: Rgb,
+    /// Drawer fronts: the desk surface that carries text.
+    pub desk_face: Rgb,
+    /// The desk top, and the clay tablet that sits on it.
+    pub desk_top: Rgb,
+    /// The desk's front panel around the drawers. Decorative.
+    pub desk_front: Rgb,
+    /// Edges and incised lines. Decorative.
+    pub desk_cut: Rgb,
+    /// The city through the window. Decorative: no text sits on it.
+    pub sky: Rgb,
+    pub city: Rgb,
+    pub city_2: Rgb,
+    /// Window panes on the buildings: dark glass by day, lamplight in the evening.
+    pub lit: Rgb,
+    /// Panes nobody is home behind. By day every pane is the same glass.
+    pub unlit: Rgb,
 }
 
-/// Lab notebook: warm paper, near-black ink, oxide accent.
-pub const LIGHT: Palette = Palette {
-    name: "light",
-    paper: Rgb(0xF4, 0xF1, 0xE9),
-    sheet: Rgb(0xFB, 0xF9, 0xF4),
-    ink: Rgb(0x17, 0x1A, 0x1F),
-    quiet: Rgb(0x58, 0x5C, 0x63),
-    accent: Rgb(0x9A, 0x40, 0x12),
-    rule: Rgb(0xD9, 0xD2, 0xC2),
-    grid: Rgb(0xE9, 0xE4, 0xD8),
+/// Day: light brass and clay tints (Aisling's choice, Nov 11: warm fits Sumer), the kit's
+/// cool petrol for the city.
+pub const DAY: World = World {
+    name: "day",
+    ink: Rgb(0x10, 0x1D, 0x22),
+    ink_2: Rgb(0x32, 0x40, 0x45),
+    muted: Rgb(0x50, 0x5D, 0x63),
+    accent: Rgb(0x0C, 0x60, 0x6D),
+    desk_face: Rgb(0xF4, 0xEA, 0xD5),
+    desk_top: Rgb(0xEA, 0xD9, 0xB6),
+    desk_front: Rgb(0xE1, 0xCB, 0xA2),
+    desk_cut: Rgb(0xB7, 0x99, 0x6C),
+    sky: Rgb(0xCA, 0xE3, 0xED),
+    city: Rgb(0x85, 0x9D, 0xA6),
+    city_2: Rgb(0x5F, 0x79, 0x84),
+    lit: Rgb(0xA9, 0xC4, 0xCF),
+    unlit: Rgb(0xA9, 0xC4, 0xCF),
 };
 
-/// Terminal: graphite ground, paper-white text, ember accent.
-pub const DARK: Palette = Palette {
-    name: "dark",
-    paper: Rgb(0x12, 0x14, 0x17),
-    sheet: Rgb(0x1A, 0x1D, 0x21),
-    ink: Rgb(0xEC, 0xE7, 0xDC),
-    quiet: Rgb(0xA4, 0xA8, 0xAE),
-    accent: Rgb(0xF0, 0x8A, 0x4B),
-    rule: Rgb(0x2E, 0x33, 0x39),
-    grid: Rgb(0x1B, 0x1E, 0x22),
+/// Evening: the same desk in low light; the windows across the street come on.
+pub const EVENING: World = World {
+    name: "evening",
+    ink: Rgb(0xE9, 0xF0, 0xF0),
+    ink_2: Rgb(0xC8, 0xD3, 0xD4),
+    muted: Rgb(0xA4, 0xB1, 0xB1),
+    accent: Rgb(0x65, 0xD0, 0xDC),
+    desk_face: Rgb(0x3B, 0x31, 0x21),
+    desk_top: Rgb(0x31, 0x27, 0x18),
+    desk_front: Rgb(0x27, 0x1D, 0x10),
+    desk_cut: Rgb(0x62, 0x53, 0x3C),
+    sky: Rgb(0x1B, 0x2A, 0x3C),
+    city: Rgb(0x0E, 0x1C, 0x28),
+    city_2: Rgb(0x08, 0x13, 0x1C),
+    lit: Rgb(0xE6, 0xD8, 0xA3),
+    unlit: Rgb(0x16, 0x26, 0x33),
 };
 
 // ── the invariants ───────────────────────────────────────────────────────────
 //
-// Every text colour is held to 4.5:1 against both grounds it can sit on: the page
-// and the raised sheet. Captions and annotations are small, so "quiet" gets no
-// large-text discount.
+// Text sits on the drawer fronts (names, one-line summaries, Sumerian words) and on the
+// clay tablet. Every kit text colour that can land there is held to 4.5:1; the small
+// lines get no large-text discount.
 
-assert_readable!(LIGHT.ink, LIGHT.paper, 450, "light ink on paper");
-assert_readable!(LIGHT.ink, LIGHT.sheet, 450, "light ink on sheet");
-assert_readable!(LIGHT.quiet, LIGHT.paper, 450, "light quiet on paper");
-assert_readable!(LIGHT.quiet, LIGHT.sheet, 450, "light quiet on sheet");
-assert_readable!(LIGHT.accent, LIGHT.paper, 450, "light accent on paper");
-assert_readable!(LIGHT.accent, LIGHT.sheet, 450, "light accent on sheet");
+assert_readable!(DAY.ink, DAY.desk_face, 450, "day ink on drawer");
+assert_readable!(DAY.ink_2, DAY.desk_face, 450, "day ink-2 on drawer");
+assert_readable!(DAY.muted, DAY.desk_face, 450, "day muted on drawer");
+assert_readable!(DAY.accent, DAY.desk_face, 450, "day accent on drawer");
+assert_readable!(DAY.ink_2, DAY.desk_top, 450, "day ink-2 on tablet");
 
-assert_readable!(DARK.ink, DARK.paper, 450, "dark ink on paper");
-assert_readable!(DARK.ink, DARK.sheet, 450, "dark ink on sheet");
-assert_readable!(DARK.quiet, DARK.paper, 450, "dark quiet on paper");
-assert_readable!(DARK.quiet, DARK.sheet, 450, "dark quiet on sheet");
-assert_readable!(DARK.accent, DARK.paper, 450, "dark accent on paper");
-assert_readable!(DARK.accent, DARK.sheet, 450, "dark accent on sheet");
+assert_readable!(EVENING.ink, EVENING.desk_face, 450, "evening ink on drawer");
+assert_readable!(EVENING.ink_2, EVENING.desk_face, 450, "evening ink-2 on drawer");
+assert_readable!(EVENING.muted, EVENING.desk_face, 450, "evening muted on drawer");
+assert_readable!(EVENING.accent, EVENING.desk_face, 450, "evening accent on drawer");
+assert_readable!(EVENING.ink_2, EVENING.desk_top, 450, "evening ink-2 on tablet");
 
-/// The CSS custom properties for one palette. Contrast figures in the comments are
+/// The CSS custom properties for one world. Contrast figures in the comments are
 /// computed from the same values the assertions check, so they cannot go stale.
-pub fn css_vars(p: &Palette) -> String {
-    let r = |fg: Rgb| contrast_x100(fg, p.paper) as f64 / 100.0;
+pub fn css_vars(w: &World) -> String {
+    let r = |fg: Rgb| contrast_x100(fg, w.desk_face) as f64 / 100.0;
     format!(
-        "  --paper:{paper};--sheet:{sheet};\n\
-         \x20 --ink:{ink};       /* {ri:.2}:1 on paper */\n\
-         \x20 --quiet:{quiet};     /* {rq:.2}:1 on paper */\n\
-         \x20 --accent:{accent};    /* {ra:.2}:1 on paper */\n\
-         \x20 --rule:{rule};--grid:{grid};\n\
-         \x20 color-scheme:{name};\n",
-        paper = p.paper.hex(),
-        sheet = p.sheet.hex(),
-        ink = p.ink.hex(),
-        quiet = p.quiet.hex(),
-        accent = p.accent.hex(),
-        rule = p.rule.hex(),
-        grid = p.grid.hex(),
-        name = p.name,
-        ri = r(p.ink),
-        rq = r(p.quiet),
-        ra = r(p.accent),
+        "  /* {name} */\n\
+         \x20 --desk-face:{face};   /* ink {ri:.2}:1, muted {rm:.2}:1 */\n\
+         \x20 --desk-top:{top};--desk-front:{front};--desk-cut:{cut};\n\
+         \x20 --sky:{sky};--city:{city};--city-2:{city2};--lit:{lit};--unlit:{unlit};\n",
+        name = w.name,
+        face = w.desk_face.hex(),
+        top = w.desk_top.hex(),
+        front = w.desk_front.hex(),
+        cut = w.desk_cut.hex(),
+        sky = w.sky.hex(),
+        city = w.city.hex(),
+        city2 = w.city_2.hex(),
+        lit = w.lit.hex(),
+        unlit = w.unlit.hex(),
+        ri = r(w.ink),
+        rm = r(w.muted),
     )
 }
 
@@ -183,12 +205,11 @@ mod tests {
         assert_eq!(contrast_x100(white, white), 100);
     }
 
-    /// The grid has to stay a whisper. If it ever reads as a pattern behind body text,
-    /// the page has turned into graph paper.
+    /// Lit windows are the evening's one event. By day the panes have to stay close to
+    /// the building, or the skyline reads as lit at noon.
     #[test]
-    fn grid_stays_faint() {
-        for p in [&LIGHT, &DARK] {
-            assert!(contrast_x100(p.grid, p.paper) < 115, "{} grid is too strong", p.name);
-        }
+    fn windows_light_up_only_in_the_evening() {
+        assert!(contrast_x100(DAY.lit, DAY.city) < 160, "day windows look lit");
+        assert!(contrast_x100(EVENING.lit, EVENING.city) > 700, "evening windows look dark");
     }
 }

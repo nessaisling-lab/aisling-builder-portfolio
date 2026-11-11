@@ -8,6 +8,7 @@
 
 mod content;
 mod resume;
+mod skyline;
 mod theme;
 
 use content::*;
@@ -17,7 +18,13 @@ use std::path::{Path, PathBuf};
 const STYLE: &str = include_str!("../assets/style.css");
 const SCRIPT: &str = include_str!("../assets/site.js");
 const SITE_URL: &str = "https://nessaisling-lab.github.io/aisling-builder-portfolio/";
+const NAME: &str = "Aisling (Stan) Leiva-Davila";
 const EMAIL: &str = "ness.aisling@gmail.com";
+/// Applies the reader's saved reading settings before first paint, so a reader who chose
+/// Evening or Larger text never sees a flash of the defaults. brand/ness.js keeps them
+/// in sync after that; it uses the same storage key.
+const SETTINGS_EARLY: &str = "try{var s=JSON.parse(localStorage.getItem('ness-brand-settings'))||{};\
+for(var k in s)if(s[k])document.documentElement.setAttribute('data-'+k,s[k])}catch(e){}";
 /// Web3Forms public access key. It is designed to sit in page source.
 const FORM_KEY: &str = "a0888a12-c951-4b99-bc7c-fe8da519a5f6";
 
@@ -40,12 +47,12 @@ fn main() -> std::io::Result<()> {
     write(&cv.join("resume.json"), &resume::to_json(), &mut written)?;
 
     let home = rsx! { Home { root: "".to_string() } };
-    write(&out.join("index.html"), &page("", "", "Software engineer, Rust-first",
-        "Stan (Aisling) Leiva-Davila: Rust-first software engineer in NYC who builds systems whose guarantees can be checked.",
+    write(&out.join("index.html"), &page("", "", "AI-native builder, Rust first",
+        "Aisling (Stan) Leiva-Davila builds with AI in New York: she makes the architecture calls, writes the specs, and reviews, tests and ships, Rust first.",
         home), &mut written)?;
 
     let work = rsx! { Work { root: "../".to_string() } };
-    write(&out.join("work/index.html"), &page("../", "work/", "Work",
+    write(&out.join("work/index.html"), &page("../", "work/", "Projects",
         "Builds in Rust and on small teams: signed exports, on-device AI, Postgres row-level security.",
         work), &mut written)?;
 
@@ -60,9 +67,25 @@ fn main() -> std::io::Result<()> {
         "Data integration for small teams: migrations into Salesforce, app-to-Salesforce syncs, and keeping them running.",
         integration), &mut written)?;
 
-    let about = rsx! { About { root: "../".to_string() } };
+    let experience = rsx! { Experience { root: "../".to_string() } };
+    write(&out.join("experience/index.html"), &page("../", "experience/", "Experience",
+        "Where Aisling has worked: the Pursuit client capstone, Nisaba, Architechne, and a business of her own.",
+        experience), &mut written)?;
+
+    let school = rsx! { School { root: "../".to_string() } };
+    write(&out.join("school/index.html"), &page("../", "school/", "School",
+        "Pursuit's AI-Native Builder program (inaugural cohort), Per Scholas IT Support, and A&P coursework at Vaughn College.",
+        school), &mut written)?;
+
+    let contact = rsx! { Contact { root: "../".to_string() } };
+    write(&out.join("contact/index.html"), &page("../", "contact/", "Contact",
+        "Email Aisling, or send a message from this page.",
+        contact), &mut written)?;
+
+    // About's story moved to Home (Nov 11). Old links still land somewhere useful.
+    let about = rsx! { Moved { root: "../".to_string() } };
     write(&out.join("about/index.html"), &page("../", "about/", "About",
-        "Self-taught in C, C++ and Assembly; A&P coursework; Pursuit AI-Native Builder, inaugural cohort.",
+        "The About page moved: the story is on the home page now.",
         about), &mut written)?;
 
     let resume = rsx! { Resume { root: "../".to_string() } };
@@ -91,16 +114,17 @@ fn write(path: &Path, body: &str, log: &mut Vec<PathBuf>) -> std::io::Result<()>
     Ok(())
 }
 
-/// The stylesheet, with both palettes generated from theme.rs.
+/// The stylesheet, with the desk's day and evening colours generated from theme.rs. The
+/// selectors match brand/ness.css, so the reading settings' Light choice switches both.
 fn css() -> String {
-    let light = theme::css_vars(&theme::LIGHT);
-    let dark = theme::css_vars(&theme::DARK);
+    let day = theme::css_vars(&theme::DAY);
+    let evening = theme::css_vars(&theme::EVENING);
     let palettes = format!(
-        "/* GENERATED from site/src/theme.rs. Edit the Rust, not this block. Every text\n\
-         \x20  colour is held to WCAG 4.5:1 on both grounds by a const assertion. */\n\
-         :root{{\n{light}}}\n\
-         @media (prefers-color-scheme: dark){{:root:not([data-theme=light]){{\n{dark}}}}}\n\
-         :root[data-theme=dark]{{\n{dark}}}\n"
+        "/* GENERATED from site/src/theme.rs. Edit the Rust, not this block. Every kit text\n\
+         \x20  colour that sits on the desk is held to WCAG 4.5:1 by a const assertion. */\n\
+         :root{{\n{day}}}\n\
+         @media (prefers-color-scheme: dark){{:root:not([data-theme=light]){{\n{evening}}}}}\n\
+         :root[data-theme=dark]{{\n{evening}}}\n"
     );
     STYLE.replace("/*@PALETTES@*/", &palettes)
 }
@@ -145,9 +169,9 @@ fn esc(s: &str) -> String {
 fn page(root: &str, path: &str, title: &str, desc: &str, body: Element) -> String {
     let body = dioxus_ssr::render_element(body);
     let full_title = if path.is_empty() {
-        format!("Stan (Aisling) Leiva-Davila · {title}")
+        format!("{NAME} · {title}")
     } else {
-        format!("{title} · Stan (Aisling) Leiva-Davila")
+        format!("{title} · {NAME}")
     };
     let (t, d) = (esc(&full_title), esc(desc));
     let canonical = if path == "404" { SITE_URL.to_string() } else { format!("{SITE_URL}{path}") };
@@ -161,7 +185,7 @@ fn page(root: &str, path: &str, title: &str, desc: &str, body: Element) -> Strin
     let footer = dioxus_ssr::render_element(rsx! { Foot { root: root.to_string() } });
     format!(
         "<!doctype html>\n\
-         <html lang=\"en\">\n\
+         <html lang=\"en\" data-finish=\"matte\">\n\
          <head>\n\
          <meta charset=\"utf-8\">\n\
          <meta name=\"viewport\" content=\"width=device-width, initial-scale=1\">\n\
@@ -174,19 +198,23 @@ fn page(root: &str, path: &str, title: &str, desc: &str, body: Element) -> Strin
          <meta property=\"og:url\" content=\"{canonical}\">\n\
          <meta property=\"og:image\" content=\"{SITE_URL}{og}\">\n\
          <meta name=\"twitter:card\" content=\"summary_large_image\">\n\
-         <meta name=\"theme-color\" content=\"#F4F1E9\" media=\"(prefers-color-scheme: light)\">\n\
-         <meta name=\"theme-color\" content=\"#121417\" media=\"(prefers-color-scheme: dark)\">\n\
+         <meta name=\"theme-color\" content=\"#EAF2F3\" media=\"(prefers-color-scheme: light)\">\n\
+         <meta name=\"theme-color\" content=\"#0A191A\" media=\"(prefers-color-scheme: dark)\">\n\
          <link rel=\"icon\" href=\"{root}assets/favicon.svg\" type=\"image/svg+xml\">\n\
          <link rel=\"icon\" href=\"{root}assets/favicon-32.png\" sizes=\"32x32\">\n\
          <link rel=\"apple-touch-icon\" href=\"{root}assets/apple-touch-icon.png\">\n\
-         <script>try{{var m=localStorage.getItem('theme');if(m)document.documentElement.dataset.theme=m}}catch(e){{}}</script>\n\
+         <script>{SETTINGS_EARLY}</script>\n\
+         <link rel=\"preload\" href=\"{root}assets/fonts/archivo.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n\
+         <link rel=\"preload\" href=\"{root}assets/fonts/atkinson-next.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n\
+         <link rel=\"stylesheet\" href=\"{root}brand/ness.css\">\n\
          <link rel=\"stylesheet\" href=\"{root}assets/site.css\">\n\
          </head>\n\
-         <body>\n\
+         <body class=\"nb\">\n\
          <a class=\"skip\" href=\"#main\">Skip to content</a>\n\
          {header}\n\
          <main id=\"main\">\n{body}\n</main>\n\
          {footer}\n\
+         <script src=\"{root}brand/ness.js\" defer></script>\n\
          <script src=\"{root}assets/site.js\" defer></script>\n\
          </body>\n\
          </html>\n"
@@ -201,25 +229,19 @@ fn Top(root: String, here: String) -> Element {
     rsx! {
         header { class: "top",
             div { class: "wrap top-in",
-                a { class: "brand", href: "{root}",
-                    span { class: "brand-name", "Stan (Aisling) Leiva-Davila" }
-                    span { class: "brand-tag", "rust · integrity · nyc" }
+                a { class: "brand", href: "{root}", "aria-current": if here.is_empty() { "page" } else { "false" },
+                    "{NAME}"
                 }
-                nav { "aria-label": "Site",
-                    a { href: "{root}work/", "aria-current": cur("work/"), "Work" }
-                    a { href: "{root}integration/", "aria-current": cur("integration/"), "Integration" }
-                    a { href: "{root}about/", "aria-current": cur("about/"), "About" }
+                nav { class: "tabs", "aria-label": "Site",
+                    a { href: "{root}work/", "aria-current": cur("work/"), "Projects" }
+                    a { href: "{root}experience/", "aria-current": cur("experience/"), "Experience" }
+                    a { href: "{root}integration/", "aria-current": cur("integration/"), "Integrations" }
+                    a { href: "{root}school/", "aria-current": cur("school/"), "School" }
                     a { href: "{root}resume/", "aria-current": cur("resume/"), "Résumé" }
-                    // Hidden until site.js runs, since only the script can switch the theme.
-                    // A toggle's name stays fixed; site.js sets aria-pressed to say whether it is on.
-                    button {
-                        class: "theme",
-                        "type": "button",
-                        "aria-label": "Dark theme",
-                        hidden: "hidden",
-                        span { class: "theme-ic", "aria-hidden": "true" }
-                    }
                 }
+                // brand/ness.js mounts the reading settings here. Without the script the page
+                // still follows the device's light, motion and contrast preferences.
+                div { class: "settings-slot" }
             }
         }
     }
@@ -231,9 +253,11 @@ fn Foot(root: String) -> Element {
         footer { class: "foot",
             div { class: "wrap foot-in",
                 div {
-                    p { class: "foot-name", "Stan (Aisling) Leiva-Davila" }
+                    p { class: "foot-name", "{NAME}" }
                     p {
                         a { href: "mailto:{EMAIL}", "{EMAIL}" }
+                        " · "
+                        a { href: "{root}contact/", "Contact form" }
                         " · "
                         a { href: "https://www.linkedin.com/in/stan-leiva-davila/", "LinkedIn" }
                         " · "
@@ -241,8 +265,9 @@ fn Foot(root: String) -> Element {
                     }
                 }
                 p { class: "colophon",
-                    "Rendered from Rust: Dioxus RSX in, static HTML out, no WASM. Every text colour is
-                     held to WCAG 4.5:1 by a compile-time assertion. "
+                    "Rendered from Rust: Dioxus RSX in, static HTML out, no WASM. The skyline is drawn
+                     by Rust at build time, and the desk's colours are held to WCAG 4.5:1 by a
+                     compile-time assertion. 3D models by Kenney (CC0). "
                     a { href: "https://github.com/nessaisling-lab/aisling-builder-portfolio/tree/main/site", "Source" }
                 }
             }
@@ -250,121 +275,163 @@ fn Foot(root: String) -> Element {
     }
 }
 
-#[component]
-fn Label(prompt: String, text: String) -> Element {
-    rsx! {
-        p { class: "label",
-            span { class: "prompt", "aria-hidden": "true", "{prompt}" }
-            " {text}"
-        }
-    }
-}
-
-// ── home ─────────────────────────────────────────────────────────────────────
+// ── home: the desk at the window ─────────────────────────────────────────────
+//
+// One room, seen straight on: her card pinned to the wall, the city through the window,
+// the work open on the laptop, a clay tablet beside it, and the other sections in the
+// desk's drawers. Every object is a way in except the reeds and the skyline, which are
+// marked aria-hidden. Without CSS it reads top to bottom as card, projects, sections.
 
 #[component]
 fn Home(root: String) -> Element {
+    let skyline = skyline::svg();
     rsx! {
-        section { class: "wrap hero",
-            div { class: "hero-text",
-                p { class: "status",
-                    span { class: "dot", "aria-hidden": "true" }
-                    "open to work · New York · on-site or hybrid"
-                }
-                h1 { "I build software whose guarantees "
-                    em { "you can check" }
-                    "."
-                }
-                p { class: "deck",
-                    "Rust-first software engineer with a C, C++ and Assembly foundation. Signed,
-                     hash-chained exports a stranger can verify offline; speech-to-text where the audio
-                     never leaves the machine; the Postgres backend and data integrations for a nonprofit
-                     client's gala. I ship end-to-end, solo and on small teams, with Claude Code."
-                }
-                div { class: "actions",
-                    a { class: "btn", href: "{root}assets/docs/resume/resume-letter.pdf", "Résumé (PDF)" }
-                    a { class: "btn ghost", href: "{root}work/", "See the work" }
-                    a { class: "text-link", href: "mailto:{EMAIL}", "{EMAIL}" }
-                }
-            }
-            figure { class: "portrait",
-                img {
-                    src: "{root}assets/portrait.jpg",
-                    srcset: "{root}assets/portrait.jpg 1x, {root}assets/portrait@2x.jpg 2x",
-                    alt: "Portrait of Stan (Aisling) Leiva-Davila",
-                    width: "440",
-                    height: "550",
-                    fetchpriority: "high",
-                }
-                figcaption { "fig. 0 · the builder, NYC" }
-            }
-        }
-
-        section { class: "wrap block",
-            Label { prompt: "$".to_string(), text: "ls work/ --featured".to_string() }
-            h2 { class: "block-h", "Three builds, three kinds of guarantee." }
-            ol { class: "featured",
-                for (i, b) in BUILDS.iter().filter(|b| b.featured).enumerate() {
-                    FeaturedRow { root: root.clone(), n: i + 1, slug: b.slug.to_string() }
-                }
-            }
-            p { class: "more",
-                a { class: "text-link", href: "{root}work/", "All builds, including Nisaba, SiteAssure and Ziqpu →" }
-            }
-        }
-
-        section { class: "wrap block",
-            Label { prompt: "$".to_string(), text: "cat integration.txt".to_string() }
-            h2 { class: "block-h", "Data integration for small teams." }
-            p { class: "deck", "I connect the systems a team already pays for, so nobody retypes a list again." }
-            div { class: "rules",
-                for c in INTEGRATION {
-                    div { class: "rule",
-                        h3 { "{c.title}" }
-                        p { "{c.covers}" }
+        div { class: "room",
+            div { class: "wrap scene",
+                section { class: "card", "aria-labelledby": "who",
+                    span { class: "pin", "aria-hidden": "true" }
+                    div { class: "id",
+                        img {
+                            class: "id-photo",
+                            src: "{root}assets/portrait.jpg",
+                            srcset: "{root}assets/portrait.jpg 1x, {root}assets/portrait@2x.jpg 2x",
+                            alt: "Portrait of Aisling, smiling",
+                            width: "440",
+                            height: "550",
+                            fetchpriority: "high",
+                        }
+                        div { class: "id-text",
+                            p { class: "id-name", "{NAME}" }
+                            p { class: "id-place nb-place", "New York" }
+                            dl { class: "id-rows",
+                                div { dt { "Builds with" } dd { "AI, Rust first" } }
+                                div { dt { "Status" } dd { class: "open", span { span { class: "nw", "Open to work ·" } " " span { class: "nw", "on-site or hybrid" } } } }
+                            }
+                        }
+                    }
+                    h1 { id: "who", "I build with AI the way a smith works a forge." }
+                    p { class: "story",
+                        "I make the architecture calls, write the specs, and review, test and ship what
+                         comes out. Rust first, on purpose: a compiler that checks the promise is a
+                         promise you can keep."
+                    }
+                    div { class: "actions",
+                        a { class: "nb-btn is-primary", href: "{root}assets/docs/resume/resume-letter.pdf", "Résumé (PDF)" }
+                        a { class: "nb-btn", href: "mailto:{EMAIL}", "Email me" }
                     }
                 }
-            }
-            p { class: "more",
-                a { class: "text-link", href: "{root}integration/", "How I approach integration work →" }
+
+                div { class: "window", "aria-hidden": "true", dangerous_inner_html: "{skyline}" }
+
+                section { class: "laptop", "aria-labelledby": "projects-h",
+                    div { class: "screen",
+                        h2 { id: "projects-h", class: "screen-h",
+                            "Projects"
+                            span { class: "hint",
+                                span { class: "cun", "aria-hidden": "true", "\u{121A5}" }
+                                span { class: "nb-place", lang: "sux-Latn", "kin" }
+                                " · the work"
+                            }
+                        }
+                        ol { class: "plates",
+                            for (i, b) in BUILDS.iter().filter(|b| b.featured).enumerate() {
+                                Plate { root: root.clone(), n: i + 1, slug: b.slug.to_string() }
+                            }
+                        }
+                        p { class: "screen-more",
+                            a { href: "{root}work/", "All projects, including HouseCheck and Nisaba →" }
+                        }
+                    }
+                }
+
+                // The easter egg: a real tablet's words, and what they mean. A native
+                // <details>, so it opens with no script and announces its state.
+                div { class: "things",
+                details { class: "tablet",
+                    summary { "aria-label": "Clay tablet: read the inscription",
+                        span { class: "cun", "aria-hidden": "true", "\u{1207E}\u{122AC}" }
+                        span { class: "cun", "aria-hidden": "true", "\u{121A0}\u{12097}\u{12100}" }
+                        span { class: "tablet-cue", "aria-hidden": "true", "Press the tablet" }
+                    }
+                    p { class: "tablet-says",
+                        span { class: "nb-place", lang: "sux-Latn", "dub-sar · ki-en-gi" }
+                        " Scribe · Sumer. Writing began on clay, as record-keeping."
+                    }
+                }
+                div { class: "reeds", "aria-hidden": "true", i {} i {} i {} b {} }
+                }
             }
         }
 
-        section { class: "wrap block now",
-            Label { prompt: "$".to_string(), text: "cat now.txt".to_string() }
-            dl { class: "now-list",
-                div { dt { "Capstone" } dd { "Presented at Pursuit Demo Day on Nov 9, 2026, then handed the code and docs to the client. I was technical director and repo admin." } }
-                div { dt { "Looking" } dd { "Rust, security and privacy, AI, and backend roles in New York, on-site or hybrid." } }
-                div { dt { "Recently" } dd { "Found and closed a forgery path in HouseCheck's signed export by writing an independent verifier." } }
+        div { class: "desk",
+            nav { class: "wrap drawers", "aria-label": "More about Aisling",
+                a { class: "drawer", href: "{root}experience/",
+                    span { class: "pull", "aria-hidden": "true" }
+                    span { class: "drawer-t", "Experience" }
+                    span { class: "drawer-s", "The client capstone, Nisaba, Architechne, my own business" }
+                }
+                a { class: "drawer", href: "{root}integration/",
+                    span { class: "pull", "aria-hidden": "true" }
+                    span { class: "drawer-t", "Integrations" }
+                    span { class: "drawer-s", "Salesforce syncs, migrations, Postgres" }
+                }
+                a { class: "drawer", href: "{root}school/",
+                    span { class: "pull", "aria-hidden": "true" }
+                    span { class: "drawer-t", "School" }
+                    span { class: "drawer-s", "Pursuit, Per Scholas, Vaughn College" }
+                    span { class: "drawer-x", span { class: "nb-place", lang: "sux-Latn", "é-dub-ba" } " · the tablet house" }
+                }
             }
         }
 
-        section { class: "wrap block cta",
-            h2 { class: "block-h", "Building something that has to be right?" }
-            p { class: "deck", "I'd like to hear about it." }
-            div { class: "actions",
-                a { class: "btn", href: "mailto:{EMAIL}", "Email me" }
-                a { class: "btn ghost", href: "{root}about/#contact", "Contact form" }
+        section { class: "wrap block story-block", "aria-labelledby": "how",
+            h2 { id: "how", class: "block-h", "How I got here" }
+            div { class: "prose",
+                p {
+                    "I learned computers the hacker way. Getting Debian and a Wi-Fi driver running on a
+                     PlayStation 3 took months of books, forums and boards. Aircraft-mechanic coursework
+                     at Vaughn College came next and taught me methodical troubleshooting and respect
+                     for a checklist; a family emergency paused that degree, and the habits stayed."
+                }
+                p {
+                    "I ran a short-term-rental business on my own, then did data analysis and lead
+                     generation at Architechne. After Per Scholas IT Support, I joined the inaugural
+                     cohort of Pursuit's AI-Native Builder program, where I was technical director and
+                     repo admin on a client capstone."
+                }
+                p {
+                    "Today I build with Claude Code, Gemini and local models like Qwen. They do the
+                     hammering; I choose the metal, make the architecture calls, write the specs, and
+                     test every piece before it ships."
+                }
+            }
+            dl { class: "nb-spec now-list",
+                dt { "Capstone" } dd { "Presented at Pursuit Demo Day on Nov 9, 2026, then handed the code and docs to the client." }
+                dt { "Looking" } dd { "Rust, security and privacy, AI, and backend roles in New York, on-site or hybrid." }
+                dt { "Recently" } dd { "Found and closed a forgery path in HouseCheck's signed export by writing an independent verifier." }
             }
         }
     }
 }
 
+/// A numbered plate: number and model on the left, name and the hardest number on the right.
 #[component]
-fn FeaturedRow(root: String, n: usize, slug: String) -> Element {
+fn Plate(root: String, n: usize, slug: String) -> Element {
     let b = BUILDS.iter().find(|b| b.slug == slug).expect("featured build exists");
     let num = format!("{n:02}");
     rsx! {
-        li { class: "frow",
-            a { class: "frow-link", href: "{root}work/{b.slug}/",
-                span { class: "frow-n", "{num}" }
-                span { class: "frow-main",
-                    span { class: "frow-kicker", "{b.kicker}" }
-                    span { class: "frow-name", "{b.name}" }
-                    span { class: "frow-line", "{b.line}" }
+        li {
+            a { class: "nb-plate", href: "{root}work/{b.slug}/",
+                span { class: "nb-plate-no",
+                    if let Some((file, _)) = plate_model(b.slug) {
+                        img { class: "plate-model", src: "{root}brand/library/{file}-matte.webp", alt: "", width: "64", height: "64" }
+                    }
+                    "{num}"
                 }
-                span { class: "frow-stat", "{b.stat}" }
-                span { class: "frow-go", "aria-hidden": "true", "→" }
+                span {
+                    span { class: "nb-plate-t", "{b.name}" }
+                    span { class: "nb-plate-s", "{b.stat}" }
+                }
             }
         }
     }
@@ -376,8 +443,7 @@ fn FeaturedRow(root: String, n: usize, slug: String) -> Element {
 fn Work(root: String) -> Element {
     rsx! {
         section { class: "wrap page-head",
-            Label { prompt: "$".to_string(), text: "ls work/".to_string() }
-            h1 { "Work" }
+            h1 { "Projects" }
             p { class: "deck",
                 "Most of it is Rust, because most of it makes a promise about what the program will "
                 em { "not" }
@@ -390,7 +456,6 @@ fn Work(root: String) -> Element {
         WorkGroup { root: root.clone(), integrity: false,
             title: "Team and client work".to_string() }
         section { class: "wrap block",
-            Label { prompt: "#".to_string(), text: "earlier".to_string() }
             ul { class: "earlier",
                 for e in EARLIER {
                     li {
@@ -449,13 +514,13 @@ fn Case(root: String, i: usize) -> Element {
     rsx! {
         article { class: "wrap case",
             nav { class: "crumbs", "aria-label": "Breadcrumb",
-                a { href: "{root}work/", "work" }
+                a { href: "{root}work/", "Projects" }
                 span { "aria-hidden": "true", " / " }
                 span { "aria-current": "page", "{b.slug}" }
             }
             header { class: "case-head",
-                p { class: "kicker", "{b.kicker} · {b.year}" }
                 h1 { "{b.name}" }
+                p { class: "case-meta", "{b.kicker} · {b.year}" }
                 p { class: "deck", "{b.line}" }
                 p { class: "status-line",
                     span { class: "dot", "aria-hidden": "true" }
@@ -562,7 +627,7 @@ fn Case(root: String, i: usize) -> Element {
                     }
                     if let Some((lead, cmd)) = b.verify {
                         div { class: "verify",
-                            Label { prompt: "$".to_string(), text: "verify it yourself".to_string() }
+                            h2 { class: "verify-h", "Verify it yourself" }
                             p { "{lead}" }
                             // Focusable and named because it scrolls sideways on narrow screens.
                             pre { tabindex: "0", role: "region", "aria-label": "Command to verify it yourself",
@@ -643,7 +708,6 @@ fn CaseSection(i: usize, k: usize) -> Element {
 fn Integration(root: String) -> Element {
     rsx! {
         section { class: "wrap page-head",
-            Label { prompt: "$".to_string(), text: "man integration".to_string() }
             h1 { "Data integration" }
             p { class: "deck",
                 "I connect the systems a team already pays for, so nobody retypes a list again. The proof
@@ -687,53 +751,33 @@ fn Integration(root: String) -> Element {
         section { class: "wrap block cta",
             h2 { class: "block-h", "Have systems that don't talk to each other?" }
             div { class: "actions",
-                a { class: "btn", href: "{root}about/#contact", "Talk about a project" }
+                a { class: "nb-btn is-primary", href: "{root}contact/", "Talk about a project" }
             }
         }
     }
 }
 
-// ── about ────────────────────────────────────────────────────────────────────
+// ── experience, school, contact ──────────────────────────────────────────────
+//
+// The three drawers of the home desk. Each gets its own world later (asked as we reach
+// it); for now they share the kit's spec-sheet look.
 
 #[component]
-fn About(root: String) -> Element {
+fn Experience(root: String) -> Element {
     rsx! {
         section { class: "wrap page-head",
-            Label { prompt: "$".to_string(), text: "whoami".to_string() }
-            h1 { "About" }
-            figure { class: "portrait about-photo",
-                img {
-                    src: "{root}assets/portrait-about.jpg",
-                    srcset: "{root}assets/portrait-about.jpg 1x, {root}assets/portrait-about@2x.jpg 2x",
-                    alt: "Stan (Aisling) Leiva-Davila, smiling",
-                    width: "320",
-                    height: "320",
-                }
-            }
-            div { class: "prose",
-                p {
-                    "I taught myself C, C++ and Assembly in my late teens, and installed Debian on a
-                     PlayStation 3 with a custom Wi-Fi driver because I wanted to know if I could. Then
-                     aircraft-mechanic A&P coursework at Vaughn College: methodical troubleshooting, risk
-                     awareness, precision under pressure. A family emergency paused that degree; the
-                     habits stayed."
-                }
-                p {
-                    "Now I'm in the inaugural cohort of Pursuit's AI-Native Builder program, a 600+ hour
-                     in-person intensive in Long Island City, after Per Scholas IT Support (CompTIA A+,
-                     Google IT Support, ServiceNow ITSM). Most of what I build is Rust, and most of it
-                     makes a promise about what the program will not do."
-                }
-                p {
-                    "Before that: data analysis and lead generation at Architechne, and two and a half
-                     years running an Airbnb business solo. The same end-to-end ownership, applied to
-                     software."
-                }
+            h1 { "Experience" }
+            p { class: "deck",
+                "A client capstone, a terminal I'm building solo, data work, and a business I ran on
+                 my own. The same habit runs through all of it: own the thing end to end."
             }
         }
-
-        section { class: "wrap block",
-            h2 { class: "block-h", "How I work" }
+        section { class: "wrap block", "aria-labelledby": "jobs",
+            h2 { id: "jobs", class: "block-h", "Where I've worked" }
+            Timeline { education: false }
+        }
+        section { class: "wrap block", "aria-labelledby": "rules",
+            h2 { id: "rules", class: "block-h", "How I work" }
             div { class: "rules",
                 for r in RULES {
                     div { class: "rule",
@@ -743,37 +787,54 @@ fn About(root: String) -> Element {
                 }
             }
         }
-
-        section { class: "wrap block", id: "experience",
-            h2 { class: "block-h", "Experience" }
-            Timeline { education: false }
-        }
-        section { class: "wrap block", id: "education",
-            h2 { class: "block-h", "Education" }
-            Timeline { education: true }
-        }
-
-        section { class: "wrap block", id: "stack",
-            h2 { class: "block-h", "Stack" }
-            dl { class: "stack-dl",
+        section { class: "wrap block", "aria-labelledby": "stack",
+            h2 { id: "stack", class: "block-h", "Stack" }
+            dl { class: "nb-spec stack-dl",
                 for r in STACK {
-                    div { dt { "{r.dt}" } dd { "{r.dd}" } }
+                    dt { "{r.dt}" } dd { "{r.dd}" }
                 }
             }
+            p { class: "more", a { href: "{root}resume/", "The full résumé →" } }
         }
+    }
+}
 
-        section { class: "wrap block", id: "contact",
-            h2 { class: "block-h", "Contact" }
+#[component]
+fn School(root: String) -> Element {
+    rsx! {
+        section { class: "wrap page-head",
+            h1 { "School" }
+            p { class: "deck",
+                "Pursuit's AI-Native Builder program, Per Scholas IT Support, and aircraft-mechanic
+                 coursework at Vaughn College."
+            }
+        }
+        section { class: "wrap block", "aria-labelledby": "schools",
+            h2 { id: "schools", class: "block-h", "Programs and certificates" }
+            Timeline { education: true }
+            p { class: "more", a { href: "{root}work/", "What I built at Pursuit →" } }
+        }
+    }
+}
+
+#[component]
+fn Contact(root: String) -> Element {
+    rsx! {
+        section { class: "wrap page-head",
+            h1 { "Contact" }
+            p { class: "deck", "The fastest way to reach me is email. The form below sends me one too." }
+        }
+        section { class: "wrap block", "aria-labelledby": "write",
+            h2 { id: "write", class: "visually-hidden", "Write to me" }
             div { class: "contact",
                 div { class: "contact-direct",
-                    p { "The fastest way to reach me is email." }
                     p { class: "contact-mail", a { href: "mailto:{EMAIL}", "{EMAIL}" } }
                     p {
-                        a { class: "text-link", href: "https://www.linkedin.com/in/stan-leiva-davila/", "LinkedIn" }
+                        a { href: "https://www.linkedin.com/in/stan-leiva-davila/", "LinkedIn" }
                         " · "
-                        a { class: "text-link", href: "https://github.com/nessaisling-lab", "github.com/nessaisling-lab" }
+                        a { href: "https://github.com/nessaisling-lab", "github.com/nessaisling-lab" }
                         " · "
-                        a { class: "text-link", href: "https://github.com/aislingld-pursuit", "github.com/aislingld-pursuit" }
+                        a { href: "https://github.com/aislingld-pursuit", "github.com/aislingld-pursuit" }
                         " (Pursuit cohort work)"
                     }
                 }
@@ -788,9 +849,26 @@ fn About(root: String) -> Element {
                     input { id: "cf-email", "type": "email", name: "email", autocomplete: "email", required: "required" }
                     label { r#for: "cf-msg", "Message" }
                     textarea { id: "cf-msg", name: "message", rows: "5", required: "required" }
-                    button { class: "btn", "type": "submit", "Send" }
+                    button { class: "nb-btn is-primary", "type": "submit", "Send" }
                     p { class: "form-status", id: "formStatus", role: "status", "aria-live": "polite" }
                 }
+            }
+        }
+    }
+}
+
+/// The old About page. Its story is on Home now; site.js forwards old #anchors.
+#[component]
+fn Moved(root: String) -> Element {
+    rsx! {
+        section { class: "wrap page-head moved",
+            h1 { "About moved" }
+            p { class: "deck", "My story is on the home page now. You might be looking for:" }
+            div { class: "actions",
+                a { class: "nb-btn is-primary", href: "{root}", "Home" }
+                a { class: "nb-btn", href: "{root}experience/", "Experience" }
+                a { class: "nb-btn", href: "{root}school/", "School" }
+                a { class: "nb-btn", href: "{root}contact/", "Contact" }
             }
         }
     }
@@ -820,7 +898,6 @@ fn Timeline(education: bool) -> Element {
 fn Resume(root: String) -> Element {
     rsx! {
         section { class: "wrap page-head",
-            Label { prompt: "$".to_string(), text: "ls resume/".to_string() }
             h1 { "Résumé" }
             p { class: "deck", "One page, in Letter or Legal." }
             div { class: "actions",
@@ -828,7 +905,6 @@ fn Resume(root: String) -> Element {
             }
         }
         section { class: "wrap block",
-            Label { prompt: "$".to_string(), text: "cat resume.md".to_string() }
             Cv {}
         }
         section { class: "wrap block",
@@ -912,12 +988,11 @@ fn CvEntry(e: &'static resume::Entry) -> Element {
 fn NotFound(root: String) -> Element {
     rsx! {
         section { class: "wrap page-head",
-            Label { prompt: "$".to_string(), text: "cd here".to_string() }
             h1 { "Not found" }
             p { class: "deck", "No such page. It may have moved when the site went multi-page." }
             div { class: "actions",
                 a { class: "btn", href: "{root}", "Home" }
-                a { class: "btn ghost", href: "{root}work/", "Work" }
+                a { class: "nb-btn", href: "{root}work/", "Projects" }
             }
         }
     }

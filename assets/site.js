@@ -1,37 +1,26 @@
 // Progressive enhancement only. Every page works with this file blocked.
 (function () {
-  var root = document.documentElement;
 
   // Links people already have (an email, a résumé) point at the old one-page site's
-  // anchors. Send them to where that section lives now.
+  // anchors, or at the About page that folded into Home. Send them where it lives now.
   var moved = {
-    '#projects': 'work/', '#founder': 'work/nisaba/', '#experience': 'about/#experience',
-    '#documents': 'resume/', '#contact': 'about/#contact', '#about': 'about/'
+    '#projects': 'work/', '#founder': 'work/nisaba/', '#experience': 'experience/',
+    '#documents': 'resume/', '#contact': 'contact/', '#about': ''
   };
-  if (document.querySelector('.hero') && moved[location.hash]) {
-    location.replace(moved[location.hash]);
+  if (document.querySelector('.room') && moved[location.hash] !== undefined) {
+    location.replace(moved[location.hash] || './');
+    return;
+  }
+  var aboutMoved = { '#experience': 'experience/', '#education': 'school/', '#stack': 'experience/#stack', '#contact': 'contact/' };
+  if (document.querySelector('.moved')) {
+    location.replace('../' + (aboutMoved[location.hash] || ''));
     return;
   }
 
-  // Theme: follow the system until the reader picks; remember the pick if storage works.
-  // The button ships hidden, because without this script it would do nothing.
-  var btn = document.querySelector('.theme');
-  if (btn) {
-    var system = matchMedia('(prefers-color-scheme: dark)');
-    var isDark = function () {
-      return root.dataset.theme ? root.dataset.theme === 'dark' : system.matches;
-    };
-    var sync = function () { btn.setAttribute('aria-pressed', String(isDark())); };
-    btn.hidden = false;
-    sync();
-    system.addEventListener('change', sync);
-    btn.addEventListener('click', function () {
-      var next = isDark() ? 'light' : 'dark';
-      root.dataset.theme = next;
-      try { localStorage.setItem('theme', next); } catch (e) {}
-      sync();
-    });
-  }
+  // Reading settings (text size, spacing, contrast, day or evening, motion, finish), from
+  // the brand kit. Without the kit's script the slot stays empty and hidden.
+  var slot = document.querySelector('.settings-slot');
+  if (slot && window.NessBrand) NessBrand.settings.mount(slot);
 
   // Build recordings play while on screen, unless the reader prefers less motion.
   // Without this script they are ordinary videos with controls.

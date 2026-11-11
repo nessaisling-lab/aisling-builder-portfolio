@@ -1,0 +1,2 @@
+Models by Kenney (https://kenney.nl), from the All-in-1 pack 3.8.0, released under CC0 1.0 (public domain).
+Repainted to the Ness brand kit's colors and rendered matte by the kit's tools/render-library.mjs.
