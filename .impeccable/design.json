@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-12T19:20:22.529Z",
+  "generatedAt": "2026-11-12T19:47:40.019Z",
   "title": "Design System: Aisling Builder Portfolio",
   "extensions": {
     "sources": {
@@ -383,14 +383,14 @@
         "purpose": "The stack ziggurat on Experience; holds while pointed at or focused; none with reduced motion."
       },
       {
-        "name": "door-roll",
-        "value": "clip-path inset to 82% from the bottom, .7s, var(--ease)",
-        "purpose": "A hall door rolling up for the build on show; none with reduced motion."
-      },
-      {
         "name": "rise",
         "value": "translateY(8px) to 0, .3s, var(--ease)",
         "purpose": "Panels rising into place: a build coming on show in the hall, a build raised on Experience; none with reduced motion."
+      },
+      {
+        "name": "turntable",
+        "value": "live 3D, one clockwise turn in 12s; tiles 8s while pointed at or on show; drag to spin",
+        "purpose": "The Projects hall models; none with reduced motion."
       }
     ],
     "breakpoints": [
@@ -575,7 +575,7 @@
       "name": "Projects hall",
       "kind": "composite",
       "refersTo": "work/index.html .hall",
-      "description": "A garage seen down its middle (site/src/garage.rs): the walkthrough on the far wall with a play disc and a scrolling transcript, opaque HUD panels (about; spec sheet with share meters), the model turning on a turntable, roll-up doors that rise for the build on show, and a seven-tile select strip lit for the build on show and dimmed for the rest; class tabs and arrow keys. A column below 75rem.",
+      "description": "A garage seen down its middle (site/src/garage.rs) with one big roll-up door on the left wall: the walkthrough on the far wall with a play disc and a scrolling transcript, opaque HUD panels (about; spec sheet with share meters), the model drawn live in 3D (assets/turntable.js, three.js) turning on a turntable, a contact desk (computer, phone, fax; links to Contact) with a sticky note, and a seven-tile select strip lit for the build on show; class tabs and arrow keys. A column below 75rem.",
       "html": "<a class=\"ds-tile\">06 Gala Guest List Tool</a>",
       "css": ".ds-tile{display:block;padding:.6em .7em;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 2px var(--mark);font:800 .88rem var(--display);color:var(--ink)}"
     }

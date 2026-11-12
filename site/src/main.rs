@@ -19,6 +19,8 @@ use std::path::{Path, PathBuf};
 
 const STYLE: &str = include_str!("../assets/style.css");
 const SCRIPT: &str = include_str!("../assets/site.js");
+/// Live 3D for the Projects hall. It imports assets/vendor/three.module.min.js (three.js r169, MIT).
+const TURNTABLE: &str = include_str!("../assets/turntable.js");
 const SITE_URL: &str = "https://nessaisling-lab.github.io/aisling-builder-portfolio/";
 const NAME: &str = "Aisling (Stan) Leiva-Davila";
 const EMAIL: &str = "ness.aisling@gmail.com";
@@ -41,6 +43,7 @@ fn main() -> std::io::Result<()> {
 
     write(&out.join("assets/site.css"), &css(), &mut written)?;
     write(&out.join("assets/site.js"), SCRIPT, &mut written)?;
+    write(&out.join("assets/turntable.js"), TURNTABLE, &mut written)?;
 
     // The résumé's three sources. tools/build-resume.sh turns them into PDF, Word, txt, html.
     let cv = out.join("assets/docs/resume");
@@ -178,6 +181,12 @@ fn page(root: &str, path: &str, title: &str, desc: &str, body: Element) -> Strin
     let (t, d) = (esc(&full_title), esc(desc));
     let canonical = if path == "404" { SITE_URL.to_string() } else { format!("{SITE_URL}{path}") };
     let robots = if path == "404" { "<meta name=\"robots\" content=\"noindex\">\n" } else { "" };
+    // three.js loads on the Projects hall only, where the turntable needs it.
+    let three = if path == "work/" {
+        format!("<script type=\"module\" src=\"{root}assets/turntable.js\"></script>\n")
+    } else {
+        String::new()
+    };
     // Case studies share their own card (tools/og-cards.mjs); every other page, the site's.
     let og = match path.strip_prefix("work/").map(|s| s.trim_end_matches('/')) {
         Some(slug) if !slug.is_empty() => format!("assets/og/{slug}.png"),
@@ -218,6 +227,7 @@ fn page(root: &str, path: &str, title: &str, desc: &str, body: Element) -> Strin
          {footer}\n\
          <script src=\"{root}brand/ness.js\" defer></script>\n\
          <script src=\"{root}assets/site.js\" defer></script>\n\
+         {three}\
          </body>\n\
          </html>\n"
     )
@@ -269,7 +279,7 @@ fn Foot(root: String) -> Element {
                 p { class: "colophon",
                     "Rendered from Rust: Dioxus RSX in, static HTML out, no WASM. The skyline is drawn
                      by Rust at build time, and the desk's colours are held to WCAG 4.5:1 by a
-                     compile-time assertion. 3D models by Kenney (CC0). "
+                     compile-time assertion. 3D models by Kenney (CC0), drawn live with three.js (MIT). "
                     a { href: "https://github.com/nessaisling-lab/aisling-builder-portfolio/tree/main/site", "Source" }
                 }
             }
@@ -459,22 +469,32 @@ fn hall_order() -> Vec<&'static Build> {
 #[component]
 fn Work(root: String) -> Element {
     let builds = hall_order();
-    let doors: Vec<(&str, String)> = builds.iter().enumerate().map(|(i, b)| (b.slug, format!("{:02}", i + 1))).collect();
+    // Each tile's model for live 3D; turntable.js draws it, and the flipbook stands in until then.
+    let models: Vec<String> = builds.iter()
+        .map(|b| plate_model(b.slug).map(|(f, _)| format!("{root}brand/library/{f}-model.json")).unwrap_or_default())
+        .collect();
     rsx! {
         section { class: "hall", "aria-labelledby": "projects-h",
             div { class: "hall-box",
-                div { class: "hall-draw", dangerous_inner_html: garage::svg(&doors, ON_SHOW) }
+                div { class: "hall-draw", dangerous_inner_html: garage::svg() }
                 h1 { id: "projects-h", class: "hall-h1", "Projects" }
                 for (i, b) in builds.iter().enumerate() {
                     Show { root: root.clone(), n: i + 1, slug: b.slug.to_string() }
                 }
-                a { class: "neon", href: "{root}contact/", "aria-label": "Open to work: get in touch", "OPEN" }
                 // The earlier work, on a clipboard hung on the wall; pressing it opens the full log.
                 button { class: "clipboard", "type": "button", "popovertarget": "egg-log",
                     span { class: "clip-h", "Service log" }
                     for e in EARLIER { span { class: "clip-i", "{e.name}" } }
                 }
-                button { class: "toolbox", "type": "button", "popovertarget": "egg-kin", "aria-label": "The toolbox: kin, the work", "\u{121A5}" }
+                // The contact desk in the corner: computer, phone and fax; any of it opens Contact.
+                div { class: "desk-spot",
+                    a { class: "hall-desk", href: "{root}contact/",
+                        span { class: "visually-hidden", "Contact: write to me" }
+                        span { class: "desk-draw", dangerous_inner_html: garage::desk() }
+                    }
+                    // The note stuck to the computer: kiĝ₂, work, and a message.
+                    button { class: "sticky", "type": "button", "popovertarget": "egg-kin", "aria-label": "A note on the computer: kin, work and message", "\u{121A5}" }
+                }
                 // Classes, as a racing game sorts its cars; shown by site.js, which does the sorting.
                 div { class: "classes", role: "group", "aria-label": "Show", hidden: true,
                     button { "type": "button", "aria-pressed": "true", "data-group": "all", "All seven" }
@@ -485,6 +505,7 @@ fn Work(root: String) -> Element {
                     for (i, b) in builds.iter().enumerate() {
                         li { "data-group": if b.group == Group::Integrity { "integrity" } else { "team" },
                             a { class: "tile", href: "{root}work/{b.slug}/", "aria-current": if b.slug == ON_SHOW { "true" } else { "false" },
+                                "data-model": "{models[i]}",
                                 if let Some((file, _)) = plate_model(b.slug) {
                                     img { class: "plate-model turn", src: "{root}brand/library/{file}-turn.webp", alt: "", width: "44", height: "44" }
                                 }
@@ -512,8 +533,8 @@ fn Work(root: String) -> Element {
         }
         Card { id: "egg-kin".to_string(),
             p { class: "card-glyph", "aria-hidden": "true", "\u{121A5}" }
-            h3 { span { class: "nb-place", lang: "sux-Latn", "kin" } " · the work" }
-            p { "Sumerian for work: the older reading of the sign scholars now write kiĝ₂. On the home page it labels the projects on the laptop. Here it's stamped on the toolbox." }
+            h3 { span { class: "nb-place", lang: "sux-Latn", "kin" } " · work, and a message" }
+            p { "One Sumerian word, written with this sign, means both work and a message: kiĝ₂, read kin in older books. On the home page it labels the work on the laptop. Here, stuck to the computer, it's asking for yours." }
         }
     }
 }
@@ -578,7 +599,7 @@ fn Show(root: String, n: usize, slug: String) -> Element {
                 }
             }
             if let Some((file, _)) = model {
-                div { class: "turntable", "aria-hidden": "true",
+                div { class: "turntable", "aria-hidden": "true", "data-model": "{root}brand/library/{file}-model.json",
                     img { class: "turn", src: "{root}brand/library/{file}-turn-lg.webp", alt: "", width: "192", height: "192",
                         loading: if on { "eager" } else { "lazy" } }
                 }

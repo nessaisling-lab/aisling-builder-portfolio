@@ -30,7 +30,8 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 
 ## Easter eggs
 
-- The OPEN sign above the far wall: open to work, links to Contact.
+- The contact desk, bottom right (Aisling, Nov 12): computer, phone and fax; the whole desk links to Contact. A sticky note on the monitor: kiĝ₂/kin, work and message.
 - The service log on a clipboard: opens the earlier work.
-- The toolbox stamped 𒆥 kin, the work (verified for the home page): opens its card.
+- One big decorative roll-up door on the left wall replaces the seven doors (Aisling: they were redundant).
+- Live 3D models (three.js, vendored) replace the flipbooks on the turntable and strip (Aisling: the flipbooks were too choppy); the flipbooks stay as the fallback.
 - Nisaba has no walkthrough yet; its screen says so plainly.

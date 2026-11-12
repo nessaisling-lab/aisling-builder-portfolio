@@ -49,7 +49,8 @@
       });
       panel.hidden = false;
       tiles.forEach(function (a) { a.setAttribute('aria-current', slugOf(a) === slug ? 'true' : 'false'); });
-      hall.querySelectorAll('.g-bay').forEach(function (g) { g.classList.toggle('up', g.dataset.slug === slug); });
+      // turntable.js puts this build's model on the turntable.
+      hall.dispatchEvent(new CustomEvent('show', { detail: slug }));
       // Keep the build on show in view in the strip (on phones it scrolls sideways), never the page.
       var strip = hall.querySelector('.strip'), cur = tiles.find(function (a) { return slugOf(a) === slug; });
       if (cur && strip.scrollWidth > strip.clientWidth) strip.scrollLeft = cur.parentNode.offsetLeft - strip.offsetLeft - 16;

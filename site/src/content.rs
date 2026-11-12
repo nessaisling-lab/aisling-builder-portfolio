@@ -1096,7 +1096,7 @@ mod tests {
         paths.extend(GALLERY.iter().map(|s| s.src));
         // The turntable strip plays on the page; the still is what the link-preview cards use.
         let models: Vec<String> = PLATE_MODELS.iter()
-            .flat_map(|m| ["matte", "turn", "turn-lg"].map(|k| format!("brand/library/{}-{k}.webp", m.1)))
+            .flat_map(|m| ["matte.webp", "turn.webp", "turn-lg.webp", "model.json"].map(|k| format!("brand/library/{}-{k}", m.1)))
             .collect();
         paths.extend(models.iter().map(String::as_str));
         for p in paths {
