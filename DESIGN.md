@@ -270,7 +270,7 @@ The page is centred in a `--wrap` of 86rem with a gutter of `max(16px, 3.5vw)`. 
 
 **Inner pages** follow the kit's spec-sheet model: thin full-width rules between rows, label columns beside wide values. Case studies are a reading column beside a sticky 16 to 20rem spec panel. At 52rem and below every one of these collapses to one column, the spec panel unsticks and moves above the body, and on phones role, team and stack fold into a disclosure so the video comes first. At 46rem and below the top bar stops sticking and the five tabs take their own wrapping row so none hides off screen; the settings button shows its icon alone but keeps its words for screen readers.
 
-**The garage** (Projects) is one column inside the wrap: the title with its deck beside it, then the wall of bays (seven across; four at 75rem and below; two at 40rem, where each bay drops its stat and the model shrinks to 24px), then the lift centred at a 62rem maximum, then the floor. The lift's posts reach down to the floor's top edge. The floor is a full-bleed concrete band (`--floor`, line mixed 55% into the ground, with a 2px strong-hairline top edge); the workbench stands on it with the earlier work in four columns (two at 75rem, one at 40rem). At 64rem and below the raised build stacks its still above its text and the posts thin to 6px; the lift itself stays.
+**The hall** (Projects) is a fixed 1440 by 836 box like the sky chart: the drawing fills it and every panel sits by percentage, type scaling between 13.5 and 16px. The screen holds the centre of the far wall, the two HUD panels the top corners, the turntable the floor's centre, and the class tabs and seven-tile strip the bottom. Below 75rem it is a column: the title, the tabs, a sideways-scrolling strip that keeps the build on show in view, then that build's name and role, its walkthrough and transcript, its spec sheet and the turntable.
 
 **Experience (an-ki)** is a sky over a strip of earth. Above 75rem the sky is a fixed 1440 by 740 chart, drawn at build time by `site/src/sky.rs`, with every label placed by percentage of that box so words and drawing never drift; its type scales with the width between 13.5 and 16px. The meridian stands at 36% across; the ziggurat stands on the horizon at 80%, rising into the earth below, which runs down to the footer. Below 75rem the sky becomes a list down a meridian line on the left, facts as a wrapped row under each job, and the ziggurat becomes low terraces under the shrine, AI at the top and Rust at the foundation, each a collapsible (one open at a time) that opens to its tools.
 
@@ -285,7 +285,7 @@ Depth comes from objects and engraving, not from shadows. The finish is matte: s
 - **Pin and card lift** (`0 1px 2px var(--shadow)`): the enamel pin and the wall card.
 - **Drawer seat** (`inset 0 0 0 1px var(--desk-cut), 0 1px 0 var(--desk-cut)`): a drawer at rest; on hover or focus the outline darkens to ink-2 and the ledge moves above (`0 -1px 0`).
 - **Floating slip** (`0 0 0 1px var(--line-strong), 0 8px 20px -10px var(--shadow)`): the tablet's translation only.
-- **On the lift** (`0 18px 30px -22px var(--shadow)`): the raised build in the garage only, because it is the one object held up off the floor.
+- **The screen** (`0 0 0 1px var(--line-strong), 0 30px 50px -30px`, a dark drop): the walkthrough on the hall's far wall only, hung off the wall.
 
 ### Named Rules
 **The Matte Rule.** No glaze, sheen, glow or bloom on this site. `data-finish="matte"` is set on every page, and depth stays at a hairline and a 1px lift.
@@ -311,7 +311,7 @@ Kit buttons, quiet and firm.
 - **Phone:** see Layout (46rem).
 
 ### Plates
-The way to choose a project. A number column (plate number in tabular Archivo, with a matte Library model above it when the project has one; the model is a 72-view turntable strip that turns clockwise, 8s a turn, while the plate is hovered or focused, and keeps turning on the build that is up on the garage lift; still for reduced motion) beside the name and the project's hardest number. Paper White, 12px corners, the engraved double hairline; hover darkens the outer line to ink-2. On the home laptop they stand at least 84px tall in a numbered list.
+The way to choose a project. A number column (plate number in tabular Archivo, with a matte Library model above it when the project has one; the model is a 72-view turntable strip that turns clockwise, 8s a turn, while the plate is hovered or focused, and keeps turning on the tile of the build on show in the hall; still for reduced motion) beside the name and the project's hardest number. Paper White, 12px corners, the engraved double hairline; hover darkens the outer line to ink-2. On the home laptop they stand at least 84px tall in a numbered list.
 
 ### Wall card
 Her ID card pinned to the wall: Petrol Mist face, engraved double hairline, enamel pin. A 7.5rem 4:5 portrait beside the name, the place in Marcellus SC, and spec rows (Archivo label, 650 value) on hairlines; the open-to-work row leads with the green dot. Then the headline, a two-line story at 52ch, and the Résumé and Email buttons.
@@ -331,13 +331,13 @@ The kit's `nb-spec` for definition lists: a strong rule on top, a hairline under
 ### Timeline and rules
 Records on rules. The timeline is rows on hairlines under a strong top rule, with tabular dates in muted. Rule cards (Experience, School, Integrations) are a three-column set of engraved panels: a title, an ink-2 line, then the rule itself in ink.
 
-### The garage
-The Projects page. Every build parks in a numbered bay along the wall: a kit plate turned upright, model and number on one row over a hairline, then the name and the hardest number. The bay whose build is on the lift fills Soft Wash with a 2px petrol ring and carries `aria-current`.
-- **The lift:** two strong-hairline steel posts and a 12px arm bar, a muted lamp shade on a cord above. The raised build is a 12px engraved panel (still on the left, name, meta line, one-line summary, the hardest number in Archivo 800, and the primary Open the build). The lamp's light is a flat tint on that panel, 14% brass into Paper White falling from its top edge, never a glow past it.
-- **Inspection tags:** role and stack hang under the arms as small single-hairline plates on 2px cords.
-- **Raising:** without script each bay is a plain link to its case page and the client capstone stays up. With site.js a plain press raises that build in place (the panel rises 8px over 200ms; none with reduced motion), focuses its heading and writes `#slug` so the link reopens with it raised. Modified clicks still open the link.
-- **The workbench:** the earlier work as a service log on a Drawer Face bench with a clay top edge, entries on desk-cut hairlines.
-
+### The hall
+The Projects page: a garage seen down its middle, drawn at build time by `site/src/garage.rs`. Walls, floor and ceiling are the kit's ground mixed with ink (lit by day, dark by evening), with lamp-coloured lane lines and ceiling strips, and one corrugated roll-up door per build down the side walls; a door rolls up (its shutter clips upward over 0.7s) when its build comes on show.
+- **The screen:** the build's walkthrough, about 600px across at 1440, in a 0.6em black bezel on the far wall. Narrated walkthroughs never autoplay: a 64px play disc ringed in `--mark` sits on the poster, and the video's own controls stay. Under it, Read the walkthrough opens the narration as text in its own scrolling box, built from the same caption file.
+- **The panels:** two opaque engraved HUD panels. Left: the name, the meta line (number, kicker, year) under it, the one-liner, the role in `--mark`, Open the build. Right: the spec sheet, each figure in Archivo 800 tabular `--mark`, a meter bar only where the figure is a share (`a / b`), then stack chips.
+- **The turntable:** the build's model from the large turntable strip, turning clockwise, one turn in 12s, on a disc in the floor's light pool. Still for reduced motion.
+- **The select strip:** seven tiles along the floor, each model, number and name. The build on show is lit (surface fill, 2px `--mark` ring); the rest are dimmed by saturation and brightness, the showroom pattern of light rather than borders. Class tabs (All seven, Rust, Team & client) sort the strip; the arrow keys step through it. Without script each tile is a link and the capstone stays on show.
+- **Easter eggs:** the OPEN sign (open to work, to Contact), the service log on a paper clipboard (opens the earlier work), and the toolbox stamped with the kin sign (opens its card).
 ### The sky chart
 Experience. Night sky in the evening, a pale dawn by day (`--chart-top` to `--chart-bottom`). A fixed scatter of stars and a lamplit meridian in `--mark`; each job is a dashed track across the sky whose peak sits on the meridian, newest highest, with a star at the crossing and its facts as small dots along the track. Job labels alternate sides of the meridian: date in `--mark`, the job name as a button that opens its card, the role in ink-2. Pointing at a job turns its star into the cuneiform sign for star (mul).
 

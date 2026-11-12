@@ -17,36 +17,93 @@
     return;
   }
 
+  // Less motion if the reader asked for it, in Reading settings or in their system settings.
+  var calm = function () {
+    var m = document.documentElement.dataset.motion;
+    return m === 'reduce' || (m !== 'full' && matchMedia('(prefers-reduced-motion: reduce)').matches);
+  };
+
   // Reading settings (text size, spacing, contrast, day or evening, motion, finish), from
   // the brand kit. Without the kit's script the slot stays empty and hidden.
   var slot = document.querySelector('.settings-slot');
   if (slot && window.NessBrand) NessBrand.settings.mount(slot);
 
-  // Projects: pressing a bay raises that build onto the lift. Without this, each bay is a
-  // plain link to its build; a modified click (new tab, new window) still opens the link.
-  var lift = document.querySelector('.lift');
-  if (lift) {
-    var bays = document.querySelectorAll('.wall .nb-plate');
-    var raise = function (slug, focus) {
-      var panel = slug && document.getElementById('lift-' + slug);
-      if (!panel || !panel.classList.contains('raised')) return false;
-      lift.querySelectorAll('.raised').forEach(function (p) { p.hidden = p !== panel; });
-      bays.forEach(function (a) { a.setAttribute('aria-current', a.dataset.slug === slug ? 'true' : 'false'); });
+  // Projects: the hall. Pressing a tile in the select strip puts that build on show: its
+  // walkthrough on the far wall, its spec sheet, its model on the turntable, its door raised.
+  // The arrow keys step through the builds and the class tabs narrow the strip. Without this
+  // each tile is a plain link to its build and the capstone stays on show; a modified click
+  // (new tab, new window) still opens the link.
+  var hall = document.querySelector('.hall');
+  if (hall) {
+    var tiles = [].slice.call(hall.querySelectorAll('.tile'));
+    var slugOf = function (a) { return (a.getAttribute('href').match(/work\/([^/]+)\/$/) || [])[1]; };
+    var shown = function (a) { return !a.parentNode.hidden; };
+    var show = function (slug, focus) {
+      var panel = slug && document.getElementById('show-' + slug);
+      if (!panel || !panel.classList.contains('show')) return false;
+      hall.querySelectorAll('.show').forEach(function (s) {
+        if (s === panel) return;
+        s.hidden = true;
+        var v = s.querySelector('video');
+        if (v) v.pause();
+      });
+      panel.hidden = false;
+      tiles.forEach(function (a) { a.setAttribute('aria-current', slugOf(a) === slug ? 'true' : 'false'); });
+      hall.querySelectorAll('.g-bay').forEach(function (g) { g.classList.toggle('up', g.dataset.slug === slug); });
+      // Keep the build on show in view in the strip (on phones it scrolls sideways), never the page.
+      var strip = hall.querySelector('.strip'), cur = tiles.find(function (a) { return slugOf(a) === slug; });
+      if (cur && strip.scrollWidth > strip.clientWidth) strip.scrollLeft = cur.parentNode.offsetLeft - strip.offsetLeft - 16;
       if (focus) panel.querySelector('h2').focus();
       return true;
     };
-    bays.forEach(function (a) {
-      a.dataset.slug = (a.getAttribute('href').match(/work\/([^/]+)\/$/) || [])[1];
-      a.setAttribute('aria-controls', 'lift-' + a.dataset.slug);
+    // The big play button over each walkthrough; the video's own controls remain.
+    hall.querySelectorAll('.reel').forEach(function (r) {
+      var v = r.querySelector('video'), b = r.querySelector('.play');
+      if (!v || !b) return;
+      b.hidden = false;
+      b.addEventListener('click', function () { v.play(); });
+      v.addEventListener('play', function () { b.hidden = true; });
+      v.addEventListener('pause', function () { b.hidden = false; });
+      v.addEventListener('ended', function () { b.hidden = false; });
+    });
+    var pick = function (a, focus) {
+      if (!show(slugOf(a), focus)) return false;
+      history.replaceState(null, '', '#' + slugOf(a));
+      return true;
+    };
+    tiles.forEach(function (a) {
       a.addEventListener('click', function (e) {
         if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
-        if (raise(a.dataset.slug, true)) { e.preventDefault(); history.replaceState(null, '', '#' + a.dataset.slug); }
+        if (pick(a, true)) e.preventDefault();
       });
     });
-    var up = lift.querySelector('.raised:not([hidden])');
-    if (!raise(location.hash.slice(1), false) && up) raise(up.id.slice(5), false);
+    document.addEventListener('keydown', function (e) {
+      if ((e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') || e.altKey || e.ctrlKey || e.metaKey) return;
+      if (e.target.closest('input,textarea,select,video,[contenteditable],[popover]')) return;
+      var vis = tiles.filter(shown);
+      var i = vis.findIndex(function (a) { return a.getAttribute('aria-current') === 'true'; });
+      var next = vis[(i + (e.key === 'ArrowRight' ? 1 : -1) + vis.length) % vis.length];
+      if (next && pick(next, false)) { e.preventDefault(); next.focus(); }
+    });
+    var classes = hall.querySelector('.classes');
+    classes.hidden = false;
+    classes.addEventListener('click', function (e) {
+      var b = e.target.closest('button');
+      if (!b) return;
+      classes.querySelectorAll('button').forEach(function (x) { x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+      var g = b.dataset.group;
+      tiles.forEach(function (a) { a.parentNode.hidden = g !== 'all' && a.parentNode.dataset.group !== g; });
+      // If the build on show was sorted out of view, put the first one left on show.
+      if (!tiles.some(function (a) { return shown(a) && a.getAttribute('aria-current') === 'true'; })) {
+        var first = tiles.filter(shown)[0];
+        if (first) pick(first, false);
+      }
+    });
+    if (!show(location.hash.slice(1), false)) {
+      var on = hall.querySelector('.show:not([hidden])');
+      if (on) show(on.id.slice(5), false);
+    }
   }
-
   // Experience: the stack ziggurat turns slowly clockwise, like the plate models. Drag it, or use
   // the arrow keys, to turn it by hand; tabbing to a tool turns that side to face you. Each side
   // is shaded by how squarely it faces the lamp. Without this it stands still at an angle and
@@ -54,10 +111,6 @@
   var zig = document.querySelector('.zig');
   if (zig) {
     var model = zig.querySelector('.model'), wide = matchMedia('(min-width: 75rem)');
-    var calm = function () {
-      var m = document.documentElement.dataset.motion;
-      return m === 'reduce' || (m !== 'full' && matchMedia('(prefers-reduced-motion: reduce)').matches);
-    };
     var ry = 38, target = null, held = false, drag = null, moved = false, last = 0;
     var paint = function () {
       model.style.setProperty('--ry', ry.toFixed(2) + 'deg');
@@ -112,7 +165,7 @@
 
   // Build recordings play while on screen, unless the reader prefers less motion.
   // Without this script they are ordinary videos with controls.
-  var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var still = calm();
   var vids = document.querySelectorAll('video[data-autoplay]');
   if (!still && 'IntersectionObserver' in window && vids.length) {
     var io = new IntersectionObserver(function (entries) {

@@ -7,6 +7,7 @@
 //! subdirectory never has to be spelled out.
 
 mod content;
+mod garage;
 mod resume;
 mod sky;
 mod skyline;
@@ -440,102 +441,196 @@ fn Plate(root: String, n: usize, slug: String) -> Element {
 
 // ── work ─────────────────────────────────────────────────────────────────────
 
-/// The build up on the lift when the Projects page opens: the client capstone.
-const ON_THE_LIFT: &str = "gala-guest-list";
+/// The build on show when the Projects page opens: the client capstone.
+const ON_SHOW: &str = "gala-guest-list";
 
-/// The garage: every build parked in a numbered bay along the wall, one raised on the lift
-/// under the lamp, and the earlier work in the service log on the bench.
+/// The builds in hall order, Rust first, then team and client work. The hall's doors, the
+/// select strip and the arrow keys all follow it.
+fn hall_order() -> Vec<&'static Build> {
+    BUILDS.iter().filter(|b| b.group == Group::Integrity)
+        .chain(BUILDS.iter().filter(|b| b.group == Group::Team))
+        .collect()
+}
+
+/// Projects is a garage hall, drawn by garage.rs: the build on show turns on a turntable, its
+/// walkthrough plays on the far wall with the transcript under it, its spec sheet stands
+/// beside it, and a select strip along the floor picks the next one. Without script every
+/// tile is a link to its build and the capstone stays on show.
 #[component]
 fn Work(root: String) -> Element {
-    // Rust builds first, then team and client work, as they stand along the wall.
-    let builds: Vec<&Build> = BUILDS.iter().filter(|b| b.group == Group::Integrity)
-        .chain(BUILDS.iter().filter(|b| b.group == Group::Team))
-        .collect();
+    let builds = hall_order();
+    let doors: Vec<(&str, String)> = builds.iter().enumerate().map(|(i, b)| (b.slug, format!("{:02}", i + 1))).collect();
     rsx! {
-        section { class: "garage", "aria-labelledby": "garage-h",
-            div { class: "wrap bayroom",
-                div { class: "garage-head",
-                    h1 { id: "garage-h", "Projects" }
-                    p { class: "deck",
-                        "Most of it is Rust, because most of it makes a promise about what the program will "
-                        em { "not" }
-                        " do, and that is easier to hold when a compiler is checking it. Press a bay to
-                         raise that build onto the lift."
-                    }
+        section { class: "hall", "aria-labelledby": "projects-h",
+            div { class: "hall-box",
+                div { class: "hall-draw", dangerous_inner_html: garage::svg(&doors, ON_SHOW) }
+                h1 { id: "projects-h", class: "hall-h1", "Projects" }
+                for (i, b) in builds.iter().enumerate() {
+                    Show { root: root.clone(), n: i + 1, slug: b.slug.to_string() }
                 }
-                // Without script each bay is a link to its build; site.js makes a press raise it.
-                ol { class: "wall", "aria-label": "Every build",
+                a { class: "neon", href: "{root}contact/", "aria-label": "Open to work: get in touch", "OPEN" }
+                // The earlier work, on a clipboard hung on the wall; pressing it opens the full log.
+                button { class: "clipboard", "type": "button", "popovertarget": "egg-log",
+                    span { class: "clip-h", "Service log" }
+                    for e in EARLIER { span { class: "clip-i", "{e.name}" } }
+                }
+                button { class: "toolbox", "type": "button", "popovertarget": "egg-kin", "aria-label": "The toolbox: kin, the work", "\u{121A5}" }
+                // Classes, as a racing game sorts its cars; shown by site.js, which does the sorting.
+                div { class: "classes", role: "group", "aria-label": "Show", hidden: true,
+                    button { "type": "button", "aria-pressed": "true", "data-group": "all", "All seven" }
+                    button { "type": "button", "aria-pressed": "false", "data-group": "integrity", "Rust · a promise kept" }
+                    button { "type": "button", "aria-pressed": "false", "data-group": "team", "Team & client" }
+                }
+                ol { class: "strip", "aria-label": "Every build",
                     for (i, b) in builds.iter().enumerate() {
-                        Plate { root: root.clone(), n: i + 1, slug: b.slug.to_string() }
-                    }
-                }
-                div { class: "lift",
-                    span { class: "lamp", "aria-hidden": "true" }
-                    for b in builds.iter() {
-                        Raised { root: root.clone(), slug: b.slug.to_string() }
-                    }
-                }
-                // The concrete floor the lift stands on, with the workbench along it.
-                div { class: "floor",
-                    aside { class: "bench", "aria-labelledby": "bench-h",
-                        h2 { id: "bench-h", "Service log · earlier work" }
-                        ul {
-                            for e in EARLIER {
-                                li {
-                                    if e.href.is_empty() {
-                                        span { class: "bench-name", "{e.name}" }
-                                    } else {
-                                        a { class: "bench-name", href: "{e.href}", "{e.name}" }
-                                    }
-                                    span { class: "bench-line", "{e.line}" }
+                        li { "data-group": if b.group == Group::Integrity { "integrity" } else { "team" },
+                            a { class: "tile", href: "{root}work/{b.slug}/", "aria-current": if b.slug == ON_SHOW { "true" } else { "false" },
+                                if let Some((file, _)) = plate_model(b.slug) {
+                                    img { class: "plate-model turn", src: "{root}brand/library/{file}-turn.webp", alt: "", width: "44", height: "44" }
                                 }
+                                span { class: "tn", "{i + 1:02}" }
+                                span { class: "tt", "{b.name}" }
                             }
                         }
-                        p { class: "more",
-                            "The four Pursuit L2 builds also have their original write-ups, with measured numbers: "
-                            a { href: "https://nessaisling-lab.github.io/pursuit-l2-portfolio/", "pursuit-l2-portfolio →" }
+                    }
+                }
+            }
+        }
+        Card { id: "egg-log".to_string(),
+            h3 { "Service log · earlier work" }
+            ul { class: "card-log",
+                for e in EARLIER {
+                    li {
+                        if e.href.is_empty() { b { "{e.name}" } } else { a { href: "{e.href}", "{e.name}" } }
+                        span { "{e.line}" }
+                    }
+                }
+            }
+            p { "The four Pursuit L2 builds also have their original write-ups, with measured numbers: "
+                a { href: "https://nessaisling-lab.github.io/pursuit-l2-portfolio/", "pursuit-l2-portfolio →" }
+            }
+        }
+        Card { id: "egg-kin".to_string(),
+            p { class: "card-glyph", "aria-hidden": "true", "\u{121A5}" }
+            h3 { span { class: "nb-place", lang: "sux-Latn", "kin" } " · the work" }
+            p { "Sumerian for work: the older reading of the sign scholars now write kiĝ₂. On the home page it labels the projects on the laptop. Here it's stamped on the toolbox." }
+        }
+    }
+}
+
+/// One build on show: its walkthrough and transcript, what it is, its spec sheet, and its model
+/// on the turntable. Only `ON_SHOW` is visible until site.js shows another.
+#[component]
+fn Show(root: String, n: usize, slug: String) -> Element {
+    let b = BUILDS.iter().find(|b| b.slug == slug).expect("build exists");
+    let on = b.slug == ON_SHOW;
+    let spoken = b.media.as_ref().and_then(|m| m.captions).map(|c| {
+        transcript(&std::fs::read_to_string(site_root().join(c)).expect("captions file exists"))
+    });
+    let model = plate_model(b.slug);
+    let chips: Vec<&str> = b.stack.iter().take(5).copied().collect();
+    rsx! {
+        article { class: "show", id: "show-{b.slug}", hidden: !on, "aria-labelledby": "show-{b.slug}-h",
+            div { class: "screen",
+                if let Some(m) = &b.media {
+                    div { class: "reel",
+                        BuildVideo { root: root.clone(), slug: b.slug.to_string() }
+                        // A big play button over the poster; site.js shows it. Without script the
+                        // video's own controls do the job.
+                        if !m.autoplay {
+                            button { class: "play", "type": "button", hidden: true, "aria-label": "Play the walkthrough" }
                         }
                     }
+                } else {
+                    div { class: "no-reel",
+                        p { "No walkthrough for this one yet. The build page has the whole story." }
+                    }
+                }
+                if let Some(paras) = &spoken {
+                    details { class: "transcript",
+                        summary { "Read the walkthrough" }
+                        div { class: "tx", tabindex: "0", role: "region", "aria-label": "Walkthrough transcript",
+                            for para in paras { p { "{para}" } }
+                        }
+                    }
+                }
+            }
+            div { class: "hud about",
+                h2 { id: "show-{b.slug}-h", tabindex: "-1", "{b.name}" }
+                p { class: "kick", "{n:02} · {b.kicker} · {b.year}" }
+                p { class: "line", "{b.line}" }
+                p { class: "role", "{b.role}" }
+                a { class: "nb-btn is-primary", href: "{root}work/{b.slug}/", "Open the build" }
+            }
+            aside { class: "hud spec-sheet", "aria-label": "Spec",
+                p { class: "spec-h", "Spec" }
+                for f in b.figs {
+                    div { class: "sfig",
+                        b { "{f.v}" }
+                        span { "{f.k}" }
+                        if let Some(pct) = ratio(f.v) {
+                            span { class: "sbar", "aria-hidden": "true", i { style: "width:{pct:.1}%" } }
+                        }
+                    }
+                }
+                p { class: "schips",
+                    for c in chips { span { "{c}" } }
+                }
+            }
+            if let Some((file, _)) = model {
+                div { class: "turntable", "aria-hidden": "true",
+                    img { class: "turn", src: "{root}brand/library/{file}-turn-lg.webp", alt: "", width: "192", height: "192",
+                        loading: if on { "eager" } else { "lazy" } }
                 }
             }
         }
     }
 }
 
-/// A build up on the lift: its still, what it is, its hardest number, and the way in.
-/// Only the build in `ON_THE_LIFT` is visible until site.js raises another.
+/// A figure written as "a / b" as a share of 100, for its meter bar. Other figures get no bar:
+/// a bar needs a scale, and "250 buildings" has none.
+fn ratio(v: &str) -> Option<f64> {
+    let (a, b) = v.split_once('/')?;
+    let num = |s: &str| s.trim().replace(',', "").parse::<f64>().ok();
+    let (a, b) = (num(a)?, num(b)?);
+    (b > 0.0 && a <= b).then(|| a / b * 100.0)
+}
+
+/// A build's video: a silent build loop plays while on screen (if motion is allowed); a
+/// narrated walkthrough never autoplays and has its captions on.
 #[component]
-fn Raised(root: String, slug: String) -> Element {
+fn BuildVideo(root: String, slug: String) -> Element {
     let b = BUILDS.iter().find(|b| b.slug == slug).expect("build exists");
-    let up = b.slug == ON_THE_LIFT;
-    let still = b.media.as_ref().map(|m| (m.poster, m.w, m.h));
-    let model = plate_model(b.slug);
-    let stack = b.stack.iter().take(3).copied().collect::<Vec<_>>().join(" · ");
-    // The build sits on the arms; its role and stack hang underneath like inspection tags.
+    let m = b.media.as_ref().expect("build has media");
     rsx! {
-        article { class: "raised", id: "lift-{b.slug}", hidden: !up, "aria-labelledby": "lift-{b.slug}-h",
-            div { class: "raised-car",
-                div { class: "raised-still",
-                    if let Some((poster, w, h)) = still {
-                        img { src: "{root}{poster}", alt: "", width: "{w}", height: "{h}",
-                            loading: if up { "eager" } else { "lazy" } }
-                    } else if let Some((file, _)) = model {
-                        img { class: "raised-model turn", src: "{root}brand/library/{file}-turn.webp", alt: "", width: "96", height: "96" }
-                    }
-                }
-                div { class: "raised-text",
-                    h2 { id: "lift-{b.slug}-h", tabindex: "-1", "{b.name}" }
-                    p { class: "raised-meta", "{b.kicker}" }
-                    p { class: "raised-line", "{b.line}" }
-                    p { class: "raised-stat", "{b.stat}" }
-                    a { class: "nb-btn is-primary", href: "{root}work/{b.slug}/", "Open the build" }
-                }
+        if m.autoplay {
+            video {
+                src: "{root}{m.video}",
+                poster: "{root}{m.poster}",
+                width: "{m.w}",
+                height: "{m.h}",
+                // Boolean attributes take their own name as the value: dioxus-ssr writes a Rust
+                // `true` as `controls=true`, which HTML does not allow.
+                controls: "controls",
+                muted: "muted",
+                "loop": "loop",
+                playsinline: "playsinline",
+                preload: "none",
+                "aria-label": "{m.alt}",
+                "data-autoplay": "true",
             }
-            span { class: "arms", "aria-hidden": "true" }
-            dl { class: "under",
-                div { dt { "Role" } dd { "{b.role}" } }
-                if !stack.is_empty() {
-                    div { dt { "Stack" } dd { "{stack}" } }
+        } else {
+            video {
+                src: "{root}{m.video}",
+                poster: "{root}{m.poster}",
+                width: "{m.w}",
+                height: "{m.h}",
+                controls: "controls",
+                playsinline: "playsinline",
+                preload: "none",
+                "aria-label": "{m.alt}",
+                if let Some(c) = m.captions {
+                    track { kind: "captions", src: "{root}{c}", srclang: "en", label: "English", default: "default" }
                 }
             }
         }
@@ -614,39 +709,7 @@ fn Case(root: String, i: usize) -> Element {
                 div { class: "case-body",
                     if let Some(m) = &b.media {
                         figure { class: if m.w > m.h { "media wide" } else { "media tall" },
-                            if m.autoplay {
-                                // A silent build loop: plays while on screen, if motion is allowed.
-                                video {
-                                    src: "{root}{m.video}",
-                                    poster: "{root}{m.poster}",
-                                    width: "{m.w}",
-                                    height: "{m.h}",
-                                    // Boolean attributes take their own name as the value: dioxus-ssr
-                                    // writes a Rust `true` as `controls=true`, which HTML does not allow.
-                                    controls: "controls",
-                                    muted: "muted",
-                                    "loop": "loop",
-                                    playsinline: "playsinline",
-                                    preload: "none",
-                                    "aria-label": "{m.alt}",
-                                    "data-autoplay": "true",
-                                }
-                            } else {
-                                // A narrated walkthrough: never autoplays, captions on by default.
-                                video {
-                                    src: "{root}{m.video}",
-                                    poster: "{root}{m.poster}",
-                                    width: "{m.w}",
-                                    height: "{m.h}",
-                                    controls: "controls",
-                                    playsinline: "playsinline",
-                                    preload: "none",
-                                    "aria-label": "{m.alt}",
-                                    if let Some(c) = m.captions {
-                                        track { kind: "captions", src: "{root}{c}", srclang: "en", label: "English", default: "default" }
-                                    }
-                                }
-                            }
+                            BuildVideo { root: root.clone(), slug: b.slug.to_string() }
                             figcaption { "fig. 1 · {m.alt}" }
                         }
                     }

@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-12T18:23:38.834Z",
+  "generatedAt": "2026-11-12T19:20:22.529Z",
   "title": "Design System: Aisling Builder Portfolio",
   "extensions": {
     "sources": {
@@ -346,14 +346,14 @@
         "purpose": "The tablet's translation slip only."
       },
       {
-        "name": "on-the-lift",
-        "value": "0 18px 30px -22px var(--shadow)",
-        "purpose": "The raised build in the Projects garage only: the one object held up off the floor."
-      },
-      {
         "name": "card",
         "value": "inset 0 0 0 1px var(--line-strong), inset 0 0 0 4px var(--surface), inset 0 0 0 5px var(--line), 0 18px 40px -20px var(--shadow)",
         "purpose": "A card opened over the page (tools, jobs, easter eggs), over a dark scrim."
+      },
+      {
+        "name": "screen",
+        "value": "0 0 0 1px var(--line-strong), 0 30px 50px -30px rgb(0 0 0 / .7)",
+        "purpose": "The walkthrough screen on the hall's far wall only."
       }
     ],
     "motion": [
@@ -378,14 +378,19 @@
         "purpose": "The kit removes every animation and transition under prefers-reduced-motion or the Motion reading setting; build recordings do not autoplay."
       },
       {
-        "name": "rise",
-        "value": "translateY(8px) to 0, 200ms, var(--ease)",
-        "purpose": "A build raised onto the garage lift; removed with reduced motion by the kit."
-      },
-      {
         "name": "ziggurat-turn",
         "value": "rotateY, one turn in 40s, clockwise seen from above",
         "purpose": "The stack ziggurat on Experience; holds while pointed at or focused; none with reduced motion."
+      },
+      {
+        "name": "door-roll",
+        "value": "clip-path inset to 82% from the bottom, .7s, var(--ease)",
+        "purpose": "A hall door rolling up for the build on show; none with reduced motion."
+      },
+      {
+        "name": "rise",
+        "value": "translateY(8px) to 0, .3s, var(--ease)",
+        "purpose": "Panels rising into place: a build coming on show in the hall, a build raised on Experience; none with reduced motion."
       }
     ],
     "breakpoints": [
@@ -543,14 +548,6 @@
       "css": ".ds-label{display:block;font:700 .92rem/1 Archivo,Arial,sans-serif;margin:0 0 .35rem;color:var(--ink,oklch(0.22 0.02 225))}.ds-input{font:400 1.0625rem/1.55 \"Atkinson Hyperlegible Next\",Arial,sans-serif;color:var(--ink,oklch(0.22 0.02 225));background:var(--bg,oklch(0.955 0.008 210));border:1.5px solid var(--line-strong,oklch(0.6 0.02 220));border-radius:8px;padding:.65rem .75rem}.ds-input:focus-visible{border-color:var(--accent,oklch(0.45 0.075 212));outline:3px solid var(--accent,oklch(0.45 0.075 212));outline-offset:1px}"
     },
     {
-      "name": "Garage lift",
-      "kind": "composite",
-      "refersTo": "work/index.html .lift",
-      "description": "Projects page: steel posts and arms, a lamp shade, the raised build as an engraved panel lit by a flat brass tint, role and stack hanging under the arms as tags. site.js swaps which build is raised; without it every bay is a link.",
-      "html": "<div class=\"ds-lift\"><span class=\"ds-lamp\"></span><div class=\"ds-car\"><h3>Gala Guest List Tool</h3><p>180 of 223 PRs</p></div><span class=\"ds-arms\"></span><dl class=\"ds-tags\"><div><dt>Role</dt><dd>Technical director</dd></div></dl></div>",
-      "css": ".ds-lift{position:relative;padding:3.6rem 2.5rem 0}.ds-lift::before,.ds-lift::after{content:\"\";position:absolute;top:3rem;bottom:0;width:16px;background:var(--line-strong)}.ds-lift::before{left:0}.ds-lift::after{right:0}.ds-lamp{position:absolute;left:50%;top:1.25rem;width:7rem;height:1.5rem;margin-left:-3.5rem;border-radius:4rem 4rem .35rem .35rem;background:var(--muted)}.ds-car{padding:1.35rem 1.5rem;border-radius:12px;background:radial-gradient(ellipse 60% 75% at 50% 0,color-mix(in oklab,var(--brass) 14%,var(--surface)),var(--surface));box-shadow:inset 0 0 0 1px var(--line-strong),inset 0 0 0 4px var(--surface),inset 0 0 0 5px var(--line),0 18px 30px -22px var(--shadow)}.ds-arms{display:block;height:12px;margin:.9rem -2.5rem 0;border-radius:6px;background:var(--line-strong)}.ds-tags{display:flex;justify-content:center;margin-top:.7rem}.ds-tags div{padding:.4rem .75rem;background:var(--surface);border-radius:8px;box-shadow:inset 0 0 0 1px var(--line-strong)}"
-    },
-    {
       "name": "Sky chart",
       "kind": "composite",
       "refersTo": "experience/index.html .chart",
@@ -573,6 +570,14 @@
       "description": "An HTML popover card: engraved surface panel, close button, Archivo 800 title, plain lines. Tools say what they are and link only builds whose pages show them; job cards carry the whole entry; easter eggs carry their cuneiform sign.",
       "html": "<div class=\"ds-card\"><h3>Tailwind</h3><p>A CSS framework of small utility classes, written straight into the markup.</p></div>",
       "css": ".ds-card{max-width:24rem;padding:1.15rem 1.3rem;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line-strong),inset 0 0 0 4px var(--surface),inset 0 0 0 5px var(--line),0 18px 40px -20px var(--shadow)}"
+    },
+    {
+      "name": "Projects hall",
+      "kind": "composite",
+      "refersTo": "work/index.html .hall",
+      "description": "A garage seen down its middle (site/src/garage.rs): the walkthrough on the far wall with a play disc and a scrolling transcript, opaque HUD panels (about; spec sheet with share meters), the model turning on a turntable, roll-up doors that rise for the build on show, and a seven-tile select strip lit for the build on show and dimmed for the rest; class tabs and arrow keys. A column below 75rem.",
+      "html": "<a class=\"ds-tile\">06 Gala Guest List Tool</a>",
+      "css": ".ds-tile{display:block;padding:.6em .7em;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 2px var(--mark);font:800 .88rem var(--display);color:var(--ink)}"
     }
   ],
   "narrative": {

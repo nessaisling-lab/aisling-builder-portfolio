@@ -2,35 +2,35 @@
 version: 1
 slug: "work-index-html"
 primary_target: "work/index.html"
-related_targets: ["site/src/main.rs"]
+related_targets: ["site/src/main.rs","site/src/garage.rs"]
 ---
 
-# Projects garage
+# Projects: the hall
 
-Scope: the Projects index (`/work/`), rendered by `Work` in `site/src/main.rs`. Mode: Experience.
+Scope: the Projects index (`/work/`), rendered by `Work`, `Show` and `BuildVideo` in `site/src/main.rs`, with the scene drawn by `site/src/garage.rs`. Mode: Experience.
 Audience: employers, hiring managers, recruiters, Pursuit staff; often on a phone, a minute or two.
-Job: see every build at once, then look closely at one without leaving the page.
-Action: raise a project onto the lift, then open its case page.
-Proof: real builds and real figures from `content.rs`; nothing claimed that is not there.
-Constraints: PRODUCT.md (truth before polish, flat version first, sound off by default, client never named); the world is settled by DESIGN.md (home's desk and city, matte).
+Job: see how a build works and my role in it, from its walkthrough, then compare builds.
+Action: watch or read the walkthrough; pick another build; open the build page.
+Proof: BUILDS (figs, role, stack, media, captions) in `content.rs`; transcripts come from the same caption files the videos serve.
+Constraints: PRODUCT.md (truth before polish, client never named, no prices); narrated walkthroughs never autoplay (captions on); the world is DESIGN.md's (matte; desk clay; kit petrol).
 
 ## Direction contract
 
-THESIS: A workshop bay where one build is raised on the lift under a work lamp and the rest stand parked along the wall. Refuses the list of equal rows and the grid of equal cards.
+THESIS: A garage seen straight down its middle: the build on show turns on a turntable in the light, its walkthrough plays big on the far wall, and a select strip along the floor picks the next, the way a racing game's showroom does. Refuses the card grid and the list of rows.
 
-OWN-WORLD: The home world, moved into the garage: cool kit petrol for the steel (lift posts, arms, lamp shade) over the light wall, a concrete floor band, the workbench in the desk's brass and clay. Parked bays are kit plates with their matte Library models; the raised build sits on a wall-card panel with the double hairline. Archivo display, Atkinson body. Matte; the lamp is a soft pool of light, never a glow effect.
+OWN-WORLD: The kit's ground and ink mixed into walls, floor and ceiling (lit by day, dark by evening), lamp-coloured lane lines and ceiling strips, corrugated roll-up doors down both walls, engraved HUD panels, the desk's clay for the toolbox. Archivo display, Atkinson body, tabular figures. Matte.
 
-STORY: Seven builds, all visible; the client capstone is up first. The visitor reads its still, line, hardest number and role, presses another bay to raise that one, and opens the build they want.
+STORY: The visitor meets the capstone's walkthrough at the centre of the far wall, reads what it is and my role at the left, its spec sheet at the right, and sees its model turning. "Read the walkthrough" opens the narration as text. Pressing a tile, or the arrow keys, puts another build on show; its door rises.
 
-FIRST VIEWPORT: Tabs top right. Title and one-line deck top left. The wall of seven numbered bays across the top. Below it, centred, the lift: posts and arms either side, the lamp above, the raised build as a panel (video still left; kicker, name, line, stat, Open the build right), role and stack plates hanging under the arms. Workbench bottom right with the service log of earlier work. Primary action: Open the build on the raised panel.
+FIRST VIEWPORT: Tabs. The hall drawn edge to edge. Far wall centre: the walkthrough screen (about 600px at 1440) with "Read the walkthrough" under it. Left HUD: Projects, then number, kicker and year, name, line, role, Open the build. Right HUD: the spec sheet (figures, a meter where a figure is a share, stack chips). Floor centre: the turntable. Bottom: class tabs and the seven-tile select strip, the build on show lit, the rest dimmed.
 
-FORM: The lift and the wall, 4th of my 7, dealt second (Aisling, Nov 12). seed:6e8229c7ae5861d1. Signature interaction: pressing a bay raises it onto the lift (the panel swaps, the bay shows it is up); without script every bay is a plain link to its case page. Motion: the panel rises 8px into place, 200ms; none with reduced motion.
+FORM: The hall, 3rd of my 7, dealt lead and chosen by Aisling (Nov 12), iterated once: the walkthrough brought forward and large with its transcript, the select strip and class tabs added from showroom research (selection by light and saturation, not borders). seed:c7d9e26db95feafb. Signature interaction: a tile or arrow key puts a build on show; the model turns clockwise, 12s a turn; its door rises. Motion: still for reduced motion. Below 75rem a column: tabs, a swipeable strip, then the build on show.
 
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, DESIGN.md, and every shipping raster carrying its provenance
 
-## Adaptations and decisions
+## Easter eggs
 
-- Plate models chosen by Aisling Nov 12: walk-up tower (HouseCheck), books (Nisaba, the goddess of writing and accounting), desk (Excalidraw).
-- Title at top left, not bottom left as sketched: reading order.
-- The workbench runs along the floor under the lift, not beside it: the earlier-work copy stays whole and the lift stands centred, as FIRST VIEWPORT asks. It sits below the 1440x900 fold.
-- Finish review Nov 12: kicker moved after the name as a meta line, stat stripe removed, lamp light moved onto the raised panel, role and stack hang under the arms, phones keep the lift.
+- The OPEN sign above the far wall: open to work, links to Contact.
+- The service log on a clipboard: opens the earlier work.
+- The toolbox stamped 𒆥 kin, the work (verified for the home page): opens its card.
+- Nisaba has no walkthrough yet; its screen says so plainly.
