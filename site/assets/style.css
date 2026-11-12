@@ -112,6 +112,12 @@ body{min-height:100vh;text-rendering:optimizeLegibility;-webkit-font-smoothing:a
 .plates .nb-plate{height:100%;min-height:84px}
 .plates .nb-plate-s{font-size:.86rem}
 .plate-model{width:40px;height:40px;object-fit:contain}
+/* The 3D models turn clockwise on a turntable, like a car in a garage menu: a strip of 72 views
+   played with steps(). Still until hovered or focused; the build on the lift keeps turning. The
+   kit stops every animation for reduced motion, which leaves the first view. */
+.nb .turn{object-fit:cover;object-position:0 0;animation:turn 8s steps(72,jump-none) infinite paused}
+@keyframes turn{to{object-position:100% 0}}
+.nb a:hover .turn,.nb a:focus-visible .turn,.nb [aria-current="true"] .turn,.nb .raised-model.turn{animation-play-state:running}
 .nb-plate-no{min-width:3.25rem}
 .screen-more{margin-top:.75rem;font-size:.95rem}
 
@@ -210,7 +216,7 @@ body{min-height:100vh;text-rendering:optimizeLegibility;-webkit-font-smoothing:a
 @keyframes rise{from{transform:translateY(8px)}}
 .raised-still{display:grid;place-items:center;align-self:start;border-radius:8px;background:var(--soft)}
 .raised-still img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
-.raised-still .raised-model{width:10rem;height:10rem;aspect-ratio:1;object-fit:contain;margin:1rem auto}
+.raised-still .raised-model{width:7rem;height:7rem;margin:1.5rem auto}
 .raised-text{display:flex;flex-direction:column;align-items:flex-start}
 .raised h2{font:800 clamp(1.6rem,2.6vw,2.2rem)/1.05 var(--display);font-stretch:110%}
 .raised h2:focus{outline:0}

@@ -424,7 +424,7 @@ fn Plate(root: String, n: usize, slug: String) -> Element {
             a { class: "nb-plate", href: "{root}work/{b.slug}/",
                 span { class: "nb-plate-no",
                     if let Some((file, _)) = plate_model(b.slug) {
-                        img { class: "plate-model", src: "{root}brand/library/{file}-matte.webp", alt: "", width: "64", height: "64" }
+                        img { class: "plate-model turn", src: "{root}brand/library/{file}-turn.webp", alt: "", width: "64", height: "64" }
                     }
                     "{num}"
                 }
@@ -519,7 +519,7 @@ fn Raised(root: String, slug: String) -> Element {
                         img { src: "{root}{poster}", alt: "", width: "{w}", height: "{h}",
                             loading: if up { "eager" } else { "lazy" } }
                     } else if let Some((file, _)) = model {
-                        img { class: "raised-model", src: "{root}brand/library/{file}-matte.webp", alt: "", width: "160", height: "160" }
+                        img { class: "raised-model turn", src: "{root}brand/library/{file}-turn.webp", alt: "", width: "96", height: "96" }
                     }
                 }
                 div { class: "raised-text",

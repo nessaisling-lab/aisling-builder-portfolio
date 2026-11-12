@@ -994,7 +994,10 @@ mod tests {
             }
         }
         paths.extend(GALLERY.iter().map(|s| s.src));
-        let models: Vec<String> = PLATE_MODELS.iter().map(|m| format!("brand/library/{}-matte.webp", m.1)).collect();
+        // The turntable strip plays on the page; the still is what the link-preview cards use.
+        let models: Vec<String> = PLATE_MODELS.iter()
+            .flat_map(|m| ["matte", "turn"].map(|k| format!("brand/library/{}-{k}.webp", m.1)))
+            .collect();
         paths.extend(models.iter().map(String::as_str));
         for p in paths {
             assert!(root().join(p).is_file(), "missing asset: {p}");
