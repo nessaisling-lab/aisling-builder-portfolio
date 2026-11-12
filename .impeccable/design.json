@@ -453,8 +453,8 @@
       },
       {
         "path": "brand/library/*-matte.webp",
-        "source": "The plate model slot: one Kenney model per project, picked in the brand kit's Library, repainted to kit colours and rendered matte by the kit's tools/render-library.mjs, then copied into brand/library/. The project-to-model map is PLATE_MODELS in site/src/content.rs, which also states what each model shows. A plate whose project has no model shows its number alone. Rule: only Library renders go in this slot, and brand/library/LICENSE.txt must name the source pack and licence of every file there.",
-        "license": "CC0 1.0 (Kenney), brand/library/LICENSE.txt"
+        "source": "The plate model slot: one CC0 model per project (from Poly Pizza), picked in the brand kit's Library, repainted to kit colours and rendered matte by the kit's tools/render-library.mjs, then copied into brand/library/. The project-to-model map is PLATE_MODELS in site/src/content.rs, which also states what each model shows. A plate whose project has no model shows its number alone. Rule: only Library renders go in this slot, and brand/library/LICENSE.txt must name the source pack and licence of every file there.",
+        "license": "CC0 1.0 (Poly Pizza: Kenney, Quaternius, Kay, reyshapes), brand/library/LICENSE.txt"
       },
       {
         "path": "assets/portrait.jpg, assets/portrait@2x.jpg",

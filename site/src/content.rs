@@ -743,17 +743,17 @@ pub const GALLERY: &[Still] = &[
     },
 ];
 
-/// The Library model on each project's plate (brand/library/, by Kenney, CC0), with what it
-/// shows. HouseCheck keeps its own look (built with a teammate) and Nisaba has no 3D, so
-/// neither has one; a plate without a model shows its number alone.
+/// The Library model on each project's plate (brand/library/, CC0 models from Poly Pizza,
+/// credited in its LICENSE.txt), with what it shows. A plate without a model shows its number
+/// alone.
 pub const PLATE_MODELS: &[(&str, &str, &str)] = &[
-    ("gala-guest-list", "racing-kit--tent", "an event tent"),
-    ("resona", "furniture-kit--radio", "a vintage radio"),
-    ("siteassure", "city-kit-roads--construction-cone", "a traffic cone"),
-    ("ziqpu", "nature-kit--crops-wheatstageb", "ripe ears of wheat, for Spica, the ear of grain"),
-    ("housecheck", "modular-buildings--building-sample-tower-c", "a New York walk-up with a shopfront"),
-    ("nisaba", "furniture-kit--books", "a stack of books, for the goddess of writing and accounting"),
-    ("excalidraw", "furniture-kit--desk", "a desk"),
+    ("gala-guest-list", "poly-pizza--cocktail", "a cocktail glass"),
+    ("resona", "poly-pizza--radio", "a pocket radio"),
+    ("siteassure", "poly-pizza--cone", "a safety cone"),
+    ("ziqpu", "poly-pizza--wheat", "a sheaf of wheat, for Spica, the ear of grain"),
+    ("housecheck", "poly-pizza--walk-up", "a New York walk-up"),
+    ("nisaba", "poly-pizza--ledger", "a clasped ledger, for the goddess of writing and accounting"),
+    ("excalidraw", "poly-pizza--easel", "an easel with a canvas"),
 ];
 
 pub fn plate_model(slug: &str) -> Option<(&'static str, &'static str)> {

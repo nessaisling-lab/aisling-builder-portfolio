@@ -279,7 +279,8 @@ fn Foot(root: String) -> Element {
                 p { class: "colophon",
                     "Rendered from Rust: Dioxus RSX in, static HTML out, no WASM. The skyline is drawn
                      by Rust at build time, and the desk's colours are held to WCAG 4.5:1 by a
-                     compile-time assertion. 3D models by Kenney (CC0), drawn live with three.js (MIT). "
+                     compile-time assertion. 3D models by Kenney, Quaternius, Kay and reyshapes (CC0, via
+                     Poly Pizza), drawn live with three.js (MIT). "
                     a { href: "https://github.com/nessaisling-lab/aisling-builder-portfolio/tree/main/site", "Source" }
                 }
             }
