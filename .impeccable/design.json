@@ -84,15 +84,11 @@
       { "path": "brand/library/*-matte.webp", "source": "The plate model slot: one Kenney model per project, picked in the brand kit's Library, repainted to kit colours and rendered matte by the kit's tools/render-library.mjs, then copied into brand/library/. The project-to-model map is PLATE_MODELS in site/src/content.rs, which also states what each model shows. A plate whose project has no model shows its number alone. Rule: only Library renders go in this slot, and brand/library/LICENSE.txt must name the source pack and licence of every file there.", "license": "CC0 1.0 (Kenney), brand/library/LICENSE.txt" },
       { "path": "assets/portrait.jpg, assets/portrait@2x.jpg", "source": "Aisling's own photograph; wall-card portrait and the site-wide link card", "license": "Her own" },
       { "path": "assets/work/*/walkthrough-poster.jpg, assets/work/*/*.webp", "source": "Posters and stills from her own builds' walkthrough recordings. Capstone stills are frames from a re-recording on invented data with the client's identity swapped for a neutral stand-in, OCR- and Whisper-checked for the client's name (per site/src/content.rs). Per-file capture notes for the other projects are not recorded in the repo.", "license": "Her own work" },
-      { "path": "assets/og/*.png, assets/og-image.png", "source": "Rendered by tools/og-cards.mjs from content.rs and the portrait; still in the retired lab-notebook style (see drift)", "license": "Her own" },
+      { "path": "assets/og/*.png, assets/og-image.png", "source": "Rendered by tools/og-cards.mjs with the site's own built CSS (brand/ness.css + assets/site.css), facts and plate models from content.rs, the portrait, and the skyline from the built index.html", "license": "Her own" },
       { "path": "assets/favicon.svg, favicon-32.png, apple-touch-icon.png", "source": "Not recorded in the repo", "license": "Unverified" }
     ],
     "drift": [
-      "tools/og-cards.mjs and the shipped assets/og/*.png and og-image.png still use the retired lab-notebook system (Newsreader, IBM Plex Mono, paper #F4F1E9, rust #9A4012) and an uppercase letter-spaced 'Case study · kicker' label; the Newsreader and Plex files it loads are no longer in assets/fonts, so it cannot re-run as written.",
-      "assets/portrait-about.jpg and portrait-about@2x.jpg ship but nothing references them.",
       "site/assets/style.css keeps a legacy .btn/.ghost alias for older case-page markup; it is not a system component.",
-      "The kit's primary button has no hover change (.nb-btn:hover and .nb-btn.is-primary have equal specificity and the fill rule comes later); only the focus ring marks it. Not recorded as a rule.",
-      "The Sumerian words are an open decision in the direction contract: not yet verified against a source.",
       "The direction contract names four ID rows on the wall card; the build ships name, place and two rows (Builds with, Status). The build is recorded."
     ]
   },

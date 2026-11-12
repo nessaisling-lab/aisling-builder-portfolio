@@ -1,13 +1,14 @@
-// Renders one 1200x630 link-preview card per case study into assets/og/{slug}.png.
+// Renders one 1200x630 link-preview card per case study into assets/og/{slug}.png, and the
+// site-wide card, assets/og-image.png. Both are drawn with the site's own built CSS (brand kit
+// plus assets/site.css), so a card can never drift from the page's colours, fonts or desk.
 // Reads the facts from site/src/content.rs, so a card never says something the page doesn't.
-// Text only: the video posters are title cards, so cropping one beside the text repeats it.
-// Also renders the site-wide card, assets/og-image.png, from the hero portrait.
-// Run after changing a build's name, kicker, line or stat, or the portrait:
+// Run after `cargo run` whenever a build's name, kicker, line, stat or plate model changes,
+// or the portrait:
 //   NODE_PATH=<dir with playwright> node tools/og-cards.mjs
 // Commit the PNGs; the site build only links to them.
 import { readFileSync, mkdirSync } from 'node:fs';
 import { join, dirname } from 'node:path';
-import { fileURLToPath } from 'node:url';
+import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createRequire } from 'node:module';
 
 const { chromium } = createRequire(import.meta.url)('playwright');
@@ -24,65 +25,61 @@ const builds = src.split('pub const BUILDS: &[Build] = &[')[1].split(/\n    Buil
   }
   return f;
 });
+const models = Object.fromEntries([...src.matchAll(/\("([a-z0-9-]+)", "([a-z0-9-]+--[a-z0-9-]+)", "/g)].map((m) => [m[1], m[2]]));
 
-// Inlined as data: URLs; a page loaded with setContent can't fetch file:// resources.
-const font = (file) => `data:font/woff2;base64,${readFileSync(join(root, 'assets/fonts', file)).toString('base64')}`;
 const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;');
-const card = (b) => {
-  return `<!doctype html><meta charset="utf-8"><style>
-@font-face{font-family:N;font-weight:400 500;src:url(${font('newsreader.woff2')})}
-@font-face{font-family:M;font-weight:400;src:url(${font('plex-mono-400.woff2')})}
-@font-face{font-family:M;font-weight:500;src:url(${font('plex-mono-500.woff2')})}
-*{margin:0;box-sizing:border-box}
-body{width:1200px;height:630px;display:flex;background:#F4F1E9;color:#171A1F;overflow:hidden}
-.t{flex:1;padding:64px 72px;display:flex;flex-direction:column}
-.k{font:500 21px/1 M;letter-spacing:.06em;text-transform:uppercase;color:#9A4012}
-h1{font:500 ${b.name.length > 18 ? 64 : 84}px/1.02 N;letter-spacing:-.015em;margin-top:34px}
-.r{width:90px;height:3px;background:#9A4012;margin:30px 0 26px}
-.l{font:400 27px/1.38 N;color:#585C63;max-width:960px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
-.s{margin-top:auto;font:500 30px/1.2 M;color:#171A1F;border-left:4px solid #9A4012;padding-left:16px}
-.u{margin-top:22px;font:400 19px/1 M;color:#9A4012}
-</style><body><div class="t">
-<p class="k">Case study · ${esc(b.kicker)}</p><h1>${esc(b.name)}</h1><div class="r"></div>
-<p class="l">${esc(b.line)}</p><p class="s">${esc(b.stat)}</p>
-<p class="u">nessaisling-lab.github.io/aisling-builder-portfolio</p></div></body>`;
+const URL_TEXT = 'nessaisling-lab.github.io/aisling-builder-portfolio';
+// Day world, matte, on the page's own classes. The desk band runs along the bottom like home.
+const shell = (body) => `<!doctype html><html lang="en" data-theme="light" data-finish="matte"><meta charset="utf-8">
+<link rel="stylesheet" href="brand/ness.css"><link rel="stylesheet" href="assets/site.css"><style>
+html,body{width:1200px;height:630px;overflow:hidden}
+body{margin:0;background:var(--surface);position:relative}
+.og{position:absolute;inset:44px 56px 104px;display:grid;gap:44px}
+.og .card{grid-area:auto;align-self:stretch;margin:0;padding:34px 38px;display:flex;flex-direction:column}
+.og .window{grid-area:auto;align-self:stretch;margin:10px 10px 30px;height:auto}
+.band{position:absolute;left:0;right:0;bottom:0;height:72px;background:var(--desk-front);border-top:16px solid var(--desk-top);
+  box-shadow:inset 0 1px 0 var(--desk-cut);display:flex;align-items:center;padding:0 56px}
+.u{font:600 22px/1 var(--display);font-stretch:106%;color:var(--ink-2)}
+</style><body class="nb">${body}<div class="band"><p class="u">${URL_TEXT}</p></div></body></html>`;
+
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
+// Load the real home page first: setContent keeps its URL, so the relative CSS, fonts and
+// images below resolve against the repo root. The skyline comes from the built page too.
+await page.goto(pathToFileURL(join(root, 'index.html')).href, { waitUntil: 'load' });
+const skyline = await page.evaluate(() => document.querySelector('.window')?.innerHTML ?? '');
+if (!skyline) throw new Error('index.html has no .window skyline; run `cargo run` in site/ first');
+const shoot = async (html, out) => {
+  await page.setContent(html, { waitUntil: 'load' });
+  await page.evaluate(() => document.fonts.ready);
+  await page.screenshot({ path: join(root, out) });
+  console.log(out);
 };
 
 mkdirSync(join(root, 'assets/og'), { recursive: true });
-const browser = await chromium.launch();
-const page = await browser.newPage({ viewport: { width: 1200, height: 630 } });
 for (const b of builds) {
   if (!b.slug || !b.stat) throw new Error(`build missing slug or stat: ${JSON.stringify(b)}`);
-  await page.setContent(card(b), { waitUntil: 'load' });
-  await page.evaluate(() => document.fonts.ready);
-  await page.screenshot({ path: join(root, 'assets/og', `${b.slug}.png`) });
-  console.log(`assets/og/${b.slug}.png`);
+  const m = models[b.slug];
+  await shoot(shell(`<div class="og" style="grid-template-columns:${m ? '1fr 210px' : '1fr'}">
+<section class="card"><span class="pin"></span>
+<p style="font:600 22px/1.2 var(--display);color:var(--muted)">${esc(b.kicker)}</p>
+<h1 style="font-size:${b.name.length > 18 ? 58 : 72}px;line-height:1.02;margin-top:14px;max-width:none;text-wrap:balance">${esc(b.name)}</h1>
+<p style="font-size:26px;line-height:1.38;color:var(--ink-2);margin-top:16px;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden">${esc(b.line)}</p>
+<p style="margin-top:auto;font:800 28px/1.2 var(--display);font-stretch:106%;color:var(--ink);border-left:5px solid var(--brass-deep);padding-left:16px">${esc(b.stat)}</p>
+</section>${m ? `<img src="brand/library/${m}-matte.webp" alt="" style="align-self:center;width:210px;height:210px;object-fit:contain">` : ''}
+</div>`), `assets/og/${b.slug}.png`);
 }
 
-// The site-wide card (every page that isn't a case study): name, line and the hero portrait.
-const photo = `data:image/jpeg;base64,${readFileSync(join(root, 'assets/portrait@2x.jpg')).toString('base64')}`;
-await page.setContent(`<!doctype html><meta charset="utf-8"><style>
-@font-face{font-family:N;font-weight:400 500;src:url(${font('newsreader.woff2')})}
-@font-face{font-family:N;font-style:italic;font-weight:400;src:url(${font('newsreader-italic.woff2')})}
-@font-face{font-family:M;font-weight:400;src:url(${font('plex-mono-400.woff2')})}
-@font-face{font-family:M;font-weight:500;src:url(${font('plex-mono-500.woff2')})}
-*{margin:0;box-sizing:border-box}
-body{width:1200px;height:630px;display:flex;background:#F4F1E9;color:#171A1F;overflow:hidden}
-.t{flex:1;padding:64px 72px;display:flex;flex-direction:column}
-.k{font:500 21px/1 M;letter-spacing:.06em;text-transform:uppercase;color:#9A4012}
-h1{font:500 76px/1.04 N;letter-spacing:-.015em;margin-top:34px}
-h1 em{font-style:italic;font-weight:400;color:#9A4012}
-.r{width:90px;height:3px;background:#9A4012;margin:30px 0 24px}
-.l{font:400 30px/1.3 N}
-.s{margin-top:16px;font:400 19px/1.5 M;color:#585C63}
-.u{margin-top:auto;font:400 19px/1 M;color:#9A4012}
-.p{width:430px;border-left:6px solid #9A4012;background:url(${photo}) center 30%/cover}
-</style><body><div class="t">
-<p class="k">Builder portfolio · New York</p><h1>Stan <em>(Aisling)</em><br>Leiva-Davila</h1><div class="r"></div>
-<p class="l">Software engineer, Rust-first</p>
-<p class="s">Verifiable systems · On-device AI · Data integration</p>
-<p class="u">nessaisling-lab.github.io/aisling-builder-portfolio</p></div><div class="p"></div></body>`, { waitUntil: 'load' });
-await page.evaluate(() => document.fonts.ready);
-await page.screenshot({ path: join(root, 'assets/og-image.png') });
-console.log('assets/og-image.png');
+// The site-wide card (every page that isn't a case study): her wall card beside the window.
+await shoot(shell(`<div class="og" style="grid-template-columns:600px 1fr">
+<section class="card"><span class="pin"></span>
+<div style="display:grid;grid-template-columns:120px 1fr;gap:22px;align-items:center">
+<img class="id-photo" src="assets/portrait@2x.jpg" alt="" style="width:120px">
+<div><p style="font:800 32px/1.1 var(--display);font-stretch:108%;text-wrap:balance">Aisling (Stan) Leiva-Davila</p>
+<p class="nb-place" style="font-size:22px;color:var(--ink-2);margin-top:8px">New York</p>
+<p style="font:600 21px/1.3 var(--body);color:var(--ink-2);margin-top:6px">AI-native builder, Rust first</p></div></div>
+<h1 style="font-size:44px;line-height:1.05;margin-top:auto">I build with AI the way a smith works a forge.</h1>
+</section>
+<div class="window" aria-hidden="true">${skyline}</div>
+</div>`), 'assets/og-image.png');
 await browser.close();

@@ -31,6 +31,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 ## Open decisions
 
 - Headline and story wording: draft, to talk through with Aisling.
-- Sumerian words (dub-sar, ki-en-gi, kin, e2-dub-ba, giš-ḫur): verify each against a source before shipping.
-- Which models from the kit Library stand on the plates; ASCILINE loader; sound control placement.
+- Sumerian words: verified Nov 11 (dub-sar scribe, ki-en-gi Sumer, kin work as the older reading of kiĝ₂, é-dub-ba tablet house; ePSD2 via Wiktionary). giš-ḫur is unused.
+- Plate models chosen by Aisling Nov 11: tent (Gala), radio (Resona), cone (SiteAssure), ripe wheat for Spica (Ziqpu).
+- Still open: ASCILINE loader; sound control placement.
 - Worlds for Projects (garage or factory), Experience, Integrations, School: ask as each is reached.
