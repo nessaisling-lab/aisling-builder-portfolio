@@ -301,7 +301,7 @@ Kit buttons, quiet and firm.
 - **Phone:** see Layout (46rem).
 
 ### Plates
-The way to choose a project. A number column (plate number in tabular Archivo, with a 40px matte Library model above it when the project has one) beside the name and the project's hardest number. Paper White, 12px corners, the engraved double hairline; hover darkens the outer line to ink-2. On the home laptop they stand at least 84px tall in a numbered list.
+The way to choose a project. A number column (plate number in tabular Archivo, with a matte Library model above it when the project has one; the model is a 72-view turntable strip that turns clockwise, 8s a turn, while the plate is hovered or focused, and keeps turning on the build that is up on the garage lift; still for reduced motion) beside the name and the project's hardest number. Paper White, 12px corners, the engraved double hairline; hover darkens the outer line to ink-2. On the home laptop they stand at least 84px tall in a numbered list.
 
 ### Wall card
 Her ID card pinned to the wall: Petrol Mist face, engraved double hairline, enamel pin. A 7.5rem 4:5 portrait beside the name, the place in Marcellus SC, and spec rows (Archivo label, 650 value) on hairlines; the open-to-work row leads with the green dot. Then the headline, a two-line story at 52ch, and the Résumé and Email buttons.
