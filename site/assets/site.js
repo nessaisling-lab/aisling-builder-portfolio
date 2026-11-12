@@ -22,6 +22,31 @@
   var slot = document.querySelector('.settings-slot');
   if (slot && window.NessBrand) NessBrand.settings.mount(slot);
 
+  // Projects: pressing a bay raises that build onto the lift. Without this, each bay is a
+  // plain link to its build; a modified click (new tab, new window) still opens the link.
+  var lift = document.querySelector('.lift');
+  if (lift) {
+    var bays = document.querySelectorAll('.wall .nb-plate');
+    var raise = function (slug, focus) {
+      var panel = slug && document.getElementById('lift-' + slug);
+      if (!panel || !panel.classList.contains('raised')) return false;
+      lift.querySelectorAll('.raised').forEach(function (p) { p.hidden = p !== panel; });
+      bays.forEach(function (a) { a.setAttribute('aria-current', a.dataset.slug === slug ? 'true' : 'false'); });
+      if (focus) panel.querySelector('h2').focus();
+      return true;
+    };
+    bays.forEach(function (a) {
+      a.dataset.slug = (a.getAttribute('href').match(/work\/([^/]+)\/$/) || [])[1];
+      a.setAttribute('aria-controls', 'lift-' + a.dataset.slug);
+      a.addEventListener('click', function (e) {
+        if (e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+        if (raise(a.dataset.slug, true)) { e.preventDefault(); history.replaceState(null, '', '#' + a.dataset.slug); }
+      });
+    });
+    var up = lift.querySelector('.raised:not([hidden])');
+    if (!raise(location.hash.slice(1), false) && up) raise(up.id.slice(5), false);
+  }
+
   // Build recordings play while on screen, unless the reader prefers less motion.
   // Without this script they are ordinary videos with controls.
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;

@@ -439,59 +439,102 @@ fn Plate(root: String, n: usize, slug: String) -> Element {
 
 // ── work ─────────────────────────────────────────────────────────────────────
 
+/// The build up on the lift when the Projects page opens: the client capstone.
+const ON_THE_LIFT: &str = "gala-guest-list";
+
+/// The garage: every build parked in a numbered bay along the wall, one raised on the lift
+/// under the lamp, and the earlier work in the service log on the bench.
 #[component]
 fn Work(root: String) -> Element {
+    // Rust builds first, then team and client work, as they stand along the wall.
+    let builds: Vec<&Build> = BUILDS.iter().filter(|b| b.group == Group::Integrity)
+        .chain(BUILDS.iter().filter(|b| b.group == Group::Team))
+        .collect();
     rsx! {
-        section { class: "wrap page-head",
-            h1 { "Projects" }
-            p { class: "deck",
-                "Most of it is Rust, because most of it makes a promise about what the program will "
-                em { "not" }
-                " do, and that is easier to hold when a compiler is checking it. Each build has a page:
-                 what it is, how it works, the hard part, and what it doesn't do."
-            }
-        }
-        WorkGroup { root: root.clone(), integrity: true,
-            title: "Rust, and a promise the program keeps".to_string() }
-        WorkGroup { root: root.clone(), integrity: false,
-            title: "Team and client work".to_string() }
-        section { class: "wrap block",
-            ul { class: "earlier",
-                for e in EARLIER {
-                    li {
-                        if e.href.is_empty() {
-                            span { class: "earlier-name", "{e.name}" }
-                        } else {
-                            a { class: "earlier-name", href: "{e.href}", "{e.name}" }
-                        }
-                        span { class: "earlier-line", "{e.line}" }
+        section { class: "garage", "aria-labelledby": "garage-h",
+            div { class: "wrap bayroom",
+                div { class: "garage-head",
+                    h1 { id: "garage-h", "Projects" }
+                    p { class: "deck",
+                        "Most of it is Rust, because most of it makes a promise about what the program will "
+                        em { "not" }
+                        " do, and that is easier to hold when a compiler is checking it. Press a bay to
+                         raise that build onto the lift."
                     }
                 }
-            }
-            p { class: "more",
-                "The four Pursuit L2 builds also have their original write-ups, with measured numbers: "
-                a { class: "text-link", href: "https://nessaisling-lab.github.io/pursuit-l2-portfolio/", "pursuit-l2-portfolio →" }
+                // Without script each bay is a link to its build; site.js makes a press raise it.
+                ol { class: "wall", "aria-label": "Every build",
+                    for (i, b) in builds.iter().enumerate() {
+                        Plate { root: root.clone(), n: i + 1, slug: b.slug.to_string() }
+                    }
+                }
+                div { class: "lift",
+                    span { class: "lamp", "aria-hidden": "true" }
+                    for b in builds.iter() {
+                        Raised { root: root.clone(), slug: b.slug.to_string() }
+                    }
+                }
+                // The concrete floor the lift stands on, with the workbench along it.
+                div { class: "floor",
+                    aside { class: "bench", "aria-labelledby": "bench-h",
+                        h2 { id: "bench-h", "Service log · earlier work" }
+                        ul {
+                            for e in EARLIER {
+                                li {
+                                    if e.href.is_empty() {
+                                        span { class: "bench-name", "{e.name}" }
+                                    } else {
+                                        a { class: "bench-name", href: "{e.href}", "{e.name}" }
+                                    }
+                                    span { class: "bench-line", "{e.line}" }
+                                }
+                            }
+                        }
+                        p { class: "more",
+                            "The four Pursuit L2 builds also have their original write-ups, with measured numbers: "
+                            a { href: "https://nessaisling-lab.github.io/pursuit-l2-portfolio/", "pursuit-l2-portfolio →" }
+                        }
+                    }
+                }
             }
         }
     }
 }
 
+/// A build up on the lift: its still, what it is, its hardest number, and the way in.
+/// Only the build in `ON_THE_LIFT` is visible until site.js raises another.
 #[component]
-fn WorkGroup(root: String, integrity: bool, title: String) -> Element {
-    let want = if integrity { Group::Integrity } else { Group::Team };
+fn Raised(root: String, slug: String) -> Element {
+    let b = BUILDS.iter().find(|b| b.slug == slug).expect("build exists");
+    let up = b.slug == ON_THE_LIFT;
+    let still = b.media.as_ref().map(|m| (m.poster, m.w, m.h));
+    let model = plate_model(b.slug);
+    let stack = b.stack.iter().take(3).copied().collect::<Vec<_>>().join(" · ");
+    // The build sits on the arms; its role and stack hang underneath like inspection tags.
     rsx! {
-        section { class: "wrap block",
-            h2 { class: "block-h", "{title}" }
-            ul { class: "log",
-                for b in BUILDS.iter().filter(|b| b.group == want) {
-                    li {
-                        a { class: "log-row", href: "{root}work/{b.slug}/",
-                            span { class: "log-name", "{b.name}" }
-                            span { class: "log-line", "{b.line}" }
-                            span { class: "log-stat", "{b.stat}" }
-                            span { class: "log-year", "{b.year}" }
-                        }
+        article { class: "raised", id: "lift-{b.slug}", hidden: !up, "aria-labelledby": "lift-{b.slug}-h",
+            div { class: "raised-car",
+                div { class: "raised-still",
+                    if let Some((poster, w, h)) = still {
+                        img { src: "{root}{poster}", alt: "", width: "{w}", height: "{h}",
+                            loading: if up { "eager" } else { "lazy" } }
+                    } else if let Some((file, _)) = model {
+                        img { class: "raised-model", src: "{root}brand/library/{file}-matte.webp", alt: "", width: "160", height: "160" }
                     }
+                }
+                div { class: "raised-text",
+                    h2 { id: "lift-{b.slug}-h", tabindex: "-1", "{b.name}" }
+                    p { class: "raised-meta", "{b.kicker}" }
+                    p { class: "raised-line", "{b.line}" }
+                    p { class: "raised-stat", "{b.stat}" }
+                    a { class: "nb-btn is-primary", href: "{root}work/{b.slug}/", "Open the build" }
+                }
+            }
+            span { class: "arms", "aria-hidden": "true" }
+            dl { class: "under",
+                div { dt { "Role" } dd { "{b.role}" } }
+                if !stack.is_empty() {
+                    div { dt { "Stack" } dd { "{stack}" } }
                 }
             }
         }

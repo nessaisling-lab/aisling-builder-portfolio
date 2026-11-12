@@ -751,6 +751,9 @@ pub const PLATE_MODELS: &[(&str, &str, &str)] = &[
     ("resona", "furniture-kit--radio", "a vintage radio"),
     ("siteassure", "city-kit-roads--construction-cone", "a traffic cone"),
     ("ziqpu", "nature-kit--crops-wheatstageb", "ripe ears of wheat, for Spica, the ear of grain"),
+    ("housecheck", "modular-buildings--building-sample-tower-c", "a New York walk-up with a shopfront"),
+    ("nisaba", "furniture-kit--books", "a stack of books, for the goddess of writing and accounting"),
+    ("excalidraw", "furniture-kit--desk", "a desk"),
 ];
 
 pub fn plate_model(slug: &str) -> Option<(&'static str, &'static str)> {

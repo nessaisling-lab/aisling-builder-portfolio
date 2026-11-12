@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-11T00:00:00Z",
+  "generatedAt": "2026-11-12T16:41:58.333Z",
   "title": "Design System: Aisling Builder Portfolio",
   "extensions": {
     "sources": {
@@ -11,81 +11,456 @@
       "enhancement": "site/assets/site.js"
     },
     "colorMeta": {
-      "bg": { "role": "neutral", "displayName": "Petrol Mist", "canonical": "oklch(0.955 0.008 210)", "evening": "oklch(0.2 0.02 200)", "tonalRamp": ["oklch(0.15 0.006 210)", "oklch(0.27 0.008 210)", "oklch(0.39 0.008 210)", "oklch(0.51 0.008 210)", "oklch(0.63 0.008 210)", "oklch(0.75 0.008 210)", "oklch(0.86 0.008 210)", "oklch(0.955 0.008 210)"] },
-      "surface": { "role": "neutral", "displayName": "Paper White", "canonical": "oklch(0.99 0.004 210)", "evening": "oklch(0.245 0.022 200)", "tonalRamp": ["oklch(0.15 0.003 210)", "oklch(0.27 0.004 210)", "oklch(0.39 0.004 210)", "oklch(0.51 0.004 210)", "oklch(0.63 0.004 210)", "oklch(0.75 0.004 210)", "oklch(0.88 0.004 210)", "oklch(0.99 0.004 210)"] },
-      "soft": { "role": "neutral", "displayName": "Soft Wash", "canonical": "oklch(0.925 0.014 205)", "evening": "oklch(0.27 0.026 198)", "tonalRamp": ["oklch(0.15 0.01 205)", "oklch(0.27 0.014 205)", "oklch(0.39 0.014 205)", "oklch(0.51 0.014 205)", "oklch(0.63 0.014 205)", "oklch(0.75 0.014 205)", "oklch(0.86 0.014 205)", "oklch(0.95 0.01 205)"] },
-      "code-bg": { "role": "neutral", "displayName": "Code Wash", "canonical": "oklch(0.935 0.01 210)", "evening": "oklch(0.28 0.02 200)" },
-      "ink": { "role": "neutral", "displayName": "Deep Slate Ink", "canonical": "oklch(0.22 0.02 225)", "hexMirror": "#101D22", "evening": "oklch(0.95 0.008 200)", "eveningHexMirror": "#E9F0F0", "highContrast": "oklch(0.12 0.01 225)", "tonalRamp": ["oklch(0.15 0.015 225)", "oklch(0.22 0.02 225)", "oklch(0.36 0.02 225)", "oklch(0.48 0.02 225)", "oklch(0.6 0.018 225)", "oklch(0.72 0.014 225)", "oklch(0.85 0.01 225)", "oklch(0.95 0.006 225)"] },
-      "ink-2": { "role": "neutral", "displayName": "Second Ink", "canonical": "oklch(0.36 0.02 225)", "hexMirror": "#324045", "evening": "oklch(0.86 0.012 200)", "eveningHexMirror": "#C8D3D4" },
-      "muted": { "role": "neutral", "displayName": "Slate Muted", "canonical": "oklch(0.47 0.018 225)", "hexMirror": "#505D63", "evening": "oklch(0.75 0.014 200)", "eveningHexMirror": "#A4B1B1" },
-      "line": { "role": "neutral", "displayName": "Hairline", "canonical": "oklch(0.87 0.012 212)", "evening": "oklch(0.33 0.02 200)" },
-      "line-strong": { "role": "neutral", "displayName": "Strong Hairline", "canonical": "oklch(0.6 0.02 220)", "evening": "oklch(0.58 0.02 200)" },
-      "accent": { "role": "primary", "displayName": "Kit Petrol", "canonical": "oklch(0.45 0.075 212)", "hexMirror": "#0C606D", "evening": "oklch(0.8 0.1 205)", "eveningHexMirror": "#65D0DC", "highContrast": "oklch(0.32 0.08 212)", "tonalRamp": ["oklch(0.15 0.03 212)", "oklch(0.27 0.05 212)", "oklch(0.36 0.065 212)", "oklch(0.45 0.075 212)", "oklch(0.58 0.08 210)", "oklch(0.7 0.08 208)", "oklch(0.82 0.06 206)", "oklch(0.94 0.025 205)"] },
-      "accent-ink": { "role": "neutral", "displayName": "Ink on Petrol", "canonical": "oklch(0.99 0.004 210)", "evening": "oklch(0.2 0.02 200)" },
-      "ok": { "role": "tertiary", "displayName": "Works Green", "canonical": "oklch(0.47 0.12 150)", "evening": "oklch(0.8 0.14 150)" },
-      "risk": { "role": "tertiary", "displayName": "Crimson", "canonical": "oklch(0.5 0.17 15)", "evening": "oklch(0.75 0.14 18)" },
-      "brass-deep": { "role": "secondary", "displayName": "Pull Brass", "canonical": "oklch(0.5 0.09 78)", "evening": "oklch(0.52 0.06 85)", "decorativeOnly": true, "tonalRamp": ["oklch(0.15 0.03 78)", "oklch(0.27 0.06 78)", "oklch(0.39 0.08 78)", "oklch(0.5 0.09 78)", "oklch(0.63 0.11 82)", "oklch(0.75 0.12 86)", "oklch(0.86 0.09 88)", "oklch(0.95 0.04 90)"] },
-      "enamel": { "role": "secondary", "displayName": "Pin Enamel", "canonical": "oklch(0.44 0.14 298)", "evening": "oklch(0.5 0.14 300)", "decorativeOnly": true },
-      "asphalt-r": { "role": "neutral", "displayName": "Laptop Asphalt", "canonical": "oklch(0.240 0.012 240)", "evening": "oklch(0.187 0.012 240)" },
-      "desk-face": { "role": "neutral", "displayName": "Drawer Face", "canonical": "#F4EAD5", "evening": "#3B3121", "carriesText": true, "tonalRamp": ["oklch(0.15 0.015 85)", "oklch(0.27 0.025 85)", "oklch(0.39 0.035 85)", "oklch(0.51 0.045 85)", "oklch(0.63 0.05 85)", "oklch(0.75 0.05 85)", "oklch(0.86 0.04 85)", "oklch(0.94 0.03 85)"] },
-      "desk-top": { "role": "neutral", "displayName": "Clay Tablet", "canonical": "#EAD9B6", "evening": "#312718", "carriesText": true },
-      "desk-front": { "role": "neutral", "displayName": "Desk Front", "canonical": "#E1CBA2", "evening": "#271D10", "decorativeOnly": true },
-      "desk-cut": { "role": "neutral", "displayName": "Incised Line", "canonical": "#B7996C", "evening": "#62533C", "decorativeOnly": true },
-      "sky": { "role": "neutral", "displayName": "Day Sky", "canonical": "#CAE3ED", "evening": "#1B2A3C", "decorativeOnly": true },
-      "city": { "role": "neutral", "displayName": "Street Front", "canonical": "#859DA6", "evening": "#0E1C28", "decorativeOnly": true },
-      "city-2": { "role": "neutral", "displayName": "Set-Back Block", "canonical": "#5F7984", "evening": "#08131C", "decorativeOnly": true },
-      "pane": { "role": "neutral", "displayName": "Window Glass", "canonical": "#A9C4CF", "note": "Day: --lit and --unlit are both this glass. Evening: --unlit #162633, --lit #E6D8A3 (lamplight).", "decorativeOnly": true }
+      "bg": {
+        "role": "neutral",
+        "displayName": "Petrol Mist",
+        "canonical": "oklch(0.955 0.008 210)",
+        "evening": "oklch(0.2 0.02 200)",
+        "tonalRamp": [
+          "oklch(0.15 0.006 210)",
+          "oklch(0.27 0.008 210)",
+          "oklch(0.39 0.008 210)",
+          "oklch(0.51 0.008 210)",
+          "oklch(0.63 0.008 210)",
+          "oklch(0.75 0.008 210)",
+          "oklch(0.86 0.008 210)",
+          "oklch(0.955 0.008 210)"
+        ]
+      },
+      "surface": {
+        "role": "neutral",
+        "displayName": "Paper White",
+        "canonical": "oklch(0.99 0.004 210)",
+        "evening": "oklch(0.245 0.022 200)",
+        "tonalRamp": [
+          "oklch(0.15 0.003 210)",
+          "oklch(0.27 0.004 210)",
+          "oklch(0.39 0.004 210)",
+          "oklch(0.51 0.004 210)",
+          "oklch(0.63 0.004 210)",
+          "oklch(0.75 0.004 210)",
+          "oklch(0.88 0.004 210)",
+          "oklch(0.99 0.004 210)"
+        ]
+      },
+      "soft": {
+        "role": "neutral",
+        "displayName": "Soft Wash",
+        "canonical": "oklch(0.925 0.014 205)",
+        "evening": "oklch(0.27 0.026 198)",
+        "tonalRamp": [
+          "oklch(0.15 0.01 205)",
+          "oklch(0.27 0.014 205)",
+          "oklch(0.39 0.014 205)",
+          "oklch(0.51 0.014 205)",
+          "oklch(0.63 0.014 205)",
+          "oklch(0.75 0.014 205)",
+          "oklch(0.86 0.014 205)",
+          "oklch(0.95 0.01 205)"
+        ]
+      },
+      "code-bg": {
+        "role": "neutral",
+        "displayName": "Code Wash",
+        "canonical": "oklch(0.935 0.01 210)",
+        "evening": "oklch(0.28 0.02 200)"
+      },
+      "ink": {
+        "role": "neutral",
+        "displayName": "Deep Slate Ink",
+        "canonical": "oklch(0.22 0.02 225)",
+        "hexMirror": "#101D22",
+        "evening": "oklch(0.95 0.008 200)",
+        "eveningHexMirror": "#E9F0F0",
+        "highContrast": "oklch(0.12 0.01 225)",
+        "tonalRamp": [
+          "oklch(0.15 0.015 225)",
+          "oklch(0.22 0.02 225)",
+          "oklch(0.36 0.02 225)",
+          "oklch(0.48 0.02 225)",
+          "oklch(0.6 0.018 225)",
+          "oklch(0.72 0.014 225)",
+          "oklch(0.85 0.01 225)",
+          "oklch(0.95 0.006 225)"
+        ]
+      },
+      "ink-2": {
+        "role": "neutral",
+        "displayName": "Second Ink",
+        "canonical": "oklch(0.36 0.02 225)",
+        "hexMirror": "#324045",
+        "evening": "oklch(0.86 0.012 200)",
+        "eveningHexMirror": "#C8D3D4"
+      },
+      "muted": {
+        "role": "neutral",
+        "displayName": "Slate Muted",
+        "canonical": "oklch(0.47 0.018 225)",
+        "hexMirror": "#505D63",
+        "evening": "oklch(0.75 0.014 200)",
+        "eveningHexMirror": "#A4B1B1"
+      },
+      "line": {
+        "role": "neutral",
+        "displayName": "Hairline",
+        "canonical": "oklch(0.87 0.012 212)",
+        "evening": "oklch(0.33 0.02 200)"
+      },
+      "line-strong": {
+        "role": "neutral",
+        "displayName": "Strong Hairline",
+        "canonical": "oklch(0.6 0.02 220)",
+        "evening": "oklch(0.58 0.02 200)"
+      },
+      "accent": {
+        "role": "primary",
+        "displayName": "Kit Petrol",
+        "canonical": "oklch(0.45 0.075 212)",
+        "hexMirror": "#0C606D",
+        "evening": "oklch(0.8 0.1 205)",
+        "eveningHexMirror": "#65D0DC",
+        "highContrast": "oklch(0.32 0.08 212)",
+        "tonalRamp": [
+          "oklch(0.15 0.03 212)",
+          "oklch(0.27 0.05 212)",
+          "oklch(0.36 0.065 212)",
+          "oklch(0.45 0.075 212)",
+          "oklch(0.58 0.08 210)",
+          "oklch(0.7 0.08 208)",
+          "oklch(0.82 0.06 206)",
+          "oklch(0.94 0.025 205)"
+        ]
+      },
+      "accent-ink": {
+        "role": "neutral",
+        "displayName": "Ink on Petrol",
+        "canonical": "oklch(0.99 0.004 210)",
+        "evening": "oklch(0.2 0.02 200)"
+      },
+      "ok": {
+        "role": "tertiary",
+        "displayName": "Works Green",
+        "canonical": "oklch(0.47 0.12 150)",
+        "evening": "oklch(0.8 0.14 150)"
+      },
+      "risk": {
+        "role": "tertiary",
+        "displayName": "Crimson",
+        "canonical": "oklch(0.5 0.17 15)",
+        "evening": "oklch(0.75 0.14 18)"
+      },
+      "brass-deep": {
+        "role": "secondary",
+        "displayName": "Pull Brass",
+        "canonical": "oklch(0.5 0.09 78)",
+        "evening": "oklch(0.52 0.06 85)",
+        "decorativeOnly": true,
+        "tonalRamp": [
+          "oklch(0.15 0.03 78)",
+          "oklch(0.27 0.06 78)",
+          "oklch(0.39 0.08 78)",
+          "oklch(0.5 0.09 78)",
+          "oklch(0.63 0.11 82)",
+          "oklch(0.75 0.12 86)",
+          "oklch(0.86 0.09 88)",
+          "oklch(0.95 0.04 90)"
+        ]
+      },
+      "enamel": {
+        "role": "secondary",
+        "displayName": "Pin Enamel",
+        "canonical": "oklch(0.44 0.14 298)",
+        "evening": "oklch(0.5 0.14 300)",
+        "decorativeOnly": true
+      },
+      "asphalt-r": {
+        "role": "neutral",
+        "displayName": "Laptop Asphalt",
+        "canonical": "oklch(0.240 0.012 240)",
+        "evening": "oklch(0.187 0.012 240)"
+      },
+      "desk-face": {
+        "role": "neutral",
+        "displayName": "Drawer Face",
+        "canonical": "#F4EAD5",
+        "evening": "#3B3121",
+        "carriesText": true,
+        "tonalRamp": [
+          "oklch(0.15 0.015 85)",
+          "oklch(0.27 0.025 85)",
+          "oklch(0.39 0.035 85)",
+          "oklch(0.51 0.045 85)",
+          "oklch(0.63 0.05 85)",
+          "oklch(0.75 0.05 85)",
+          "oklch(0.86 0.04 85)",
+          "oklch(0.94 0.03 85)"
+        ]
+      },
+      "desk-top": {
+        "role": "neutral",
+        "displayName": "Clay Tablet",
+        "canonical": "#EAD9B6",
+        "evening": "#312718",
+        "carriesText": true
+      },
+      "desk-front": {
+        "role": "neutral",
+        "displayName": "Desk Front",
+        "canonical": "#E1CBA2",
+        "evening": "#271D10",
+        "decorativeOnly": true
+      },
+      "desk-cut": {
+        "role": "neutral",
+        "displayName": "Incised Line",
+        "canonical": "#B7996C",
+        "evening": "#62533C",
+        "decorativeOnly": true
+      },
+      "sky": {
+        "role": "neutral",
+        "displayName": "Day Sky",
+        "canonical": "#CAE3ED",
+        "evening": "#1B2A3C",
+        "decorativeOnly": true
+      },
+      "city": {
+        "role": "neutral",
+        "displayName": "Street Front",
+        "canonical": "#859DA6",
+        "evening": "#0E1C28",
+        "decorativeOnly": true
+      },
+      "city-2": {
+        "role": "neutral",
+        "displayName": "Set-Back Block",
+        "canonical": "#5F7984",
+        "evening": "#08131C",
+        "decorativeOnly": true
+      },
+      "pane": {
+        "role": "neutral",
+        "displayName": "Window Glass",
+        "canonical": "#A9C4CF",
+        "note": "Day: --lit and --unlit are both this glass. Evening: --unlit #162633, --lit #E6D8A3 (lamplight).",
+        "decorativeOnly": true
+      }
     },
     "contrastInvariants": [
-      { "pair": "ink, ink-2, muted, accent on desk-face", "min": "4.5:1", "worlds": ["day", "evening"], "enforcedBy": "assert_readable! (compile-time) in site/src/theme.rs" },
-      { "pair": "ink-2 on desk-top (tablet)", "min": "4.5:1", "worlds": ["day", "evening"], "enforcedBy": "assert_readable! (compile-time) in site/src/theme.rs" },
-      { "pair": "lit pane on city", "rule": "below 1.6:1 by day, above 7:1 in the evening", "enforcedBy": "unit test windows_light_up_only_in_the_evening" },
-      { "pair": "kit text pairs", "min": "4.5:1, 7:1 in high contrast", "enforcedBy": "the kit's node build.mjs" }
+      {
+        "pair": "ink, ink-2, muted, accent on desk-face",
+        "min": "4.5:1",
+        "worlds": [
+          "day",
+          "evening"
+        ],
+        "enforcedBy": "assert_readable! (compile-time) in site/src/theme.rs"
+      },
+      {
+        "pair": "ink-2 on desk-top (tablet)",
+        "min": "4.5:1",
+        "worlds": [
+          "day",
+          "evening"
+        ],
+        "enforcedBy": "assert_readable! (compile-time) in site/src/theme.rs"
+      },
+      {
+        "pair": "lit pane on city",
+        "rule": "below 1.6:1 by day, above 7:1 in the evening",
+        "enforcedBy": "unit test windows_light_up_only_in_the_evening"
+      },
+      {
+        "pair": "kit text pairs",
+        "min": "4.5:1, 7:1 in high contrast",
+        "enforcedBy": "the kit's node build.mjs"
+      }
     ],
     "typographyMeta": {
-      "display": { "displayName": "Display", "purpose": "Page titles; the wall-card headline steps down to clamp(1.85rem, 2.6vw, 2.25rem)." },
-      "headline": { "displayName": "Headline", "purpose": "Section headings, at most 30ch." },
-      "title": { "displayName": "Title", "purpose": "Name on the card, drawer titles, project log names, pager and footer names." },
-      "body": { "displayName": "Body", "purpose": "Reading text at a 66ch measure; scaled by reading settings." },
-      "deck": { "displayName": "Deck", "purpose": "The line under a page title, in ink-2, 60ch." },
-      "label": { "displayName": "Label", "purpose": "Spec and ID-row terms and form labels, sentence case, muted. Never uppercase." },
-      "place": { "displayName": "Place", "purpose": "Place names and transliterated Sumerian only, always beside the English." },
-      "mono": { "displayName": "Mono", "purpose": "Code blocks only." },
-      "cuneiform": { "displayName": "Cuneiform", "purpose": "Eight-sign subset (DUB, SAR, KI, EN, GI, KIN, E2, BA), on the tablet and the Projects hint only, aria-hidden." }
+      "display": {
+        "displayName": "Display",
+        "purpose": "Page titles; the wall-card headline steps down to clamp(1.85rem, 2.6vw, 2.25rem)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Section headings, at most 30ch."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "Name on the card, drawer titles, project log names, pager and footer names."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Reading text at a 66ch measure; scaled by reading settings."
+      },
+      "deck": {
+        "displayName": "Deck",
+        "purpose": "The line under a page title, in ink-2, 60ch."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Spec and ID-row terms and form labels, sentence case, muted. Never uppercase."
+      },
+      "place": {
+        "displayName": "Place",
+        "purpose": "Place names and transliterated Sumerian only, always beside the English."
+      },
+      "mono": {
+        "displayName": "Mono",
+        "purpose": "Code blocks only."
+      },
+      "cuneiform": {
+        "displayName": "Cuneiform",
+        "purpose": "Eight-sign subset (DUB, SAR, KI, EN, GI, KIN, E2, BA), on the tablet and the Projects hint only, aria-hidden."
+      }
     },
     "shadows": [
-      { "name": "engraved-double-hairline", "value": "inset 0 0 0 1px var(--line-strong), inset 0 0 0 4px var(--bg), inset 0 0 0 5px var(--line)", "purpose": "The wall card; plates, spec panels and rule cards use the 3px/4px version on surface." },
-      { "name": "lift", "value": "0 1px 2px var(--shadow)", "purpose": "The matte lift: wall card and enamel pin." },
-      { "name": "drawer-seat", "value": "inset 0 0 0 1px var(--desk-cut), 0 1px 0 var(--desk-cut)", "purpose": "A drawer at rest." },
-      { "name": "drawer-out", "value": "inset 0 0 0 1px var(--ink-2), 0 -1px 0 var(--desk-cut)", "purpose": "A drawer on hover or focus." },
-      { "name": "window-frame", "value": "0 0 0 10px var(--bg), 0 0 0 11px var(--line-strong)", "purpose": "The window's frame and outline; sill and mullion are pseudo-elements." },
-      { "name": "floating-slip", "value": "0 0 0 1px var(--line-strong), 0 8px 20px -10px var(--shadow)", "purpose": "The tablet's translation slip only." }
+      {
+        "name": "engraved-double-hairline",
+        "value": "inset 0 0 0 1px var(--line-strong), inset 0 0 0 4px var(--bg), inset 0 0 0 5px var(--line)",
+        "purpose": "The wall card; plates, spec panels and rule cards use the 3px/4px version on surface."
+      },
+      {
+        "name": "lift",
+        "value": "0 1px 2px var(--shadow)",
+        "purpose": "The matte lift: wall card and enamel pin."
+      },
+      {
+        "name": "drawer-seat",
+        "value": "inset 0 0 0 1px var(--desk-cut), 0 1px 0 var(--desk-cut)",
+        "purpose": "A drawer at rest."
+      },
+      {
+        "name": "drawer-out",
+        "value": "inset 0 0 0 1px var(--ink-2), 0 -1px 0 var(--desk-cut)",
+        "purpose": "A drawer on hover or focus."
+      },
+      {
+        "name": "window-frame",
+        "value": "0 0 0 10px var(--bg), 0 0 0 11px var(--line-strong)",
+        "purpose": "The window's frame and outline; sill and mullion are pseudo-elements."
+      },
+      {
+        "name": "floating-slip",
+        "value": "0 0 0 1px var(--line-strong), 0 8px 20px -10px var(--shadow)",
+        "purpose": "The tablet's translation slip only."
+      },
+      {
+        "name": "on-the-lift",
+        "value": "0 18px 30px -22px var(--shadow)",
+        "purpose": "The raised build in the Projects garage only: the one object held up off the floor."
+      }
     ],
     "motion": [
-      { "name": "ease", "value": "cubic-bezier(.16,1,.3,1)", "purpose": "The only easing; drawers and the tablet." },
-      { "name": "drawer-out", "value": "translateY(4px) over .2s", "purpose": "A drawer eases out toward the reader on hover or focus." },
-      { "name": "tablet-lift", "value": "translateY(-3px) over .25s", "purpose": "The tablet lifts on hover." },
-      { "name": "reduced", "value": "none", "purpose": "The kit removes every animation and transition under prefers-reduced-motion or the Motion reading setting; build recordings do not autoplay." }
+      {
+        "name": "ease",
+        "value": "cubic-bezier(.16,1,.3,1)",
+        "purpose": "The only easing; drawers and the tablet."
+      },
+      {
+        "name": "drawer-out",
+        "value": "translateY(4px) over .2s",
+        "purpose": "A drawer eases out toward the reader on hover or focus."
+      },
+      {
+        "name": "tablet-lift",
+        "value": "translateY(-3px) over .25s",
+        "purpose": "The tablet lifts on hover."
+      },
+      {
+        "name": "reduced",
+        "value": "none",
+        "purpose": "The kit removes every animation and transition under prefers-reduced-motion or the Motion reading setting; build recordings do not autoplay."
+      },
+      {
+        "name": "rise",
+        "value": "translateY(8px) to 0, 200ms, var(--ease)",
+        "purpose": "A build raised onto the garage lift; removed with reduced motion by the kit."
+      }
     ],
     "breakpoints": [
-      { "name": "scene-two-column", "value": "85rem", "purpose": "Tablet moves under the card." },
-      { "name": "scene-stack", "value": "64rem", "purpose": "Home scene stacks in reading order." },
-      { "name": "inner-stack", "value": "52rem", "purpose": "Log, timeline, case grid, rules, contact and footer go to one column; spec panel folds." },
-      { "name": "tabs-row", "value": "46rem", "purpose": "Top bar unsticks; tabs take their own wrapping row." },
-      { "name": "phone", "value": "40rem", "purpose": "Smaller portrait, stacked ID rows, single-column plates, drawers and gallery." },
-      { "name": "screen-plates", "value": "container 30rem", "purpose": "Plates go to two columns when the laptop screen is at least 30rem wide." }
+      {
+        "name": "scene-two-column",
+        "value": "85rem",
+        "purpose": "Tablet moves under the card."
+      },
+      {
+        "name": "scene-stack",
+        "value": "64rem",
+        "purpose": "Home scene stacks in reading order."
+      },
+      {
+        "name": "inner-stack",
+        "value": "52rem",
+        "purpose": "Log, timeline, case grid, rules, contact and footer go to one column; spec panel folds."
+      },
+      {
+        "name": "tabs-row",
+        "value": "46rem",
+        "purpose": "Top bar unsticks; tabs take their own wrapping row."
+      },
+      {
+        "name": "phone",
+        "value": "40rem",
+        "purpose": "Smaller portrait, stacked ID rows, single-column plates, drawers and gallery."
+      },
+      {
+        "name": "screen-plates",
+        "value": "container 30rem",
+        "purpose": "Plates go to two columns when the laptop screen is at least 30rem wide."
+      }
     ],
     "assetProvenance": [
-      { "path": "assets/fonts/archivo.woff2", "source": "Archivo (variable wdth 62-125, wght 100-900), Latin subset", "license": "SIL OFL 1.1, assets/fonts/OFL-Archivo.txt" },
-      { "path": "assets/fonts/atkinson-next.woff2, atkinson-next-italic.woff2", "source": "Atkinson Hyperlegible Next, roman and italic, Latin subset", "license": "SIL OFL 1.1, assets/fonts/OFL-Atkinson-Hyperlegible-Next.txt" },
-      { "path": "assets/fonts/atkinson-mono.woff2", "source": "Atkinson Hyperlegible Mono", "license": "SIL OFL 1.1, assets/fonts/OFL-Atkinson-Hyperlegible-Mono.txt" },
-      { "path": "assets/fonts/marcellus-sc.woff2", "source": "Marcellus SC", "license": "SIL OFL 1.1, assets/fonts/OFL-Marcellus-SC.txt" },
-      { "path": "assets/fonts/noto-cuneiform-sub.woff2", "source": "Noto Sans Cuneiform, cut to eight signs (DUB, SAR, KI, EN, GI, KIN, E2, BA)", "license": "SIL OFL 1.1, assets/fonts/OFL-Noto-Sans-Cuneiform.txt" },
-      { "path": "brand/library/*-matte.webp", "source": "The plate model slot: one Kenney model per project, picked in the brand kit's Library, repainted to kit colours and rendered matte by the kit's tools/render-library.mjs, then copied into brand/library/. The project-to-model map is PLATE_MODELS in site/src/content.rs, which also states what each model shows. A plate whose project has no model shows its number alone. Rule: only Library renders go in this slot, and brand/library/LICENSE.txt must name the source pack and licence of every file there.", "license": "CC0 1.0 (Kenney), brand/library/LICENSE.txt" },
-      { "path": "assets/portrait.jpg, assets/portrait@2x.jpg", "source": "Aisling's own photograph; wall-card portrait and the site-wide link card", "license": "Her own" },
-      { "path": "assets/work/*/walkthrough-poster.jpg, assets/work/*/*.webp", "source": "Posters and stills from her own builds' walkthrough recordings. Capstone stills are frames from a re-recording on invented data with the client's identity swapped for a neutral stand-in, OCR- and Whisper-checked for the client's name (per site/src/content.rs). Per-file capture notes for the other projects are not recorded in the repo.", "license": "Her own work" },
-      { "path": "assets/og/*.png, assets/og-image.png", "source": "Rendered by tools/og-cards.mjs with the site's own built CSS (brand/ness.css + assets/site.css), facts and plate models from content.rs, the portrait, and the skyline from the built index.html", "license": "Her own" },
-      { "path": "assets/favicon.svg, favicon-32.png, apple-touch-icon.png", "source": "Not recorded in the repo", "license": "Unverified" }
+      {
+        "path": "assets/fonts/archivo.woff2",
+        "source": "Archivo (variable wdth 62-125, wght 100-900), Latin subset",
+        "license": "SIL OFL 1.1, assets/fonts/OFL-Archivo.txt"
+      },
+      {
+        "path": "assets/fonts/atkinson-next.woff2, atkinson-next-italic.woff2",
+        "source": "Atkinson Hyperlegible Next, roman and italic, Latin subset",
+        "license": "SIL OFL 1.1, assets/fonts/OFL-Atkinson-Hyperlegible-Next.txt"
+      },
+      {
+        "path": "assets/fonts/atkinson-mono.woff2",
+        "source": "Atkinson Hyperlegible Mono",
+        "license": "SIL OFL 1.1, assets/fonts/OFL-Atkinson-Hyperlegible-Mono.txt"
+      },
+      {
+        "path": "assets/fonts/marcellus-sc.woff2",
+        "source": "Marcellus SC",
+        "license": "SIL OFL 1.1, assets/fonts/OFL-Marcellus-SC.txt"
+      },
+      {
+        "path": "assets/fonts/noto-cuneiform-sub.woff2",
+        "source": "Noto Sans Cuneiform, cut to eight signs (DUB, SAR, KI, EN, GI, KIN, E2, BA)",
+        "license": "SIL OFL 1.1, assets/fonts/OFL-Noto-Sans-Cuneiform.txt"
+      },
+      {
+        "path": "brand/library/*-matte.webp",
+        "source": "The plate model slot: one Kenney model per project, picked in the brand kit's Library, repainted to kit colours and rendered matte by the kit's tools/render-library.mjs, then copied into brand/library/. The project-to-model map is PLATE_MODELS in site/src/content.rs, which also states what each model shows. A plate whose project has no model shows its number alone. Rule: only Library renders go in this slot, and brand/library/LICENSE.txt must name the source pack and licence of every file there.",
+        "license": "CC0 1.0 (Kenney), brand/library/LICENSE.txt"
+      },
+      {
+        "path": "assets/portrait.jpg, assets/portrait@2x.jpg",
+        "source": "Aisling's own photograph; wall-card portrait and the site-wide link card",
+        "license": "Her own"
+      },
+      {
+        "path": "assets/work/*/walkthrough-poster.jpg, assets/work/*/*.webp",
+        "source": "Posters and stills from her own builds' walkthrough recordings. Capstone stills are frames from a re-recording on invented data with the client's identity swapped for a neutral stand-in, OCR- and Whisper-checked for the client's name (per site/src/content.rs). Per-file capture notes for the other projects are not recorded in the repo.",
+        "license": "Her own work"
+      },
+      {
+        "path": "assets/og/*.png, assets/og-image.png",
+        "source": "Rendered by tools/og-cards.mjs with the site's own built CSS (brand/ness.css + assets/site.css), facts and plate models from content.rs, the portrait, and the skyline from the built index.html",
+        "license": "Her own"
+      },
+      {
+        "path": "assets/favicon.svg, favicon-32.png, apple-touch-icon.png",
+        "source": "Not recorded in the repo",
+        "license": "Unverified"
+      }
     ],
     "drift": [
       "site/assets/style.css keeps a legacy .btn/.ghost alias for older case-page markup; it is not a system component.",
@@ -156,6 +531,14 @@
       "description": "Contact form field; strong-hairline edge at 3:1, petrol focus.",
       "html": "<label class=\"ds-label\" for=\"ds-name\">Your name</label><input class=\"ds-input\" id=\"ds-name\" type=\"text\">",
       "css": ".ds-label{display:block;font:700 .92rem/1 Archivo,Arial,sans-serif;margin:0 0 .35rem;color:var(--ink,oklch(0.22 0.02 225))}.ds-input{font:400 1.0625rem/1.55 \"Atkinson Hyperlegible Next\",Arial,sans-serif;color:var(--ink,oklch(0.22 0.02 225));background:var(--bg,oklch(0.955 0.008 210));border:1.5px solid var(--line-strong,oklch(0.6 0.02 220));border-radius:8px;padding:.65rem .75rem}.ds-input:focus-visible{border-color:var(--accent,oklch(0.45 0.075 212));outline:3px solid var(--accent,oklch(0.45 0.075 212));outline-offset:1px}"
+    },
+    {
+      "name": "Garage lift",
+      "kind": "composite",
+      "refersTo": "work/index.html .lift",
+      "description": "Projects page: steel posts and arms, a lamp shade, the raised build as an engraved panel lit by a flat brass tint, role and stack hanging under the arms as tags. site.js swaps which build is raised; without it every bay is a link.",
+      "html": "<div class=\"ds-lift\"><span class=\"ds-lamp\"></span><div class=\"ds-car\"><h3>Gala Guest List Tool</h3><p>180 of 223 PRs</p></div><span class=\"ds-arms\"></span><dl class=\"ds-tags\"><div><dt>Role</dt><dd>Technical director</dd></div></dl></div>",
+      "css": ".ds-lift{position:relative;padding:3.6rem 2.5rem 0}.ds-lift::before,.ds-lift::after{content:\"\";position:absolute;top:3rem;bottom:0;width:16px;background:var(--line-strong)}.ds-lift::before{left:0}.ds-lift::after{right:0}.ds-lamp{position:absolute;left:50%;top:1.25rem;width:7rem;height:1.5rem;margin-left:-3.5rem;border-radius:4rem 4rem .35rem .35rem;background:var(--muted)}.ds-car{padding:1.35rem 1.5rem;border-radius:12px;background:radial-gradient(ellipse 60% 75% at 50% 0,color-mix(in oklab,var(--brass) 14%,var(--surface)),var(--surface));box-shadow:inset 0 0 0 1px var(--line-strong),inset 0 0 0 4px var(--surface),inset 0 0 0 5px var(--line),0 18px 30px -22px var(--shadow)}.ds-arms{display:block;height:12px;margin:.9rem -2.5rem 0;border-radius:6px;background:var(--line-strong)}.ds-tags{display:flex;justify-content:center;margin-top:.7rem}.ds-tags div{padding:.4rem .75rem;background:var(--surface);border-radius:8px;box-shadow:inset 0 0 0 1px var(--line-strong)}"
     }
   ],
   "narrative": {
@@ -169,13 +552,41 @@
       "Still by default; the flat page works with no script, no motion and no sound."
     ],
     "rules": [
-      { "name": "The Desk Holds Its Text Rule", "body": "Any kit text colour that can land on the drawer face or the tablet (ink, ink-2, muted, accent) is asserted at 4.5:1 against it in both worlds by a const assertion in theme.rs. Small lines get no large-text discount. A new desk colour, or a change to the kit's inks, is mirrored into theme.rs so the check still means something.", "section": "colors" },
-      { "name": "The Lit Window Rule", "body": "Lit windows are the evening's one event. By day pane and building stay under 1.6:1 so the skyline never reads as lit at noon; in the evening lit panes exceed 7:1 against the buildings. Both are unit tests.", "section": "colors" },
-      { "name": "The One Meaning Rule", "body": "Petrol means place and action, green means works today, crimson means risk. Brass and enamel are decoration only: never text, status or data.", "section": "colors" },
-      { "name": "The Beside-the-English Rule", "body": "Marcellus SC and cuneiform never stand alone. Every Sumerian word carries lang=\"sux-Latn\" and sits next to its English gloss (\"kin · the work\", \"é-dub-ba · the tablet house\"); every cuneiform sign is aria-hidden, with the meaning in text or in the control's label.", "section": "typography" },
-      { "name": "The Tabular Figures Rule", "body": "Numbers that line up (plate numbers, case-study figures, timeline dates, résumé dates, project stats) use lining tabular figures.", "section": "typography" },
-      { "name": "The Matte Rule", "body": "No glaze, sheen, glow or bloom on this site. data-finish=\"matte\" is set on every page, and depth stays at a hairline and a 1px lift.", "section": "elevation" },
-      { "name": "The Engraved Tag Rule", "body": "A container that holds something you choose or read as a record (wall card, plate, spec panel, rule card) gets the double inset hairline, like an engraved tag. Plain panels (forms, verify panels, the résumé sheet, transcripts) get a single inset hairline.", "section": "elevation" }
+      {
+        "name": "The Desk Holds Its Text Rule",
+        "body": "Any kit text colour that can land on the drawer face or the tablet (ink, ink-2, muted, accent) is asserted at 4.5:1 against it in both worlds by a const assertion in theme.rs. Small lines get no large-text discount. A new desk colour, or a change to the kit's inks, is mirrored into theme.rs so the check still means something.",
+        "section": "colors"
+      },
+      {
+        "name": "The Lit Window Rule",
+        "body": "Lit windows are the evening's one event. By day pane and building stay under 1.6:1 so the skyline never reads as lit at noon; in the evening lit panes exceed 7:1 against the buildings. Both are unit tests.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Meaning Rule",
+        "body": "Petrol means place and action, green means works today, crimson means risk. Brass and enamel are decoration only: never text, status or data.",
+        "section": "colors"
+      },
+      {
+        "name": "The Beside-the-English Rule",
+        "body": "Marcellus SC and cuneiform never stand alone. Every Sumerian word carries lang=\"sux-Latn\" and sits next to its English gloss (\"kin · the work\", \"é-dub-ba · the tablet house\"); every cuneiform sign is aria-hidden, with the meaning in text or in the control's label.",
+        "section": "typography"
+      },
+      {
+        "name": "The Tabular Figures Rule",
+        "body": "Numbers that line up (plate numbers, case-study figures, timeline dates, résumé dates, project stats) use lining tabular figures.",
+        "section": "typography"
+      },
+      {
+        "name": "The Matte Rule",
+        "body": "No glaze, sheen, glow or bloom on this site. data-finish=\"matte\" is set on every page, and depth stays at a hairline and a 1px lift.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Engraved Tag Rule",
+        "body": "A container that holds something you choose or read as a record (wall card, plate, spec panel, rule card) gets the double inset hairline, like an engraved tag. Plain panels (forms, verify panels, the résumé sheet, transcripts) get a single inset hairline.",
+        "section": "elevation"
+      }
     ],
     "dos": [
       "Do generate desk and city colours from site/src/theme.rs and let assert_readable! hold every text pair on a desk surface to 4.5:1; never hand-edit the generated /*@PALETTES@*/ block.",

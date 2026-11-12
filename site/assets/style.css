@@ -181,19 +181,76 @@ body{min-height:100vh;text-rendering:optimizeLegibility;-webkit-font-smoothing:a
 }
 
 /* ── projects index ──────────────────────────────────────── */
-.log{list-style:none;border-top:1px solid var(--line-strong)}
-.log li{border-bottom:1px solid var(--line)}
-.log-row{display:grid;grid-template-columns:minmax(10rem,14rem) minmax(0,1fr) minmax(0,15rem) 3rem;gap:1.25rem;align-items:baseline;padding:1.1rem 0;text-decoration:none}
-.nb a.log-row{color:var(--ink)}
-.log-name{font:800 1.2rem/1.25 var(--display);font-stretch:106%}
-.log-line{color:var(--ink-2);font-size:.95rem}
-.log-stat{font-size:.88rem;font-variant-numeric:tabular-nums}
-.log-year{font-size:.88rem;color:var(--muted);text-align:right}
-.log-row:hover .log-name{color:var(--accent)}
-.earlier{list-style:none;border-top:1px solid var(--line)}
-.earlier li{display:grid;grid-template-columns:minmax(10rem,18rem) minmax(0,1fr);gap:1.25rem;padding:.9rem 0;border-bottom:1px solid var(--line)}
-.earlier-name{font-weight:700}
-.earlier-line{color:var(--ink-2);font-size:.95rem}
+/* ── projects: the garage ────────────────────────────────── */
+/* The wall of bays across the top, the lift centred under its lamp, and the concrete floor
+   it stands on, with the workbench along it. */
+.garage{overflow:clip;--floor:color-mix(in oklab,var(--line) 55%,var(--bg))}
+.bayroom{display:grid;grid-template-columns:minmax(0,1fr);padding-top:clamp(1.5rem,3vw,2.25rem)}
+.garage-head{display:flex;flex-wrap:wrap;align-items:baseline;gap:.4rem 1.75rem;margin-bottom:1.25rem}
+.nb .garage-head .deck{margin-top:0;font-size:1rem;max-width:78ch}
+.wall{list-style:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.6rem}
+.wall .nb-plate{height:100%;grid-template-columns:minmax(0,1fr);row-gap:.45rem;align-content:start;padding:.65rem .75rem .8rem}
+.wall .nb-plate-no{grid-auto-flow:column;justify-content:space-between;align-items:center;min-width:0;padding:0 0 .45rem;border-right:0;border-bottom:1px solid var(--line)}
+.wall .plate-model{width:34px;height:34px}
+.wall .nb-plate-t{font-size:.98rem}
+.wall .nb-plate-s{font-size:.8rem}
+.nb .wall .nb-plate[aria-current="true"]{background:var(--soft);border-color:var(--accent);box-shadow:inset 0 0 0 2px var(--accent)}
+/* the lift: two steel posts down to the floor, arms under the raised build, a work lamp above */
+.lift{position:relative;justify-self:center;width:100%;max-width:62rem;margin-top:1.25rem;padding:3.6rem clamp(2.25rem,4.5vw,4rem) 0}
+.lift::before,.lift::after{content:"";position:absolute;top:3rem;bottom:-2.25rem;width:16px;border-radius:4px 4px 0 0;background:var(--line-strong)}
+.lift::before{left:0}
+.lift::after{right:0}
+.lamp{position:absolute;left:50%;top:1.25rem;width:7rem;height:1.5rem;margin-left:-3.5rem;border-radius:4rem 4rem .35rem .35rem;background:var(--muted)}
+.lamp::before{content:"";position:absolute;left:50%;bottom:100%;width:2px;height:1.25rem;margin-left:-1px;background:var(--muted)}
+.raised[hidden]{display:none}
+/* the lamp's light falls on the raised build itself */
+.raised-car{display:grid;grid-template-columns:minmax(0,21rem) minmax(0,1fr);gap:1rem 1.75rem;padding:1.35rem 1.5rem;border-radius:var(--r-m);animation:rise .2s var(--ease);
+  background:radial-gradient(ellipse 60% 75% at 50% 0,color-mix(in oklab,var(--brass) 14%,var(--surface)),var(--surface));
+  box-shadow:inset 0 0 0 1px var(--line-strong),inset 0 0 0 4px var(--surface),inset 0 0 0 5px var(--line),0 18px 30px -22px var(--shadow)}
+@keyframes rise{from{transform:translateY(8px)}}
+.raised-still{display:grid;place-items:center;align-self:start;border-radius:8px;background:var(--soft)}
+.raised-still img{display:block;width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;border-radius:8px}
+.raised-still .raised-model{width:10rem;height:10rem;aspect-ratio:1;object-fit:contain;margin:1rem auto}
+.raised-text{display:flex;flex-direction:column;align-items:flex-start}
+.raised h2{font:800 clamp(1.6rem,2.6vw,2.2rem)/1.05 var(--display);font-stretch:110%}
+.raised h2:focus{outline:0}
+.raised-meta{font:600 .9rem/1.3 var(--display);color:var(--muted);margin:.35rem 0 .6rem}
+.raised-line{color:var(--ink-2)}
+.raised-stat{margin-top:.75rem;font:800 1.08rem/1.25 var(--display);font-stretch:106%;font-variant-numeric:tabular-nums}
+.raised .nb-btn{margin-top:1.1rem;display:inline-flex;align-items:center}
+.arms{display:block;height:12px;margin:.9rem calc(-1 * clamp(2.25rem,4.5vw,4rem)) 0;border-radius:6px;background:var(--line-strong)}
+/* role and stack hang under the arms like inspection tags */
+.under{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,17rem));justify-content:center;gap:.75rem;margin-top:.7rem}
+.under div{position:relative;padding:.4rem .75rem;background:var(--surface);border-radius:var(--r-s);box-shadow:inset 0 0 0 1px var(--line-strong)}
+.under div::before{content:"";position:absolute;left:50%;bottom:100%;width:2px;height:.7rem;margin-left:-1px;background:var(--line-strong)}
+.under dt{font:700 .78rem/1.2 var(--display);color:var(--muted)}
+.nb .under dd{text-align:left;font:400 .92rem/1.35 var(--body);color:var(--ink)}
+/* the floor: concrete, full bleed, with the bench standing on it */
+.floor{position:relative;margin-top:2.25rem;padding:1.75rem 0 2.5rem;background:var(--floor);box-shadow:0 0 0 100vmax var(--floor);clip-path:inset(0 -100vmax)}
+.floor::before{content:"";position:absolute;top:0;left:-100vmax;right:-100vmax;height:2px;background:var(--line-strong)}
+.bench{padding:.9rem 1.1rem 1rem;background:var(--desk-face);border-top:14px solid var(--desk-top);border-radius:var(--r-s);box-shadow:inset 0 0 0 1px var(--desk-cut),0 1px 0 var(--desk-cut)}
+.bench h2{font:800 1rem/1.2 var(--display);font-stretch:106%;margin-bottom:.35rem}
+.bench ul{list-style:none;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0 1.5rem}
+.bench li{padding:.55rem 0;border-top:1px solid var(--desk-cut)}
+.bench-name{display:block;font-weight:700}
+.bench-line{display:block;font-size:.85rem;line-height:1.4;color:var(--ink-2)}
+.bench .more{font-size:.88rem;margin-top:.6rem}
+@media (max-width:75rem){.wall{grid-template-columns:repeat(4,minmax(0,1fr))}.bench ul{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:64rem){
+  .lift{padding:3.25rem 14px 0}
+  .lift::before,.lift::after{width:6px}
+  .arms{margin:.75rem -14px 0}
+  .raised-car{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:40rem){
+  .wall{grid-template-columns:repeat(2,minmax(0,1fr));gap:.45rem}
+  .wall .nb-plate{padding:.5rem .6rem .6rem;row-gap:.3rem}
+  .wall .nb-plate-s{display:none}
+  .wall .plate-model{width:24px;height:24px}
+  .raised-car{padding:1rem}
+  .under{grid-template-columns:minmax(0,1fr)}
+  .bench ul{grid-template-columns:minmax(0,1fr)}
+}
 
 /* ── case study ──────────────────────────────────────────── */
 .case{padding-top:clamp(2rem,5vw,3rem)}
@@ -302,9 +359,7 @@ figcaption{font-size:.88rem;color:var(--muted);margin-top:.5rem}
 
 /* ── narrow screens ──────────────────────────────────────── */
 @media (max-width:52rem){
-  .log-row{grid-template-columns:1fr;gap:.3rem}
-  .log-year{text-align:left}
-  .earlier li,.timeline li{grid-template-columns:1fr;gap:.3rem}
+  .timeline li{grid-template-columns:1fr;gap:.3rem}
   .case-grid{grid-template-columns:minmax(0,1fr)}
   .spec{grid-column:1;grid-row:1;position:static}
   .spec-links{flex-flow:row wrap}

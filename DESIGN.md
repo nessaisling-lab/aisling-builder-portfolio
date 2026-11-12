@@ -260,7 +260,9 @@ The page is centred in a `--wrap` of 86rem with a gutter of `max(16px, 3.5vw)`. 
 
 **The desk** is a full-width band below the scene: a 16px clay top edge, then three equal drawers with a 1rem gap.
 
-**Inner pages** follow the kit's spec-sheet model: thin full-width rules between rows, label columns beside wide values. The project log is a four-column row (name, line, stat, year); case studies are a reading column beside a sticky 16 to 20rem spec panel. At 52rem and below every one of these collapses to one column, the spec panel unsticks and moves above the body, and on phones role, team and stack fold into a disclosure so the video comes first. At 46rem and below the top bar stops sticking and the five tabs take their own wrapping row so none hides off screen; the settings button shows its icon alone but keeps its words for screen readers.
+**Inner pages** follow the kit's spec-sheet model: thin full-width rules between rows, label columns beside wide values. Case studies are a reading column beside a sticky 16 to 20rem spec panel. At 52rem and below every one of these collapses to one column, the spec panel unsticks and moves above the body, and on phones role, team and stack fold into a disclosure so the video comes first. At 46rem and below the top bar stops sticking and the five tabs take their own wrapping row so none hides off screen; the settings button shows its icon alone but keeps its words for screen readers.
+
+**The garage** (Projects) is one column inside the wrap: the title with its deck beside it, then the wall of bays (seven across; four at 75rem and below; two at 40rem, where each bay drops its stat and the model shrinks to 24px), then the lift centred at a 62rem maximum, then the floor. The lift's posts reach down to the floor's top edge. The floor is a full-bleed concrete band (`--floor`, line mixed 55% into the ground, with a 2px strong-hairline top edge); the workbench stands on it with the earlier work in four columns (two at 75rem, one at 40rem). At 64rem and below the raised build stacks its still above its text and the posts thin to 6px; the lift itself stays.
 
 **Print** drops the top bar, footer, pager, media and the decorative window, tablet and reeds.
 
@@ -273,6 +275,7 @@ Depth comes from objects and engraving, not from shadows. The finish is matte: s
 - **Pin and card lift** (`0 1px 2px var(--shadow)`): the enamel pin and the wall card.
 - **Drawer seat** (`inset 0 0 0 1px var(--desk-cut), 0 1px 0 var(--desk-cut)`): a drawer at rest; on hover or focus the outline darkens to ink-2 and the ledge moves above (`0 -1px 0`).
 - **Floating slip** (`0 0 0 1px var(--line-strong), 0 8px 20px -10px var(--shadow)`): the tablet's translation only.
+- **On the lift** (`0 18px 30px -22px var(--shadow)`): the raised build in the garage only, because it is the one object held up off the floor.
 
 ### Named Rules
 **The Matte Rule.** No glaze, sheen, glow or bloom on this site. `data-finish="matte"` is set on every page, and depth stays at a hairline and a 1px lift.
@@ -315,8 +318,15 @@ The other sections, set into the desk. Drawer Face fill, 8px corners, incised ed
 ### Spec sheets
 The kit's `nb-spec` for definition lists: a strong rule on top, a hairline under each row, terms in ink-2, values in Archivo 600. The site sets values left-aligned in body type where they are sentences. Case studies carry a sticky spec panel: figures in a two-column grid, then role, team and stack rows, then links.
 
-### Timeline, log and rules
-Records on rules. The timeline and project log are rows on hairlines under a strong top rule, with tabular dates in muted. Rule cards (Experience, School, Integrations) are a three-column set of engraved panels: a title, an ink-2 line, then the rule itself in ink.
+### Timeline and rules
+Records on rules. The timeline is rows on hairlines under a strong top rule, with tabular dates in muted. Rule cards (Experience, School, Integrations) are a three-column set of engraved panels: a title, an ink-2 line, then the rule itself in ink.
+
+### The garage
+The Projects page. Every build parks in a numbered bay along the wall: a kit plate turned upright, model and number on one row over a hairline, then the name and the hardest number. The bay whose build is on the lift fills Soft Wash with a 2px petrol ring and carries `aria-current`.
+- **The lift:** two strong-hairline steel posts and a 12px arm bar, a muted lamp shade on a cord above. The raised build is a 12px engraved panel (still on the left, name, meta line, one-line summary, the hardest number in Archivo 800, and the primary Open the build). The lamp's light is a flat tint on that panel, 14% brass into Paper White falling from its top edge, never a glow past it.
+- **Inspection tags:** role and stack hang under the arms as small single-hairline plates on 2px cords.
+- **Raising:** without script each bay is a plain link to its case page and the client capstone stays up. With site.js a plain press raises that build in place (the panel rises 8px over 200ms; none with reduced motion), focuses its heading and writes `#slug` so the link reopens with it raised. Modified clicks still open the link.
+- **The workbench:** the earlier work as a service log on a Drawer Face bench with a clay top edge, entries on desk-cut hairlines.
 
 ### Inputs / Fields
 - **Style:** Petrol Mist background, 1.5px strong-hairline border (3:1), 8px corners, 0.65rem by 0.75rem padding, inheriting body type. Labels in Archivo 700 above.
