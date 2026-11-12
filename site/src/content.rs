@@ -929,6 +929,106 @@ pub const STACK: &[Row] = &[
     Row { dt: "Ops", dd: "GitHub admin · Actions (3-OS matrix) · Docker · Fly.io · Vercel · Cloudflare Pages + Access" },
 ];
 
+/// Facts plotted along each job's track on the Experience sky, in track order. Each one
+/// restates part of that job's own body text.
+pub const JOB_FACTS: &[(&str, &[&str])] = &[
+    ("Pursuit client capstone (NYC nonprofit)", &["Offline iPad check-in", "180 of 223 merged PRs",
+        "Postgres row-level security", "Salesforce sync, stand-in org"]),
+    ("Nisaba Capital Charting", &["~25k lines of native Rust", "132 tests · zero warnings", "Built solo in 30 days"]),
+    ("Architechne", &["Python + AI scraper", "Manual research cut about 50%", "MySQL territory database"]),
+    ("Airbnb", &["2.5 years, solo", "Listing · marketing · bookkeeping"]),
+];
+
+pub fn job_facts(org: &str) -> &'static [&'static str] {
+    JOB_FACTS.iter().find(|f| f.0 == org).map_or(&[], |f| f.1)
+}
+
+/// One tool on the Experience ziggurat: what it is, in a plain line, and the builds that used
+/// it. Each use names a phrase that appears on that build's page; a test holds it to that.
+pub struct Tool {
+    pub name: &'static str,
+    pub what: &'static str,
+    pub used: &'static [(&'static str, &'static str)],
+}
+
+pub const TOOLS: &[Tool] = &[
+    Tool { name: "axum", what: "A Rust web framework for servers and APIs, from the Tokio project.",
+        used: &[("housecheck", "axum"), ("nisaba", "axum"), ("ziqpu", "axum")] },
+    Tool { name: "SQLx", what: "Rust's async SQL toolkit; it checks queries against the database at compile time.",
+        used: &[("nisaba", "SQLx")] },
+    Tool { name: "rusqlite", what: "Rust bindings for SQLite, the database that lives in a single file.", used: &[] },
+    Tool { name: "Tauri 2", what: "Small desktop apps with a Rust core and a web front end.", used: &[("resona", "Tauri 2")] },
+    Tool { name: "Dioxus", what: "A Rust UI framework in the style of React. This site is rendered with it, at build time.",
+        used: &[("ziqpu", "Dioxus")] },
+    Tool { name: "Iced", what: "A Rust GUI toolkit inspired by the Elm architecture.", used: &[("nisaba", "Iced")] },
+    Tool { name: "whisper-rs", what: "Rust bindings for whisper.cpp, for speech-to-text.", used: &[("resona", "whisper-rs")] },
+    Tool { name: "cpal", what: "Cross-platform audio input and output for Rust.", used: &[("resona", "cpal")] },
+    Tool { name: "Ed25519", what: "A fast digital-signature scheme: a signature proves who made a file and that it hasn't changed since.",
+        used: &[("housecheck", "Ed25519")] },
+    Tool { name: "SHA-256 hash chains", what: "Each record carries the hash of the one before it, so changing any entry breaks every link after it.",
+        used: &[("housecheck", "hash chain"), ("siteassure", "hash chain")] },
+    Tool { name: "Postgres row-level security", what: "Rules inside Postgres that decide, row by row, what each user can see or change.",
+        used: &[("gala-guest-list", "row-level security")] },
+    Tool { name: "hashed tokens", what: "Only a hash of each access token is stored, so a leaked database holds no working links.",
+        used: &[("gala-guest-list", "stored only as SHA-256 hashes")] },
+    Tool { name: "gitleaks", what: "A scanner that stops passwords and keys from being committed to git.", used: &[] },
+    Tool { name: "egress allowlists", what: "Outbound network access limited to a named list of hosts.",
+        used: &[("siteassure", "allowlist")] },
+    Tool { name: "TypeScript", what: "JavaScript with types, checked before the code runs.",
+        used: &[("housecheck", "TypeScript"), ("gala-guest-list", "TypeScript"), ("resona", "TypeScript"), ("excalidraw", "TypeScript")] },
+    Tool { name: "React", what: "A JavaScript library for building interfaces out of components.",
+        used: &[("gala-guest-list", "React"), ("resona", "React"), ("excalidraw", "React")] },
+    Tool { name: "Vite", what: "A fast dev server and build tool for web front ends.",
+        used: &[("gala-guest-list", "Vite"), ("excalidraw", "Vite")] },
+    Tool { name: "Tailwind", what: "A CSS framework of small utility classes, written straight into the markup.",
+        used: &[("gala-guest-list", "Tailwind")] },
+    Tool { name: "Supabase", what: "Hosted Postgres with sign-in, storage and edge functions on top.",
+        used: &[("gala-guest-list", "Supabase")] },
+    Tool { name: "Salesforce REST API and data model", what: "Salesforce's HTTP API, and the objects and fields its records live in.",
+        used: &[("gala-guest-list", "Salesforce")] },
+    Tool { name: "SOQL", what: "Salesforce Object Query Language, the SQL-like way to query Salesforce records.", used: &[] },
+    Tool { name: "import pipelines with record provenance", what: "Imports that keep where every row came from, so any value traces back to its source.",
+        used: &[] },
+    Tool { name: "Python", what: "A general-purpose language, the usual choice for data work.", used: &[] },
+    Tool { name: "SQL (Postgres, MySQL)", what: "The language of relational databases, in two of the most common ones.",
+        used: &[("ziqpu", "Postgres"), ("gala-guest-list", "Postgres")] },
+    Tool { name: "WGSL", what: "WebGPU's shading language, for programs that run on the graphics card.", used: &[("nisaba", "WGSL")] },
+    Tool { name: "Claude Code", what: "Anthropic's coding agent, in the terminal and the editor.",
+        used: &[("gala-guest-list", "Claude Code")] },
+    Tool { name: "Anthropic + OpenAI APIs", what: "The HTTP APIs for Claude and GPT models.", used: &[] },
+    Tool { name: "MCP", what: "Model Context Protocol: an open standard for giving AI models tools and data.", used: &[("ziqpu", "MCP")] },
+    Tool { name: "whisper.cpp", what: "A fast C/C++ port of OpenAI's Whisper speech-recognition model.", used: &[("resona", "whisper.cpp")] },
+    Tool { name: "local models", what: "Language models that run on your own machine, with no cloud call.", used: &[("ziqpu", "local models")] },
+    Tool { name: "tool-calling with grounding", what: "A model calls functions for facts, and its answer sticks to what they returned.", used: &[] },
+    Tool { name: "GitHub admin", what: "Running a team's repository: branch protection, reviews, permissions.",
+        used: &[("gala-guest-list", "repo admin")] },
+    Tool { name: "Actions (3-OS matrix)", what: "GitHub's built-in CI, here running every check on Windows, macOS and Linux.",
+        used: &[("siteassure", "3-OS"), ("excalidraw", "GitHub Actions")] },
+    Tool { name: "Docker", what: "Packs an app and everything it needs into a container that runs the same anywhere.",
+        used: &[("housecheck", "Docker")] },
+    Tool { name: "Fly.io", what: "A platform that runs app containers in regions close to users.", used: &[("housecheck", "Fly.io")] },
+    Tool { name: "Vercel", what: "A host for web front ends, deployed straight from git.", used: &[("housecheck", "Vercel")] },
+    Tool { name: "Cloudflare Pages + Access", what: "Static hosting on Cloudflare's network, with Access putting a sign-in in front.",
+        used: &[("gala-guest-list", "Cloudflare Pages")] },
+];
+
+pub fn tool(name: &str) -> Option<&'static Tool> {
+    TOOLS.iter().find(|t| t.name == name)
+}
+
+/// A tool's id on the page, for its card: lower case, runs of anything else become one dash.
+pub fn tool_id(name: &str) -> String {
+    let mut s = String::from("tool-");
+    for c in name.chars() {
+        if c.is_ascii_alphanumeric() {
+            s.push(c.to_ascii_lowercase());
+        } else if !s.ends_with('-') {
+            s.push('-');
+        }
+    }
+    s.trim_end_matches('-').to_string()
+}
+
 pub struct Doc {
     pub name: &'static str,
     pub files: &'static [(&'static str, &'static str)],
@@ -1017,6 +1117,36 @@ mod tests {
         let banned = [["aa", "fe"].concat(), ["asian ", "americans"].concat()];
         for b in banned {
             assert!(!src.contains(&b), "content.rs names the client");
+        }
+    }
+
+    /// Every tool on the stack ziggurat has a card, and every job a set of facts for its track.
+    #[test]
+    fn every_tool_and_job_has_its_words() {
+        for row in STACK {
+            for item in row.dd.split(" · ") {
+                assert!(tool(item).is_some(), "no card for stack tool {item:?}");
+            }
+        }
+        for j in JOBS {
+            assert!(!job_facts(j.org).is_empty(), "no sky facts for {:?}", j.org);
+        }
+    }
+
+    /// A card says a build used a tool only where that build's own page says so.
+    #[test]
+    fn tool_uses_are_on_the_build_page() {
+        for t in TOOLS {
+            for (slug, phrase) in t.used {
+                let b = BUILDS.iter().find(|b| b.slug == *slug).unwrap_or_else(|| panic!("{} cites unknown build {slug}", t.name));
+                let mut text = format!("{} {} {} {}", b.line, b.stat, b.role, b.stack.join(" "));
+                for s in b.sections {
+                    text.push_str(s.title);
+                    text.push_str(s.lead);
+                    s.points.iter().for_each(|p| text.push_str(p));
+                }
+                assert!(text.to_lowercase().contains(&phrase.to_lowercase()), "{} says {slug} used it, but {phrase:?} isn't on that page", t.name);
+            }
         }
     }
 }

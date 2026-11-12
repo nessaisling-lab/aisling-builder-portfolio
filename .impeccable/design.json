@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-11-12T16:41:58.333Z",
+  "generatedAt": "2026-11-12T18:23:38.834Z",
   "title": "Design System: Aisling Builder Portfolio",
   "extensions": {
     "sources": {
@@ -349,6 +349,11 @@
         "name": "on-the-lift",
         "value": "0 18px 30px -22px var(--shadow)",
         "purpose": "The raised build in the Projects garage only: the one object held up off the floor."
+      },
+      {
+        "name": "card",
+        "value": "inset 0 0 0 1px var(--line-strong), inset 0 0 0 4px var(--surface), inset 0 0 0 5px var(--line), 0 18px 40px -20px var(--shadow)",
+        "purpose": "A card opened over the page (tools, jobs, easter eggs), over a dark scrim."
       }
     ],
     "motion": [
@@ -376,6 +381,11 @@
         "name": "rise",
         "value": "translateY(8px) to 0, 200ms, var(--ease)",
         "purpose": "A build raised onto the garage lift; removed with reduced motion by the kit."
+      },
+      {
+        "name": "ziggurat-turn",
+        "value": "rotateY, one turn in 40s, clockwise seen from above",
+        "purpose": "The stack ziggurat on Experience; holds while pointed at or focused; none with reduced motion."
       }
     ],
     "breakpoints": [
@@ -539,6 +549,30 @@
       "description": "Projects page: steel posts and arms, a lamp shade, the raised build as an engraved panel lit by a flat brass tint, role and stack hanging under the arms as tags. site.js swaps which build is raised; without it every bay is a link.",
       "html": "<div class=\"ds-lift\"><span class=\"ds-lamp\"></span><div class=\"ds-car\"><h3>Gala Guest List Tool</h3><p>180 of 223 PRs</p></div><span class=\"ds-arms\"></span><dl class=\"ds-tags\"><div><dt>Role</dt><dd>Technical director</dd></div></dl></div>",
       "css": ".ds-lift{position:relative;padding:3.6rem 2.5rem 0}.ds-lift::before,.ds-lift::after{content:\"\";position:absolute;top:3rem;bottom:0;width:16px;background:var(--line-strong)}.ds-lift::before{left:0}.ds-lift::after{right:0}.ds-lamp{position:absolute;left:50%;top:1.25rem;width:7rem;height:1.5rem;margin-left:-3.5rem;border-radius:4rem 4rem .35rem .35rem;background:var(--muted)}.ds-car{padding:1.35rem 1.5rem;border-radius:12px;background:radial-gradient(ellipse 60% 75% at 50% 0,color-mix(in oklab,var(--brass) 14%,var(--surface)),var(--surface));box-shadow:inset 0 0 0 1px var(--line-strong),inset 0 0 0 4px var(--surface),inset 0 0 0 5px var(--line),0 18px 30px -22px var(--shadow)}.ds-arms{display:block;height:12px;margin:.9rem -2.5rem 0;border-radius:6px;background:var(--line-strong)}.ds-tags{display:flex;justify-content:center;margin-top:.7rem}.ds-tags div{padding:.4rem .75rem;background:var(--surface);border-radius:8px;box-shadow:inset 0 0 0 1px var(--line-strong)}"
+    },
+    {
+      "name": "Sky chart",
+      "kind": "composite",
+      "refersTo": "experience/index.html .chart",
+      "description": "A 1440x740 sky drawn by site/src/sky.rs: stars, a meridian, one dashed track per job peaking on the meridian (newest highest), facts as dots along each track. HTML labels sit by percentage of the same box. Night by evening, pale dawn by day. Below 75rem a list down a meridian line.",
+      "html": "<div class=\"ds-sky\"><span class=\"ds-star\"></span><p class=\"ds-when\">Sep – Nov 2026</p><p class=\"ds-org\">Pursuit client capstone</p></div>",
+      "css": ".ds-sky{position:relative;padding:2rem 2rem 2rem 3rem;background:linear-gradient(var(--chart-top),var(--chart-bottom))}.ds-star{position:absolute;left:1.5rem;top:2.4rem;width:14px;height:14px;border-radius:50%;background:var(--mark)}.ds-when{font:600 .82rem var(--display);color:var(--mark)}.ds-org{font:800 1.2rem var(--display);color:var(--ink)}"
+    },
+    {
+      "name": "Stack ziggurat",
+      "kind": "composite",
+      "refersTo": "experience/index.html .zig",
+      "description": "The stack in CSS 3D: seven clay terraces (Rust at the foundation, AI at the summit) with each layer's tools written round four sides, and a small niched temple on top whose arched door opens the é card; sides shaded by how squarely they face the lamp. Turns clockwise; drag, arrow keys or focus turn it. Every tool is a popover button. Below 75rem it shows as low collapsible terraces, one open at a time.",
+      "html": "<div class=\"ds-tier\"><b>Rust</b> <button class=\"ds-tool\">axum</button> · <button class=\"ds-tool\">SQLx</button></div>",
+      "css": ".ds-tier{display:flex;gap:.3em;justify-content:center;padding:.5rem;background:var(--desk-face);box-shadow:inset 0 0 0 1px var(--desk-cut);font:600 .85rem var(--display);color:var(--ink)}.ds-tool{font:inherit;color:inherit;background:none;border:0;padding:0;text-decoration:underline dotted}"
+    },
+    {
+      "name": "Card",
+      "kind": "overlay",
+      "refersTo": ".card[popover]",
+      "description": "An HTML popover card: engraved surface panel, close button, Archivo 800 title, plain lines. Tools say what they are and link only builds whose pages show them; job cards carry the whole entry; easter eggs carry their cuneiform sign.",
+      "html": "<div class=\"ds-card\"><h3>Tailwind</h3><p>A CSS framework of small utility classes, written straight into the markup.</p></div>",
+      "css": ".ds-card{max-width:24rem;padding:1.15rem 1.3rem;border-radius:12px;background:var(--surface);box-shadow:inset 0 0 0 1px var(--line-strong),inset 0 0 0 4px var(--surface),inset 0 0 0 5px var(--line),0 18px 40px -20px var(--shadow)}"
     }
   ],
   "narrative": {

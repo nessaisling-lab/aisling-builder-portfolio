@@ -110,6 +110,13 @@ pub struct World {
     pub lit: Rgb,
     /// Panes nobody is home behind. By day every pane is the same glass.
     pub unlit: Rgb,
+    /// The Experience sky chart, top and horizon. Text sits anywhere on it.
+    pub chart_top: Rgb,
+    pub chart_bottom: Rgb,
+    /// Marks on that sky: the stars where jobs cross the meridian, and their dates.
+    pub mark: Rgb,
+    /// The strip of earth under the sky, which carries how I work.
+    pub earth: Rgb,
 }
 
 /// Day: light brass and clay tints (Aisling's choice, Nov 11: warm fits Sumer), the kit's
@@ -129,6 +136,11 @@ pub const DAY: World = World {
     city_2: Rgb(0x5F, 0x79, 0x84),
     lit: Rgb(0xA9, 0xC4, 0xCF),
     unlit: Rgb(0xA9, 0xC4, 0xCF),
+    // dawn: pale sky warming to the horizon, petrol marks
+    chart_top: Rgb(0xDC, 0xEB, 0xF1),
+    chart_bottom: Rgb(0xF2, 0xE9, 0xD8),
+    mark: Rgb(0x0C, 0x60, 0x6D),
+    earth: Rgb(0xE1, 0xCB, 0xA2),
 };
 
 /// Evening: the same desk in low light; the windows across the street come on.
@@ -147,6 +159,11 @@ pub const EVENING: World = World {
     city_2: Rgb(0x08, 0x13, 0x1C),
     lit: Rgb(0xE6, 0xD8, 0xA3),
     unlit: Rgb(0x16, 0x26, 0x33),
+    // night: the stars come out in lamplight
+    chart_top: Rgb(0x08, 0x12, 0x1B),
+    chart_bottom: Rgb(0x1F, 0x30, 0x45),
+    mark: Rgb(0xE6, 0xD8, 0xA3),
+    earth: Rgb(0x1A, 0x14, 0x0C),
 };
 
 // ── the invariants ───────────────────────────────────────────────────────────
@@ -167,6 +184,24 @@ assert_readable!(EVENING.muted, EVENING.desk_face, 450, "evening muted on drawer
 assert_readable!(EVENING.accent, EVENING.desk_face, 450, "evening accent on drawer");
 assert_readable!(EVENING.ink_2, EVENING.desk_top, 450, "evening ink-2 on tablet");
 
+// The Experience sky: job names, roles, dates and facts sit anywhere from the top of the chart
+// to the horizon; how I work sits on the earth.
+assert_readable!(DAY.ink, DAY.chart_top, 450, "day ink on sky");
+assert_readable!(DAY.ink_2, DAY.chart_bottom, 450, "day ink-2 on horizon");
+assert_readable!(DAY.muted, DAY.chart_bottom, 450, "day muted on horizon");
+assert_readable!(DAY.mark, DAY.chart_top, 450, "day mark on sky");
+assert_readable!(DAY.mark, DAY.chart_bottom, 450, "day mark on horizon");
+assert_readable!(DAY.mark, DAY.earth, 450, "day mark on earth");
+assert_readable!(DAY.ink_2, DAY.earth, 450, "day ink-2 on earth");
+assert_readable!(EVENING.ink, EVENING.chart_bottom, 450, "evening ink on sky");
+assert_readable!(EVENING.ink_2, EVENING.chart_bottom, 450, "evening ink-2 on horizon");
+assert_readable!(EVENING.muted, EVENING.chart_bottom, 450, "evening muted on horizon");
+assert_readable!(EVENING.mark, EVENING.chart_bottom, 450, "evening mark on horizon");
+assert_readable!(EVENING.mark, EVENING.earth, 450, "evening mark on earth");
+assert_readable!(EVENING.ink_2, EVENING.earth, 450, "evening ink-2 on earth");
+assert_readable!(DAY.accent, DAY.earth, 450, "day link on earth");
+assert_readable!(EVENING.accent, EVENING.earth, 450, "evening link on earth");
+
 /// The CSS custom properties for one world. Contrast figures in the comments are
 /// computed from the same values the assertions check, so they cannot go stale.
 pub fn css_vars(w: &World) -> String {
@@ -175,7 +210,8 @@ pub fn css_vars(w: &World) -> String {
         "  /* {name} */\n\
          \x20 --desk-face:{face};   /* ink {ri:.2}:1, muted {rm:.2}:1 */\n\
          \x20 --desk-top:{top};--desk-front:{front};--desk-cut:{cut};\n\
-         \x20 --sky:{sky};--city:{city};--city-2:{city2};--lit:{lit};--unlit:{unlit};\n",
+         \x20 --sky:{sky};--city:{city};--city-2:{city2};--lit:{lit};--unlit:{unlit};\n\
+         \x20 --chart-top:{ct};--chart-bottom:{cb};--mark:{mark};--earth:{earth};\n",
         name = w.name,
         face = w.desk_face.hex(),
         top = w.desk_top.hex(),
@@ -186,6 +222,10 @@ pub fn css_vars(w: &World) -> String {
         city2 = w.city_2.hex(),
         lit = w.lit.hex(),
         unlit = w.unlit.hex(),
+        ct = w.chart_top.hex(),
+        cb = w.chart_bottom.hex(),
+        mark = w.mark.hex(),
+        earth = w.earth.hex(),
         ri = r(w.ink),
         rm = r(w.muted),
     )

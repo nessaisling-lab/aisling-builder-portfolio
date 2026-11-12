@@ -26,6 +26,14 @@ colors:
   city: "#859DA6"
   city-2: "#5F7984"
   pane: "#A9C4CF"
+  chart-top: "#DCEBF1"
+  chart-bottom: "#F2E9D8"
+  mark: "#0C606D"
+  earth: "#E1CBA2"
+  chart-top-evening: "#08121B"
+  chart-bottom-evening: "#1F3045"
+  mark-evening: "#E6D8A3"
+  earth-evening: "#1A140C"
   bg-evening: "oklch(0.2 0.02 200)"
   surface-evening: "oklch(0.245 0.022 200)"
   soft-evening: "oklch(0.27 0.026 198)"
@@ -264,6 +272,8 @@ The page is centred in a `--wrap` of 86rem with a gutter of `max(16px, 3.5vw)`. 
 
 **The garage** (Projects) is one column inside the wrap: the title with its deck beside it, then the wall of bays (seven across; four at 75rem and below; two at 40rem, where each bay drops its stat and the model shrinks to 24px), then the lift centred at a 62rem maximum, then the floor. The lift's posts reach down to the floor's top edge. The floor is a full-bleed concrete band (`--floor`, line mixed 55% into the ground, with a 2px strong-hairline top edge); the workbench stands on it with the earlier work in four columns (two at 75rem, one at 40rem). At 64rem and below the raised build stacks its still above its text and the posts thin to 6px; the lift itself stays.
 
+**Experience (an-ki)** is a sky over a strip of earth. Above 75rem the sky is a fixed 1440 by 740 chart, drawn at build time by `site/src/sky.rs`, with every label placed by percentage of that box so words and drawing never drift; its type scales with the width between 13.5 and 16px. The meridian stands at 36% across; the ziggurat stands on the horizon at 80%, rising into the earth below, which runs down to the footer. Below 75rem the sky becomes a list down a meridian line on the left, facts as a wrapped row under each job, and the ziggurat becomes low terraces under the shrine, AI at the top and Rust at the foundation, each a collapsible (one open at a time) that opens to its tools.
+
 **Print** drops the top bar, footer, pager, media and the decorative window, tablet and reeds.
 
 ## Elevation & Depth
@@ -327,6 +337,15 @@ The Projects page. Every build parks in a numbered bay along the wall: a kit pla
 - **Inspection tags:** role and stack hang under the arms as small single-hairline plates on 2px cords.
 - **Raising:** without script each bay is a plain link to its case page and the client capstone stays up. With site.js a plain press raises that build in place (the panel rises 8px over 200ms; none with reduced motion), focuses its heading and writes `#slug` so the link reopens with it raised. Modified clicks still open the link.
 - **The workbench:** the earlier work as a service log on a Drawer Face bench with a clay top edge, entries on desk-cut hairlines.
+
+### The sky chart
+Experience. Night sky in the evening, a pale dawn by day (`--chart-top` to `--chart-bottom`). A fixed scatter of stars and a lamplit meridian in `--mark`; each job is a dashed track across the sky whose peak sits on the meridian, newest highest, with a star at the crossing and its facts as small dots along the track. Job labels alternate sides of the meridian: date in `--mark`, the job name as a button that opens its card, the role in ink-2. Pointing at a job turns its star into the cuneiform sign for star (mul).
+
+### The stack ziggurat
+The stack in CSS 3D: seven terraces in the desk's clay, Rust at the foundation to AI at the summit, each terrace's tools written round its four sides, and on top a small temple with the niched walls of a Sumerian temple and an arched door; the door lights in `--mark` when pointed at and opens the é card. Sides are lit by how squarely they face the lamp, the kit's three-face light made continuous. It turns clockwise, one turn in 40s, holds while pointed at or focused, and turns by drag or arrow keys; tabbing to a tool turns its side forward. Every tool is a button that opens its card. Still for reduced motion. Below 75rem the 3D ziggurat is hidden and the same stack shows as low terraces, each a `<details>` (named, so one opens at a time) whose summary carries the layer and its tool count.
+
+### Cards
+The HTML popover, so no script is needed: a 12px engraved surface panel centred over a dark scrim, a close button, a title in Archivo 800, then plain lines. Tool cards say what the tool is and link only the builds whose own pages show it in use (a test holds each link to a phrase on that page). Job cards carry the whole entry. The easter eggs (an-ki, é, ziqpu) use the same card with their cuneiform sign above the title.
 
 ### Inputs / Fields
 - **Style:** Petrol Mist background, 1.5px strong-hairline border (3:1), 8px corners, 0.65rem by 0.75rem padding, inheriting body type. Labels in Archivo 700 above.

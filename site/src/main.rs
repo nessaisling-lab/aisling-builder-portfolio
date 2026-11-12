@@ -8,6 +8,7 @@
 
 mod content;
 mod resume;
+mod sky;
 mod skyline;
 mod theme;
 
@@ -805,39 +806,271 @@ fn Integration(root: String) -> Element {
 // The three drawers of the home desk. Each gets its own world later (asked as we reach
 // it); for now they share the kit's spec-sheet look.
 
+/// One job on the sky: its place in the list, the job, where it crosses the meridian (as CSS),
+/// and its facts with where each sits along the track.
+type SkyJob = (usize, &'static Job, String, Vec<(String, &'static str)>);
+
+/// Experience is an-ki, heaven and earth: where I've worked is plotted on the sky (drawn by
+/// sky.rs), the stack stands on the horizon as a ziggurat, and how I work is the ground.
 #[component]
 fn Experience(root: String) -> Element {
+    let jobs: Vec<SkyJob> = JOBS.iter().enumerate().map(|(i, j)| {
+        let y = format!("--y:{:.2}%", sky::crossing(i) / sky::H * 100.0);
+        let facts = job_facts(j.org).iter().enumerate().map(|(k, f)| {
+            let (x, y) = sky::fact_at(i, k);
+            (format!("--fx:{x:.2}%;--fy:{y:.2}%"), *f)
+        }).collect();
+        (i, j, y, facts)
+    }).collect();
     rsx! {
-        section { class: "wrap page-head",
-            h1 { "Experience" }
-            p { class: "deck",
-                "A client capstone, a terminal I'm building solo, data work, and a business I ran on
-                 my own. The same habit runs through all of it: own the thing end to end."
+        section { class: "sky", "aria-labelledby": "exp-h",
+            div { class: "chart",
+                div { class: "sky-draw", dangerous_inner_html: sky::svg(JOBS.len()) }
+                div { class: "chart-head",
+                    h1 { id: "exp-h", "Experience" }
+                    p { class: "deck",
+                        "A client capstone, a terminal I'm building solo, data work, and a business I ran on
+                         my own. The same habit runs through all of it: own the thing end to end."
+                    }
+                }
+                button { class: "mer-label", "type": "button", "popovertarget": "egg-ziqpu", "The meridian" }
+                button { class: "glyph an", "type": "button", "popovertarget": "egg-anki", "aria-label": "an, Sumerian for the sky", "\u{1202D}" }
+                // Each job crosses the meridian at its star; press the name for the whole story.
+                ol { class: "jobs",
+                    for (i, j, y, facts) in jobs {
+                        li { class: if i % 2 == 0 { "job r" } else { "job l" }, style: "{y}",
+                            span { class: "star", "aria-hidden": "true" }
+                            span { class: "mul", "aria-hidden": "true", "mul · star" }
+                            div { class: "job-label",
+                                p { class: "when", "{j.when}" }
+                                h2 { class: "org",
+                                    button { "type": "button", "popovertarget": "job-{i}", "{j.org}" }
+                                }
+                                p { class: "role", "{j.role}" }
+                            }
+                            ul { class: "facts",
+                                for (style, f) in facts {
+                                    li { style: "{style}", "{f}" }
+                                }
+                            }
+                        }
+                    }
+                }
+                Ziggurat {}
+                StackSteps {}
             }
         }
-        section { class: "wrap block", "aria-labelledby": "jobs",
-            h2 { id: "jobs", class: "block-h", "Where I've worked" }
-            Timeline { education: false }
+        section { class: "earth", "aria-labelledby": "how-h",
+            div { class: "wrap earth-in",
+                div { class: "earth-head",
+                    h2 { id: "how-h", "How I work" }
+                    button { class: "glyph ki", "type": "button", "popovertarget": "egg-anki", "aria-label": "ki, Sumerian for the earth", "\u{121A0}" }
+                }
+                div { class: "earth-rules",
+                    for r in RULES {
+                        div { class: "earth-rule",
+                            h3 { "{r.head}" }
+                            p { "{r.body}" }
+                        }
+                    }
+                }
+                p { class: "more", a { href: "{root}resume/", "The full résumé →" } }
+            }
         }
-        section { class: "wrap block", "aria-labelledby": "rules",
-            h2 { id: "rules", class: "block-h", "How I work" }
-            div { class: "rules",
-                for r in RULES {
-                    div { class: "rule",
-                        h3 { "{r.head}" }
-                        p { "{r.body}" }
+        for (i, j) in JOBS.iter().enumerate() {
+            Card { id: format!("job-{i}"),
+                p { class: "card-k", "{j.when}" }
+                h3 { "{j.org}" }
+                p { class: "card-role", "{j.role}" }
+                p { "{j.body}" }
+            }
+        }
+        for t in TOOLS {
+            ToolCard { root: root.clone(), name: t.name.to_string() }
+        }
+        Card { id: "egg-anki".to_string(),
+            p { class: "card-glyph", "aria-hidden": "true", "\u{1202D}\u{121A0}" }
+            h3 { span { class: "nb-place", lang: "sux-Latn", "an-ki" } " · heaven and earth" }
+            p {
+                "The Sumerian word for the universe was an-ki: "
+                span { class: "nb-place", lang: "sux-Latn", "an" }
+                ", the sky, and "
+                span { class: "nb-place", lang: "sux-Latn", "ki" }
+                ", the earth. This page is laid out the same way: where I've worked on the sky, how I work on the ground under it."
+            }
+        }
+        Card { id: "egg-e2".to_string(),
+            p { class: "card-glyph", "aria-hidden": "true", "\u{1208D}" }
+            h3 { span { class: "nb-place", lang: "sux-Latn", "é" } " · house, temple" }
+            p { "A ziggurat was a stepped platform with a shrine at the top. In Sumerian, é is a house, and a temple: the god's house." }
+        }
+        Card { id: "egg-ziqpu".to_string(),
+            h3 { span { class: "nb-place", "ziqpu" } " · highest point" }
+            p {
+                "Babylonian astronomers kept a list of ziqpu stars and timed them as they crossed the meridian
+                 overhead, to tell the hour of the night. My project "
+                a { href: "{root}work/ziqpu/", "Ziqpu" }
+                " shares the name."
+            }
+        }
+    }
+}
+
+/// A card that opens over the page: the HTML popover, so it needs no script, closes on Esc or
+/// a click outside, and comes back to the button that opened it.
+#[component]
+fn Card(id: String, children: Element) -> Element {
+    rsx! {
+        div { class: "card", id: "{id}", "popover": "auto",
+            button { class: "card-x", "type": "button", "popovertarget": "{id}", "popovertargetaction": "hide", "aria-label": "Close", "×" }
+            {children}
+        }
+    }
+}
+
+/// A tool's card: what it is, and the builds whose pages show it in use.
+#[component]
+fn ToolCard(root: String, name: String) -> Element {
+    let t = tool(&name).expect("tool exists");
+    let used: Vec<&Build> = t.used.iter().filter_map(|(s, _)| BUILDS.iter().find(|b| b.slug == *s)).collect();
+    rsx! {
+        Card { id: tool_id(t.name),
+            h3 { "{t.name}" }
+            p { "{t.what}" }
+            if !used.is_empty() {
+                p { class: "card-used",
+                    "Used in "
+                    for (k, b) in used.iter().enumerate() {
+                        if k > 0 { if k + 1 == used.len() { " and " } else { ", " } }
+                        a { href: "{root}work/{b.slug}/", "{b.name}" }
                     }
                 }
             }
         }
-        section { class: "wrap block", "aria-labelledby": "stack",
-            h2 { id: "stack", class: "block-h", "Stack" }
-            dl { class: "nb-spec stack-dl",
-                for r in STACK {
-                    dt { "{r.dt}" } dd { "{r.dd}" }
+    }
+}
+
+/// The ziggurat's layers, foundation first: Rust at the bottom, AI at the summit.
+const ZIG: [&str; 7] = ["Rust", "Integrity", "Integration", "Web", "Ops", "Also", "AI"];
+
+/// Spreads a layer's tools over the ziggurat's four sides by length, so its band reads evenly
+/// all the way round.
+fn four_sides<'a>(items: &[&'a str]) -> [Vec<&'a str>; 4] {
+    let total: usize = items.iter().map(|s| s.len() + 3).sum();
+    let mut out: [Vec<&str>; 4] = Default::default();
+    let (mut side, mut run) = (0, 0);
+    for it in items {
+        if side < 3 && run * 4 >= total * (side + 1) {
+            side += 1;
+        }
+        out[side].push(it);
+        run += it.len() + 3;
+    }
+    out
+}
+
+/// The stack as a ziggurat, in CSS 3D: seven terraces, each with its tools written round its
+/// four sides, and a shrine on top. site.js turns it; every tool is a button that opens its card.
+#[component]
+fn Ziggurat() -> Element {
+    rsx! {
+        div { class: "zig", tabindex: "0", role: "group",
+            "aria-label": "My stack as a ziggurat, Rust at the foundation, AI at the top; each tool opens its card.",
+            div { class: "model",
+                for (i, name) in ZIG.iter().enumerate() {
+                    Tier { i, name: name.to_string() }
+                }
+                Shrine {}
+            }
+        }
+    }
+}
+
+const TIER_W: f64 = 22.5; // em, the foundation's width
+const TIER_STEP: f64 = 1.875; // em narrower per terrace
+const TIER_H: f64 = 2.125; // em tall
+
+#[component]
+fn Tier(i: usize, name: String) -> Element {
+    let row = STACK.iter().find(|r| r.dt == name).expect("stack row exists");
+    let items: Vec<&str> = row.dd.split(" · ").collect();
+    let w = TIER_W - TIER_STEP * i as f64;
+    let tier = format!("--i:{i};--w:{w}em;transform:translateY(-{}em)", TIER_H * (i + 1) as f64);
+    let sides: Vec<(usize, String, Vec<&str>)> = four_sides(&items).into_iter().enumerate()
+        .map(|(k, s)| (k, format!("transform:rotateY({}deg) translateZ({}em)", k * 90, w / 2.0), s))
+        .collect();
+    rsx! {
+        div { class: "tier", style: "{tier}",
+            for (k, style, side) in sides {
+                div { class: "face f{k}", style: "{style}",
+                    div { class: "band",
+                        if k == 0 { b { class: "layer", "{name}" } }
+                        if side.is_empty() { span { class: "layer-name", "aria-hidden": "true", "{name}" } }
+                        for (n, t) in side.iter().enumerate() {
+                            if n > 0 { span { class: "sep", "aria-hidden": "true", "·" } }
+                            button { class: "tool", "type": "button", "popovertarget": tool_id(t), "{t}" }
+                        }
+                    }
                 }
             }
-            p { class: "more", a { href: "{root}resume/", "The full résumé →" } }
+            div { class: "cap" }
+        }
+    }
+}
+
+/// The shrine on the summit, é, the god's house: a small temple with the niched walls of a
+/// Sumerian temple and an arched door. The door is the easter egg, like the tablet at home.
+#[component]
+fn Shrine() -> Element {
+    let (w, h) = (4.5, 2.6);
+    let tier = format!("--i:7;--w:{w}em;--h:{h}em;transform:translateY(-{}em)", TIER_H * 7.0 + h);
+    let sides: Vec<(usize, String)> = (0..4).map(|k| (k, format!("transform:rotateY({}deg) translateZ({}em)", k * 90, w / 2.0))).collect();
+    rsx! {
+        div { class: "tier shrine", style: "{tier}",
+            for (k, style) in sides {
+                div { class: "face f{k}", style: "{style}",
+                    if k == 0 {
+                        button { class: "door", "type": "button", "popovertarget": "egg-e2", "aria-label": "The shrine's door: é, the god's house" }
+                    } else {
+                        button { class: "door", "type": "button", "popovertarget": "egg-e2", tabindex: "-1", "aria-hidden": "true" }
+                    }
+                }
+            }
+            div { class: "cap" }
+        }
+    }
+}
+
+/// Narrow screens: the ziggurat as low terraces under the shrine, AI at the top and Rust at the
+/// foundation. Each terrace is a collapsible that opens to its tools, one at a time, so it never
+/// stands taller than the shrine and seven names.
+#[component]
+fn StackSteps() -> Element {
+    rsx! {
+        div { class: "steps", role: "group", "aria-label": "My stack, from AI at the top to Rust at the foundation",
+            div { class: "shrine-flat",
+                button { class: "door", "type": "button", "popovertarget": "egg-e2", "aria-label": "The shrine's door: é, the god's house" }
+            }
+            for (i, name) in ZIG.iter().enumerate().rev() {
+                StepTier { i, name: name.to_string() }
+            }
+        }
+    }
+}
+
+#[component]
+fn StepTier(i: usize, name: String) -> Element {
+    let row = STACK.iter().find(|r| r.dt == name).expect("stack row exists");
+    let items: Vec<&str> = row.dd.split(" · ").collect();
+    let count = format!("{} tools", items.len());
+    rsx! {
+        details { class: "step", "name": "stack", style: "--i:{i}",
+            summary { span { class: "step-name", "{name}" } span { class: "step-count", "{count}" } }
+            div { class: "step-tools",
+                for t in items {
+                    button { class: "tool", "type": "button", "popovertarget": tool_id(t), "{t}" }
+                }
+            }
         }
     }
 }

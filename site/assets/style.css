@@ -363,6 +363,132 @@ figcaption{font-size:.88rem;color:var(--muted);margin-top:.5rem}
 .foot-name{font:800 1.1rem/1.3 var(--display);font-stretch:108%;margin-bottom:.4rem}
 .colophon{font-size:.88rem;color:var(--muted)}
 
+/* ── experience: an-ki, the sky and the earth ────────────── */
+/* The sky chart is drawn by site/src/sky.rs on a 1440 x 740 box; the labels sit on it by
+   percentage, so drawing and words stay together at any width. Its type scales with the
+   width (16px at 1440) between 13.5 and 16px. Below 75rem it becomes a list down a meridian
+   line, and the ziggurat becomes low terraces you open one at a time. */
+.sky{position:relative;z-index:1;container-type:inline-size;overflow-x:clip;color:var(--ink);background:linear-gradient(var(--chart-top),var(--chart-bottom))}
+.chart{position:relative;max-width:1440px;margin:0 auto;aspect-ratio:1440/740;font-size:clamp(13.5px,1.111cqw,16px)}
+/* the drawing sits behind everything on the chart and never takes a tap */
+.sky-draw svg{position:absolute;inset:0;z-index:-1;width:100%;height:100%;pointer-events:none}
+.sky-art .stars circle{fill:var(--mark)}
+.sky-art .meridian{stroke:var(--mark);stroke-opacity:.5;vector-effect:non-scaling-stroke}
+.sky-art .track{fill:none;stroke:var(--muted);stroke-opacity:.7;stroke-dasharray:2 6;vector-effect:non-scaling-stroke}
+.chart-head{position:absolute;left:5.7%;top:3.5%;width:23.6%}
+.nb .chart-head h1{font-size:2.75em;line-height:1}
+.nb .chart-head .deck{font-size:.94em;margin-top:.6em;color:var(--ink-2)}
+.mer-label,.glyph{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.mer-label{position:absolute;left:calc(36.11% + .7em);top:1.1em;font:400 .82em/1 var(--place);letter-spacing:.1em;color:var(--muted);
+  text-decoration:underline dotted;text-underline-offset:.3em}
+.glyph{font-family:"Noto Sans Cuneiform",sans-serif;line-height:1}
+.glyph.an{position:absolute;right:4%;top:7%;font-size:1.7em;color:var(--mark);opacity:.5}
+.glyph:hover,.glyph:focus-visible,.mer-label:hover{opacity:1;color:var(--mark)}
+.jobs,.facts{list-style:none}
+.job,.facts{display:contents}
+.job .star{position:absolute;left:36.11%;top:var(--y);width:.875em;height:.875em;margin:-.4375em 0 0 -.4375em;border-radius:50%;background:var(--mark);
+  box-shadow:0 0 0 .4em color-mix(in oklab,var(--mark) 18%,transparent);transition:opacity .2s var(--ease)}
+/* the star is a star: mul, three sky signs, takes the dot's place while its job is pointed at */
+.job .star::after{content:"\1202F";position:absolute;left:50%;top:50%;transform:translate(-50%,-52%);font:400 1.7em/1 "Noto Sans Cuneiform",sans-serif;color:var(--mark);opacity:0}
+.job:hover .star,.job:focus-within .star{background:transparent;box-shadow:none}
+.job:hover .star::after,.job:focus-within .star::after{opacity:1}
+.mul{position:absolute;right:calc(63.89% + .8em);top:calc(var(--y) + .9em);white-space:nowrap;font:400 .72em/1 var(--place);letter-spacing:.08em;color:var(--muted);opacity:0}
+.job.l .mul{right:auto;left:calc(36.11% + .8em)}
+.job:hover .mul,.job:focus-within .mul{opacity:1}
+.job-label{position:absolute;top:calc(var(--y) - 1.95em);width:30%}
+.job.r .job-label{left:calc(36.11% + 1.5em)}
+.job.l .job-label{right:calc(63.89% + 1.5em);text-align:right}
+.when{font:600 .82em/1.2 var(--display);color:var(--mark)}
+.nb .org{font:800 1.2em/1.25 var(--display);font-stretch:106%;margin:.15em 0 .1em}
+.org button{font:inherit;color:var(--ink);background:none;border:0;padding:0;text-align:inherit;cursor:pointer}
+.org button:hover{text-decoration:underline;text-underline-offset:.2em}
+.role{font-size:.88em;color:var(--ink-2)}
+.facts li{position:absolute;left:var(--fx);top:var(--fy);transform:translate(-.2em,-50%);padding-left:.85em;font-size:.8em;line-height:1.2;color:var(--ink-2);white-space:nowrap}
+.facts li::before{content:"";position:absolute;left:0;top:50%;width:.45em;height:.45em;margin-top:-.225em;border-radius:50%;background:var(--mark)}
+/* the ziggurat: the stack, standing on the horizon at the right, rising out of the earth */
+.zig{position:absolute;left:80%;top:calc(100% + 1.4em);width:0;height:0;z-index:1;perspective:110em;perspective-origin:0 -16em;cursor:grab;outline:none;touch-action:pan-y}
+.zig.dragging{cursor:grabbing}
+.zig:focus-visible::after{content:"";position:absolute;left:-12em;top:1.4em;width:24em;height:3px;border-radius:2px;background:var(--accent)}
+.model{transform-style:preserve-3d;transform:rotateX(-14deg) rotateY(var(--ry,38deg))}
+.tier{position:absolute;transform-style:preserve-3d}
+.face{position:absolute;top:0;left:calc(var(--w) / -2);width:var(--w);height:var(--h,2.125em);display:flex;align-items:center;justify-content:center;padding:0 .7em;
+  background:linear-gradient(rgb(0 0 0 / var(--sh)),rgb(0 0 0 / var(--sh))),var(--desk-face);box-shadow:inset 0 0 0 1px var(--desk-cut);backface-visibility:hidden}
+/* each side is lit by how squarely it faces the lamp; site.js updates these as it turns */
+.f0{--sh:var(--sh0,.21)}.f1{--sh:var(--sh1,.34)}.f2{--sh:var(--sh2,.34)}.f3{--sh:var(--sh3,.02)}
+.cap{position:absolute;left:calc(var(--w) / -2);top:calc(var(--w) / -2);width:var(--w);height:var(--w);transform:rotateX(90deg);background:var(--desk-top);box-shadow:inset 0 0 0 1px var(--desk-cut)}
+.band{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:center;gap:0 .3em;font:600 .72em/1.15 var(--display);font-stretch:104%;color:var(--ink);text-align:center}
+.layer{font-weight:800}
+.layer-name{color:var(--muted)}
+.sep{color:var(--muted)}
+.tool{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;text-decoration:underline dotted color-mix(in oklab,currentColor 45%,transparent);text-underline-offset:.2em}
+.tool:hover{color:var(--accent);text-decoration-color:currentColor}
+.tool:focus-visible,.glyph:focus-visible,.org button:focus-visible,.mer-label:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+/* the shrine: a small temple with the niched walls of a Sumerian temple and an arched door */
+.shrine .face{padding:0;align-items:flex-end;
+  background:linear-gradient(rgb(0 0 0 / var(--sh)),rgb(0 0 0 / var(--sh))),repeating-linear-gradient(90deg,transparent 0 .5em,rgb(0 0 0 / .13) .5em .66em),var(--desk-face);
+  box-shadow:inset 0 .3em 0 color-mix(in oklab,var(--desk-cut) 70%,transparent),inset 0 0 0 1px var(--desk-cut)}
+.door{display:block;width:1.05em;height:1.6em;margin:0 auto;padding:0;border:0;border-radius:999px 999px 0 0;background:#20160B;cursor:pointer;transition:background .2s var(--ease)}
+.door:hover,.door:focus-visible{background:var(--mark)}
+.door:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.steps{display:none}
+/* the earth: how I work, the ground it all stands on */
+/* the earth runs down to the footer, so no strip of page shows between them */
+.earth{position:relative;background:var(--earth);border-top:1px solid var(--desk-cut);padding:1.4rem 0 clamp(3rem,7vw,5rem)}
+body:has(.earth) .foot{margin-top:0}
+.earth-head{display:flex;align-items:baseline;gap:.75rem}
+.nb .earth-head h2{font:400 .9rem/1 var(--place);letter-spacing:.1em;color:var(--ink-2)}
+.glyph.ki{font-size:1.15rem;color:var(--mark);opacity:.6}
+.earth-rules{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1.25rem 2rem;max-width:60%;margin-top:.9rem}
+.nb .earth-rule h3{font:800 1.05rem/1.2 var(--display);font-stretch:106%;color:var(--mark)}
+.earth-rule p{font-size:.9rem;line-height:1.45;color:var(--ink-2);margin-top:.3rem}
+.earth .more{font-size:.92rem}
+/* cards: tools, jobs and the easter eggs, opened over the page */
+.card[popover]{margin:auto;width:min(24rem,calc(100% - 2rem));padding:1.15rem 1.3rem 1.25rem;border:0;border-radius:var(--r-m);background:var(--surface);color:var(--ink);
+  box-shadow:inset 0 0 0 1px var(--line-strong),inset 0 0 0 4px var(--surface),inset 0 0 0 5px var(--line),0 18px 40px -20px var(--shadow)}
+.card[popover]::backdrop{background:rgb(0 0 0 / .3)}
+.nb .card h3{font:800 1.2rem/1.2 var(--display);font-stretch:106%;padding-right:2rem}
+.card p{margin-top:.5rem;font-size:.95rem;color:var(--ink-2)}
+.card-k{font:600 .82rem/1.2 var(--display);color:var(--muted)}
+.card-role{font-weight:650}
+.card-glyph{font:400 1.7rem/1 "Noto Sans Cuneiform",sans-serif;color:var(--accent);letter-spacing:.1em}
+.card-x{position:absolute;right:.6rem;top:.55rem;width:2.25rem;height:2.25rem;border:0;border-radius:50%;background:none;color:var(--muted);font:400 1.4rem/1 var(--body);cursor:pointer}
+.card-x:hover{background:var(--soft);color:var(--ink)}
+@media (max-width:75rem){
+  .chart{aspect-ratio:auto;font-size:1rem;padding:clamp(1.5rem,4vw,2.25rem) var(--gutter) 2rem;max-width:var(--wrap)}
+  .sky-draw{position:absolute;inset:0;z-index:-1;opacity:.7;pointer-events:none}
+  .sky-draw .track,.sky-draw .meridian{display:none}
+  .sky-draw svg{height:auto;min-height:100%}
+  .chart-head,.mer-label,.glyph.an{position:relative;left:auto;top:auto;right:auto;width:auto}
+  .glyph.an{position:absolute;right:var(--gutter);top:1.5rem}
+  .mer-label{margin-top:1.25rem}
+  .jobs{position:relative;margin-top:.75rem;padding-left:1.6rem;border-left:1px solid color-mix(in oklab,var(--mark) 55%,transparent)}
+  .job{display:block;position:relative;padding:.9rem 0}
+  .job .star{left:-1.6rem;top:1.45rem}
+  .mul{display:none}
+  .job-label,.job.l .job-label{position:static;width:auto;text-align:left}
+  .facts{display:flex;flex-wrap:wrap;gap:.35rem 1.1rem;margin-top:.45rem}
+  .facts li{position:relative;left:auto;top:auto;transform:none;white-space:normal}
+  /* the ziggurat becomes low terraces under the shrine, each a collapsible of its tools */
+  .zig{display:none}
+  .steps{display:flex;flex-direction:column;align-items:center;margin:2.25rem auto 0;max-width:34rem}
+  .shrine-flat{width:6rem;height:3rem;display:flex;align-items:flex-end;justify-content:center;
+    background:repeating-linear-gradient(90deg,transparent 0 .55rem,rgb(0 0 0 / .13) .55rem .72rem),var(--desk-face);box-shadow:inset 0 .3rem 0 color-mix(in oklab,var(--desk-cut) 70%,transparent),inset 0 0 0 1px var(--desk-cut)}
+  .shrine-flat .door{width:1.4rem;height:1.95rem}
+  .step{width:100%;display:flex;flex-direction:column;align-items:center}
+  .step summary{list-style:none;width:calc(100% - var(--i) * 9%);min-height:2.6rem;display:flex;align-items:center;justify-content:center;gap:.6rem;padding:0 .9rem;cursor:pointer;
+    background:var(--desk-face);border-top:4px solid var(--desk-top);box-shadow:inset 0 0 0 1px var(--desk-cut)}
+  .step summary::-webkit-details-marker{display:none}
+  .step summary::after{content:"+";font:600 1rem/1 var(--body);color:var(--muted)}
+  .step[open] summary::after{content:"\2212"}
+  .step summary:hover .step-name,.step[open] .step-name{color:var(--accent)}
+  .step summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+  .step-name{font:800 .98rem/1 var(--display);font-stretch:106%;color:var(--ink)}
+  .step-count{font-size:.8rem;color:var(--muted)}
+  .step-tools{width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:.25rem .9rem;padding:.7rem .9rem .9rem;margin-bottom:.35rem;
+    background:color-mix(in oklab,var(--desk-face) 55%,transparent);border-radius:0 0 var(--r-s) var(--r-s);font:600 .88rem/1.2 var(--display)}
+  .step-tools .tool{min-height:1.6rem;white-space:nowrap;color:var(--ink)}
+  .earth-rules{max-width:none;grid-template-columns:minmax(0,1fr)}
+}
 /* ── narrow screens ──────────────────────────────────────── */
 @media (max-width:52rem){
   .timeline li{grid-template-columns:1fr;gap:.3rem}

@@ -47,6 +47,69 @@
     if (!raise(location.hash.slice(1), false) && up) raise(up.id.slice(5), false);
   }
 
+  // Experience: the stack ziggurat turns slowly clockwise, like the plate models. Drag it, or use
+  // the arrow keys, to turn it by hand; tabbing to a tool turns that side to face you. Each side
+  // is shaded by how squarely it faces the lamp. Without this it stands still at an angle and
+  // the tool cards open all the same. Below 75rem it is unfolded flat, and none of this runs.
+  var zig = document.querySelector('.zig');
+  if (zig) {
+    var model = zig.querySelector('.model'), wide = matchMedia('(min-width: 75rem)');
+    var calm = function () {
+      var m = document.documentElement.dataset.motion;
+      return m === 'reduce' || (m !== 'full' && matchMedia('(prefers-reduced-motion: reduce)').matches);
+    };
+    var ry = 38, target = null, held = false, drag = null, moved = false, last = 0;
+    var paint = function () {
+      model.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+      for (var k = 0; k < 4; k++) {
+        var c = Math.cos((ry + k * 90 + 30) * Math.PI / 180);
+        model.style.setProperty('--sh' + k, (0.34 * (1 - Math.max(0, c))).toFixed(3));
+      }
+    };
+    var tick = function (t) {
+      if (wide.matches) {
+        var dt = last ? Math.min(t - last, 100) : 0;
+        if (target !== null) {
+          var d = ((target - ry) % 360 + 540) % 360 - 180;
+          if (Math.abs(d) < 0.3) { ry = target; target = null; } else ry += d * 0.12;
+          paint();
+        } else if (!held && drag === null && !calm()) { ry -= dt * 0.009; paint(); }  // one turn in 40s
+      }
+      last = t;
+      requestAnimationFrame(tick);
+    };
+    zig.addEventListener('pointerenter', function () { held = true; });
+    zig.addEventListener('pointerleave', function () { held = false; });
+    zig.addEventListener('focusin', function (e) {
+      held = true;
+      var face = e.target.closest('.face');
+      if (face && wide.matches) target = -90 * +face.className.match(/f(\d)/)[1] - 18;
+    });
+    zig.addEventListener('focusout', function () { held = false; });
+    zig.addEventListener('pointerdown', function (e) {
+      if (!wide.matches || e.button) return;
+      drag = e.clientX; moved = false;
+    });
+    window.addEventListener('pointermove', function (e) {
+      if (drag === null) return;
+      var dx = e.clientX - drag;
+      if (!moved && Math.abs(dx) > 3) { moved = true; zig.classList.add('dragging'); }
+      if (moved) { ry += dx * 0.4; drag = e.clientX; target = null; paint(); }
+    });
+    window.addEventListener('pointerup', function () { drag = null; zig.classList.remove('dragging'); });
+    // A drag that ends over a tool was a turn, not a press.
+    zig.addEventListener('click', function (e) {
+      if (moved) { e.preventDefault(); e.stopPropagation(); moved = false; }
+    }, true);
+    zig.addEventListener('keydown', function (e) {
+      if (e.target !== zig || !wide.matches || (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight')) return;
+      e.preventDefault();
+      target = ry + (e.key === 'ArrowRight' ? 30 : -30);
+    });
+    paint();
+    requestAnimationFrame(tick);
+  }
+
   // Build recordings play while on screen, unless the reader prefers less motion.
   // Without this script they are ordinary videos with controls.
   var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
