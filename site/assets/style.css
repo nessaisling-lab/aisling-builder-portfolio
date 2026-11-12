@@ -232,8 +232,8 @@ body{min-height:100vh;text-rendering:optimizeLegibility;-webkit-font-smoothing:a
 .show[hidden]{display:none}
 .show{display:contents}
 /* the far wall: the walkthrough fills it; the model turns in front of its lower edge */
-.screen{position:absolute;z-index:1;left:23.6%;top:9.6%;width:52.8%}
-.screen video,.no-reel{width:100%;border:.6em solid #070B0C;border-radius:var(--r-m);background:#070B0C;box-shadow:0 0 0 1px var(--line-strong),0 30px 50px -30px rgb(0 0 0 / .7)}
+.hall .screen{position:absolute;z-index:1;left:23.6%;top:9.6%;width:52.8%}
+.hall .screen video,.hall .no-reel{width:100%;border:.6em solid #070B0C;border-radius:var(--r-m);background:#070B0C;box-shadow:0 0 0 1px var(--line-strong),0 30px 50px -30px rgb(0 0 0 / .7)}
 .no-reel{aspect-ratio:16/9;display:grid;place-items:center;padding:2em;background:var(--g-far);color:var(--ink-2);text-align:center}
 /* the transcript opens from the floor, right of the turntable, and scrolls in its own box */
 .hall .transcript{position:absolute;z-index:2;left:68.5%;bottom:2.4%;margin:0;padding:0;background:none;box-shadow:none}
@@ -411,7 +411,7 @@ body{min-height:100vh;text-rendering:optimizeLegibility;-webkit-font-smoothing:a
   .props-live .desk-still{visibility:visible}
   .hall-desk{height:auto}
   .about .bay{right:auto;left:1.3em}
-  .hall-h1,.screen,.hud,.turntable,.desk-spot,.clipboard,.sort,.strip{position:static;left:auto;right:auto;top:auto;bottom:auto;width:auto;height:auto;margin:0}
+  .hall-h1,.hall .screen,.hud,.turntable,.desk-spot,.clipboard,.sort,.strip{position:static;left:auto;right:auto;top:auto;bottom:auto;width:auto;height:auto;margin:0}
   .clipboard{width:11em;height:auto;min-height:7em}
   .nb .hall-h1{order:1;font-size:clamp(2.2rem,8vw,3rem);font-weight:800;letter-spacing:normal;text-transform:none;color:var(--ink)}
   .sort{order:2;clip-path:none}
