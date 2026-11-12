@@ -146,6 +146,57 @@ async function start() {
     }).catch(() => {});
   });
 
+  // The room's props (the contact desk, the tool chest), drawn once into a canvas over the
+  // drawing from the hall's own camera: garage.rs projects the walls with the same numbers.
+  // Again on resize; never per frame, since nothing in the room moves.
+  const box = hall.querySelector('.hall-box');
+  const props = JSON.parse(box.dataset.props || '[]');
+  if (props.length) {
+    const [W, H, f, vx, vy, half, eye, , back] = box.dataset.room.split(' ').map(Number);
+    const room = stage(2, 2), set = new THREE.Scene(), pc = room.domElement;
+    pc.className = 'props-3d';
+    pc.setAttribute('aria-hidden', 'true');
+    pc.style.removeProperty('display');  // three.js sets it inline, over the stylesheet that hides the room on phones
+    box.querySelector('.hall-draw').after(pc);
+    // A camera looking level down the hall, its vanishing point off centre, as garage.rs draws it.
+    const eyeCam = new THREE.PerspectiveCamera(), n = 0.1;
+    eyeCam.position.set(0, eye, 0);
+    eyeCam.updateMatrixWorld();
+    eyeCam.projectionMatrix.makePerspective((-vx / f) * n, ((W - vx) / f) * n, (vy / f) * n, (-(H - vy) / f) * n, n, back * 2);
+    eyeCam.projectionMatrixInverse.copy(eyeCam.projectionMatrix).invert();
+    // The same light as the turntable: the kit's hemisphere and sun, the sun over the near right.
+    const lamp = new THREE.DirectionalLight(0xffffff, 1.76);
+    lamp.position.copy(SUN).multiplyScalar(20).add(new THREE.Vector3(0, 0, -back / 2));
+    lamp.target.position.set(0, 0, -back / 2);
+    lamp.castShadow = true;
+    lamp.shadow.mapSize.set(2048, 2048);
+    Object.assign(lamp.shadow.camera, { left: -back, right: back, top: back, bottom: -back, near: 0.1, far: 60 });
+    lamp.shadow.bias = -0.0005;
+    set.add(new THREE.HemisphereLight(0xffffff, 0x888888, 1.8), lamp, lamp.target);
+    // Shadows fall on the floor and the right wall the props stand against.
+    const catcher = (w, h, place) => { const c = new THREE.Mesh(new THREE.PlaneGeometry(w, h), new THREE.ShadowMaterial({ opacity: 0.22 })); c.receiveShadow = true; place(c); set.add(c); };
+    catcher(half * 2, back, (c) => { c.rotation.x = -Math.PI / 2; c.position.set(0, 0, -back / 2); });
+    catcher(back, 4, (c) => { c.rotation.y = -Math.PI / 2; c.position.set(half, 2, -back / 2); });
+    const paintRoom = () => {
+      const w = box.clientWidth, dpr = Math.min(devicePixelRatio || 1, 2);
+      if (!pc.offsetWidth || !w) return;
+      room.setSize(Math.round(w * dpr), Math.round((w * H) / W * dpr), false);
+      room.render(set, eyeCam);
+    };
+    Promise.all(props.map((p) => fetch(p.url).then((r) => r.json()).then((j) => {
+      const o = loader.parse(j);
+      o.traverse((m) => { if (m.isMesh) m.castShadow = m.receiveShadow = true; });
+      o.position.set(p.x, 0, -p.z);
+      o.rotation.y = p.turn;
+      set.add(o);
+    }))).then(() => {
+      paintRoom();
+      box.classList.add('props-live');
+      let queued = false;
+      new ResizeObserver(() => { if (!queued) { queued = true; requestAnimationFrame(() => { queued = false; paintRoom(); }); } }).observe(box);
+    }).catch(() => {});
+  }
+
   let last = 0;
   const tick = (now) => {
     const dt = last ? Math.min(now - last, 100) : 0;

@@ -117,6 +117,9 @@ pub struct World {
     pub mark: Rgb,
     /// The strip of earth under the sky, which carries how I work.
     pub earth: Rgb,
+    /// The Projects garage: its walls, from which the floor, ceiling and door are mixed.
+    /// Decorative: text there sits on its own panels.
+    pub garage: Rgb,
 }
 
 /// Day: light brass and clay tints (Aisling's choice, Nov 11: warm fits Sumer), the kit's
@@ -141,6 +144,8 @@ pub const DAY: World = World {
     chart_bottom: Rgb(0xF2, 0xE9, 0xD8),
     mark: Rgb(0x0C, 0x60, 0x6D),
     earth: Rgb(0xE1, 0xCB, 0xA2),
+    // a petrol slate deep enough that the white panels stand off it
+    garage: Rgb(0x8F, 0xA8, 0xB0),
 };
 
 /// Evening: the same desk in low light; the windows across the street come on.
@@ -164,6 +169,7 @@ pub const EVENING: World = World {
     chart_bottom: Rgb(0x1F, 0x30, 0x45),
     mark: Rgb(0xE6, 0xD8, 0xA3),
     earth: Rgb(0x1A, 0x14, 0x0C),
+    garage: Rgb(0x20, 0x2E, 0x2F),
 };
 
 // ── the invariants ───────────────────────────────────────────────────────────
@@ -211,7 +217,7 @@ pub fn css_vars(w: &World) -> String {
          \x20 --desk-face:{face};   /* ink {ri:.2}:1, muted {rm:.2}:1 */\n\
          \x20 --desk-top:{top};--desk-front:{front};--desk-cut:{cut};\n\
          \x20 --sky:{sky};--city:{city};--city-2:{city2};--lit:{lit};--unlit:{unlit};\n\
-         \x20 --chart-top:{ct};--chart-bottom:{cb};--mark:{mark};--earth:{earth};\n",
+         \x20 --chart-top:{ct};--chart-bottom:{cb};--mark:{mark};--earth:{earth};--garage:{garage};\n",
         name = w.name,
         face = w.desk_face.hex(),
         top = w.desk_top.hex(),
@@ -226,6 +232,7 @@ pub fn css_vars(w: &World) -> String {
         cb = w.chart_bottom.hex(),
         mark = w.mark.hex(),
         earth = w.earth.hex(),
+        garage = w.garage.hex(),
         ri = r(w.ink),
         rm = r(w.muted),
     )

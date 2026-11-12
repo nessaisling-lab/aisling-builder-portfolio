@@ -134,13 +134,14 @@ fn css() -> String {
     STYLE.replace("/*@PALETTES@*/", &palettes)
 }
 
-/// A WebVTT file's spoken text as paragraphs: cue text joined in order, with a new
-/// paragraph where the narration pauses for a second or more after a full stop.
+/// A WebVTT file's spoken text as paragraphs, each with the second it starts at: cue text
+/// joined in order, with a new paragraph where the narration pauses for a second or more
+/// after a full stop.
 /// ponytail: no cue tags (<v>, <i>) or entities are handled; the walkthrough captions
 /// have none. Strip them here if a captions file ever gains them.
-fn transcript(vtt: &str) -> Vec<String> {
+fn transcript(vtt: &str) -> Vec<(f64, String)> {
     let secs = |ts: &str| ts.split(':').fold(0.0, |acc, p| acc * 60.0 + p.parse::<f64>().unwrap_or(0.0));
-    let mut paras = vec![String::new()];
+    let mut paras = vec![(0.0, String::new())];
     let mut last_end = None;
     for block in vtt.replace("\r\n", "\n").split("\n\n") {
         // Skips the WEBVTT header, NOTE blocks and cue identifiers: text starts after the timing line.
@@ -149,20 +150,28 @@ fn transcript(vtt: &str) -> Vec<String> {
         let mut times = timing.split("-->").map(|t| secs(t.split_whitespace().next().unwrap_or("")));
         let (start, end) = (times.next().unwrap_or(0.0), times.next().unwrap_or(0.0));
         let text = lines.map(str::trim).collect::<Vec<_>>().join(" ");
-        let cur = paras.last().expect("never empty");
+        let cur = &paras.last().expect("never empty").1;
         let sentence_done = cur.trim_end_matches(['"', '\u{201D}', ')']).ends_with(['.', '!', '?']);
         if last_end.is_some_and(|e: f64| start - e >= 1.0) && sentence_done {
-            paras.push(String::new());
+            paras.push((start, String::new()));
         }
         let cur = paras.last_mut().expect("never empty");
-        if !cur.is_empty() {
-            cur.push(' ');
+        if cur.1.is_empty() {
+            cur.0 = start;
+        } else {
+            cur.1.push(' ');
         }
-        cur.push_str(&text);
+        cur.1.push_str(&text);
         last_end = Some(end);
     }
-    paras.retain(|p| !p.is_empty());
+    paras.retain(|p| !p.1.is_empty());
     paras
+}
+
+/// Seconds as a walkthrough's clock: 1:07.
+fn clock(s: f64) -> String {
+    let s = s as u64;
+    format!("{}:{:02}", s / 60, s % 60)
 }
 
 fn esc(s: &str) -> String {
@@ -455,6 +464,11 @@ fn Plate(root: String, n: usize, slug: String) -> Element {
 /// The build on show when the Projects page opens: the client capstone.
 const ON_SHOW: &str = "gala-guest-list";
 
+/// The builds in the order the program ran them, for the hall's Program order sort: L2's
+/// numbered cycles, then L3's pitch and capstone. Resona (L2, its cycle not stated on this
+/// site) and Nisaba (a founder build, outside the program) follow.
+const PROGRAM: [&str; 7] = ["siteassure", "ziqpu", "housecheck", "excalidraw", "gala-guest-list", "resona", "nisaba"];
+
 /// The builds in hall order, Rust first, then team and client work. The hall's doors, the
 /// select strip and the arrow keys all follow it.
 fn hall_order() -> Vec<&'static Build> {
@@ -463,10 +477,10 @@ fn hall_order() -> Vec<&'static Build> {
         .collect()
 }
 
-/// Projects is a garage hall, drawn by garage.rs: the build on show turns on a turntable, its
-/// walkthrough plays on the far wall with the transcript under it, its spec sheet stands
-/// beside it, and a select strip along the floor picks the next one. Without script every
-/// tile is a link to its build and the capstone stays on show.
+/// Projects is a garage hall, drawn by garage.rs: the build on show turns on a turntable in
+/// front of its walkthrough, which fills the far wall; its spec sheet stands beside it, its
+/// transcript opens from the floor, and a list of every build down the left picks the next
+/// one. Without script every tile is a link to its build and the capstone stays on show.
 #[component]
 fn Work(root: String) -> Element {
     let builds = hall_order();
@@ -474,37 +488,54 @@ fn Work(root: String) -> Element {
     let models: Vec<String> = builds.iter()
         .map(|b| plate_model(b.slug).map(|(f, _)| format!("{root}brand/library/{f}-model.json")).unwrap_or_default())
         .collect();
+    let (desk_at, note_at) = garage::desk_spot();
     rsx! {
         section { class: "hall", "aria-labelledby": "projects-h",
-            div { class: "hall-box",
+            // The room's camera and its 3D props, for turntable.js.
+            div { class: "hall-box", "data-room": garage::room(), "data-props": garage::props_json(&root),
                 div { class: "hall-draw", dangerous_inner_html: garage::svg() }
                 h1 { id: "projects-h", class: "hall-h1", "Projects" }
                 for (i, b) in builds.iter().enumerate() {
                     Show { root: root.clone(), n: i + 1, slug: b.slug.to_string() }
                 }
-                // The earlier work, on a clipboard hung on the wall; pressing it opens the full log.
+                // Past work, on a clipboard hung on the tool wall; pressing it opens the list.
                 button { class: "clipboard", "type": "button", "popovertarget": "egg-log",
-                    span { class: "clip-h", "Service log" }
-                    for e in EARLIER { span { class: "clip-i", "{e.name}" } }
+                    span { class: "clip-h", "Past work" }
+                    span { class: "clip-n", "{EARLIER.len()} earlier builds" }
                 }
-                // The contact desk in the corner: computer, phone and fax; any of it opens Contact.
-                div { class: "desk-spot",
+                // The contact desk: computer, phone and fax; any of it opens Contact. turntable.js
+                // draws it in the room in 3D; its still stands in until then. Pointed at, or tapped
+                // once on a phone (site.js), it shows its note: kiĝ₂, work, and a message.
+                div { class: "desk-spot", style: "{desk_at}",
                     a { class: "hall-desk", href: "{root}contact/",
                         span { class: "visually-hidden", "Contact: write to me" }
-                        span { class: "desk-draw", dangerous_inner_html: garage::desk() }
+                        img { class: "desk-still", src: "{root}brand/library/built--contact-desk-matte.webp", alt: "", width: "256", height: "256" }
+                        span { class: "kin-card", style: "{note_at}", "aria-hidden": "true",
+                            span { class: "kin-g", "\u{121A5}" }
+                            span { class: "kin-t", b { lang: "sux-Latn", "kin" } " · work, and a message" }
+                            span { class: "kin-s", "One Sumerian word for both. This desk is for yours." }
+                            span { class: "kin-go", "Write to me →" }
+                        }
                     }
-                    // The note stuck to the computer: kiĝ₂, work, and a message.
-                    button { class: "sticky", "type": "button", "popovertarget": "egg-kin", "aria-label": "A note on the computer: kin, work and message", "\u{121A5}" }
                 }
-                // Classes, as a racing game sorts its cars; shown by site.js, which does the sorting.
-                div { class: "classes", role: "group", "aria-label": "Show", hidden: true,
-                    button { "type": "button", "aria-pressed": "true", "data-group": "all", "All seven" }
-                    button { "type": "button", "aria-pressed": "false", "data-group": "integrity", "Rust · a promise kept" }
-                    button { "type": "button", "aria-pressed": "false", "data-group": "team", "Team & client" }
+                // Sorting the list, as a racing game sorts its cars; site.js shows it and sorts.
+                div { class: "sort", hidden: true,
+                    label { "for": "sort-by", "Sort" }
+                    select { id: "sort-by",
+                        option { value: "featured", "Featured" }
+                        option { value: "program", "Program order" }
+                        option { value: "integrity", "Rust · a promise kept" }
+                        option { value: "team", "Team & client" }
+                    }
+                }
+                // How to drive the hall, like a game's controls screen.
+                button { class: "legend-btn", "type": "button", "popovertarget": "hall-keys", "aria-label": "Controls",
+                    span { class: "ico", dangerous_inner_html: ICON_KEYS }
                 }
                 ol { class: "strip", "aria-label": "Every build",
                     for (i, b) in builds.iter().enumerate() {
                         li { "data-group": if b.group == Group::Integrity { "integrity" } else { "team" },
+                            "data-program": "{PROGRAM.iter().position(|s| *s == b.slug).unwrap_or(PROGRAM.len())}",
                             a { class: "tile", href: "{root}work/{b.slug}/", "aria-current": if b.slug == ON_SHOW { "true" } else { "false" },
                                 "data-model": "{models[i]}",
                                 if let Some((file, _)) = plate_model(b.slug) {
@@ -518,8 +549,24 @@ fn Work(root: String) -> Element {
                 }
             }
         }
+        for b in builds.iter() {
+            BuildCards { root: root.clone(), slug: b.slug.to_string() }
+        }
+        Card { id: "hall-keys".to_string(),
+            h3 { "Driving the hall" }
+            dl { class: "legend",
+                dt { kbd { "◀" } kbd { "▶" } } dd { "Step through the builds, anywhere in the hall." }
+                dt { kbd { "▲" } kbd { "▼" } } dd { "The same, in the list of builds." }
+                dt { kbd { "Enter" } } dd { "Open the build that's on show." }
+                dt { "Drag" } dd { "Turn the model on the turntable." }
+                dt { "Sort" } dd { "Featured, program order, or one class of build." }
+                dt { "0:42" } dd { "A time in the transcript plays the walkthrough from there." }
+                dt { kbd { "Esc" } } dd { "Close a card like this one." }
+            }
+            p { "Text size, spacing, contrast, day or evening, and motion are in Reading settings, at the top." }
+        }
         Card { id: "egg-log".to_string(),
-            h3 { "Service log · earlier work" }
+            h3 { "Past work · before this hall" }
             ul { class: "card-log",
                 for e in EARLIER {
                     li {
@@ -531,11 +578,6 @@ fn Work(root: String) -> Element {
             p { "The four Pursuit L2 builds also have their original write-ups, with measured numbers: "
                 a { href: "https://nessaisling-lab.github.io/pursuit-l2-portfolio/", "pursuit-l2-portfolio →" }
             }
-        }
-        Card { id: "egg-kin".to_string(),
-            p { class: "card-glyph", "aria-hidden": "true", "\u{121A5}" }
-            h3 { span { class: "nb-place", lang: "sux-Latn", "kin" } " · work, and a message" }
-            p { "One Sumerian word, written with this sign, means both work and a message: kiĝ₂, read kin in older books. On the home page it labels the work on the laptop. Here, stuck to the computer, it's asking for yours." }
         }
     }
 }
@@ -550,7 +592,6 @@ fn Show(root: String, n: usize, slug: String) -> Element {
         transcript(&std::fs::read_to_string(site_root().join(c)).expect("captions file exists"))
     });
     let model = plate_model(b.slug);
-    let chips: Vec<&str> = b.stack.iter().take(5).copied().collect();
     rsx! {
         article { class: "show", id: "show-{b.slug}", hidden: !on, "aria-labelledby": "show-{b.slug}-h",
             div { class: "screen",
@@ -568,25 +609,36 @@ fn Show(root: String, n: usize, slug: String) -> Element {
                         p { "No walkthrough for this one yet. The build page has the whole story." }
                     }
                 }
-                if let Some(paras) = &spoken {
-                    details { class: "transcript",
-                        summary { "Read the walkthrough" }
-                        div { class: "tx", tabindex: "0", role: "region", "aria-label": "Walkthrough transcript",
-                            for para in paras { p { "{para}" } }
+            }
+            // The walkthrough's words, opened from the floor of the hall.
+            if let Some(paras) = &spoken {
+                details { class: "transcript",
+                    summary { span { class: "tx-ico", "aria-hidden": "true" } "Transcript" }
+                    div { class: "tx", tabindex: "0", role: "region", "aria-label": "Walkthrough transcript",
+                        for (t, para) in paras {
+                            p { button { class: "ts", "type": "button", "data-t": "{t}", "aria-label": "Play from {clock(*t)}", "{clock(*t)}" } " {para}" }
                         }
                     }
                 }
             }
             div { class: "hud about",
-                h2 { id: "show-{b.slug}-h", tabindex: "-1", "{b.name}" }
-                p { class: "kick", "{n:02} · {b.kicker} · {b.year}" }
+                p { class: "bay", "Bay " b { "{n:02}" } " / {BUILDS.len():02}" }
+                // More about the build: a card with where each of its links goes.
+                button { class: "more", "type": "button", "popovertarget": "card-{b.slug}", "aria-label": "More about {b.name}",
+                    span { class: "ico", dangerous_inner_html: ICON_MORE }
+                }
+                // The name opens the case study, in one click.
+                h2 { id: "show-{b.slug}-h", tabindex: "-1",
+                    a { href: "{root}work/{b.slug}/", "{b.name}" span { class: "go", "aria-hidden": "true", "\u{A0}→" } }
+                }
+                p { class: "kick", "{b.kicker} · {b.year}" }
                 p { class: "line", "{b.line}" }
                 p { class: "role", "{b.role}" }
-                a { class: "nb-btn is-primary", href: "{root}work/{b.slug}/", "Open the build" }
             }
             aside { class: "hud spec-sheet", "aria-label": "Spec",
                 p { class: "spec-h", "Spec" }
-                for f in b.figs {
+                // The three headline figures; the rest, and the whole stack, are on its card.
+                for f in b.figs.iter().take(3) {
                     div { class: "sfig",
                         b { "{f.v}" }
                         span { "{f.k}" }
@@ -595,9 +647,7 @@ fn Show(root: String, n: usize, slug: String) -> Element {
                         }
                     }
                 }
-                p { class: "schips",
-                    for c in chips { span { "{c}" } }
-                }
+                button { class: "all-specs", "type": "button", "popovertarget": "specs-{b.slug}", "All specs" span { "aria-hidden": "true", " +" } }
             }
             if let Some((file, _)) = model {
                 div { class: "turntable", "aria-hidden": "true", "data-model": "{root}brand/library/{file}-model.json",
@@ -739,8 +789,8 @@ fn Case(root: String, i: usize) -> Element {
                     if let Some(paras) = &spoken {
                         details { class: "transcript",
                             summary { "Transcript" }
-                            for para in paras {
-                                p { "{para}" }
+                            for (t, para) in paras {
+                                p { button { class: "ts", "type": "button", "data-t": "{t}", "aria-label": "Play from {clock(*t)}", "{clock(*t)}" } " {para}" }
                             }
                         }
                     }
@@ -997,6 +1047,51 @@ fn Experience(root: String) -> Element {
                 a { href: "{root}work/ziqpu/", "Ziqpu" }
                 " shares the name."
             }
+        }
+    }
+}
+
+/// Icons for the hall's buttons and the build cards' links, drawn in the text colour.
+const ICON_KEYS: &str = r#"<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M3 6h18a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm1 2v8h16V8zm1 1h2v2H5zm3 0h2v2H8zm3 0h2v2h-2zm3 0h2v2h-2zm3 0h2v2h-2zM5 12h2v2H5zm3 0h8v2H8zm9 0h2v2h-2z"/></svg>"#;
+const ICON_MORE: &str = r#"<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20zm0 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16zm-1 3.5h2v2h-2zm0 3.5h2v6h-2z"/></svg>"#;
+const ICON_CASE: &str = r#"<svg viewBox="0 0 24 24" aria-hidden="true"><path fill-rule="evenodd" d="M6 2h9l5 5v15H6zm2 2v16h10V8h-4V4zm1 8h8v1.6H9zm0 3.5h8v1.6H9z"/></svg>"#;
+const ICON_DOWN: &str = r#"<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 3h2v9.2l3.3-3.3 1.4 1.4L12 16l-5.7-5.7 1.4-1.4 3.3 3.3zM4 18h16v2H4z"/></svg>"#;
+const ICON_OUT: &str = r#"<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 3h7v7h-2V6.4l-8.3 8.3-1.4-1.4L17.6 5H14zM5 5h6v2H7v10h10v-4h2v6H5z"/></svg>"#;
+/// GitHub's mark (Octicons, MIT).
+const ICON_GITHUB: &str = r#"<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0 0 16 8c0-4.42-3.58-8-8-8z"/></svg>"#;
+
+/// The hall's two cards for one build: more about it, with each place its links go (an icon
+/// and the site's name, so nothing is a surprise), and its whole spec sheet.
+#[component]
+fn BuildCards(root: String, slug: String) -> Element {
+    let b = BUILDS.iter().find(|b| b.slug == slug).expect("build exists");
+    let host = |h: &str| h.split("//").nth(1).and_then(|r| r.split('/').next()).unwrap_or(h).trim_start_matches("www.").to_string();
+    let icon = |l: &Link| if l.label.starts_with("Download") { ICON_DOWN } else if l.href.contains("github.com") { ICON_GITHUB } else { ICON_OUT };
+    rsx! {
+        Card { id: format!("card-{}", b.slug),
+            p { class: "card-kick", "{b.kicker} · {b.year}" }
+            h3 { "{b.name}" }
+            p { "{b.line}" }
+            p { class: "card-role", "{b.role}" }
+            ul { class: "card-links",
+                li { a { href: "{root}work/{b.slug}/",
+                    span { class: "ico", dangerous_inner_html: ICON_CASE } span { class: "lbl", "Case study" } span { class: "where", "this site" }
+                } }
+                for l in b.links {
+                    li { a { href: "{l.href}",
+                        span { class: "ico", dangerous_inner_html: icon(l) } span { class: "lbl", "{l.label}" } span { class: "where", "{host(l.href)}" }
+                    } }
+                }
+            }
+        }
+        Card { id: format!("specs-{}", b.slug),
+            p { class: "card-kick", "Spec" }
+            h3 { "{b.name}" }
+            dl { class: "spec-all",
+                for f in b.figs { div { dt { "{f.v}" } dd { "{f.k}" } } }
+            }
+            p { class: "schips", for c in b.stack { span { "{c}" } } }
+            p { "More in the case study: " a { href: "{root}work/{b.slug}/", "{b.name} →" } }
         }
     }
 }
@@ -1366,6 +1461,16 @@ mod tests {
     /// Header, NOTE and cue ids are dropped; a pause after a full stop starts a paragraph,
     /// a pause mid-sentence does not.
     #[test]
+    fn program_order_has_every_build() {
+        use crate::{BUILDS, PROGRAM};
+        let mut p: Vec<&str> = PROGRAM.to_vec();
+        p.sort();
+        let mut b: Vec<&str> = BUILDS.iter().map(|b| b.slug).collect();
+        b.sort();
+        assert_eq!(p, b, "Program order must name every build once, or sorting by it drops one");
+    }
+
+    #[test]
     fn transcript_joins_cues_into_paragraphs() {
         let vtt = "WEBVTT\r\n\r\nNOTE made by hand\r\n\r\n1\r\n00:00:00.500 --> 00:00:02.000\r\nRight now,\r\n\r\n\
                    00:00:03.500 --> 00:00:05.000 line:90%\r\nit is one sentence.\r\n\r\n\
@@ -1373,7 +1478,7 @@ mod tests {
                    00:01:07.000 --> 00:01:08.000\r\nA new beat\r\non two lines.\r\n";
         assert_eq!(
             transcript(vtt),
-            ["Right now, it is one sentence. Still the first.", "A new beat on two lines."]
+            [(0.5, "Right now, it is one sentence. Still the first.".to_string()), (67.0, "A new beat on two lines.".to_string())]
         );
     }
 }

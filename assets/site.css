@@ -10,21 +10,21 @@
   --desk-face:#F4EAD5;   /* ink 14.39:1, muted 5.69:1 */
   --desk-top:#EAD9B6;--desk-front:#E1CBA2;--desk-cut:#B7996C;
   --sky:#CAE3ED;--city:#859DA6;--city-2:#5F7984;--lit:#A9C4CF;--unlit:#A9C4CF;
-  --chart-top:#DCEBF1;--chart-bottom:#F2E9D8;--mark:#0C606D;--earth:#E1CBA2;
+  --chart-top:#DCEBF1;--chart-bottom:#F2E9D8;--mark:#0C606D;--earth:#E1CBA2;--garage:#8FA8B0;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme=light]){
   /* evening */
   --desk-face:#3B3121;   /* ink 11.04:1, muted 5.76:1 */
   --desk-top:#312718;--desk-front:#271D10;--desk-cut:#62533C;
   --sky:#1B2A3C;--city:#0E1C28;--city-2:#08131C;--lit:#E6D8A3;--unlit:#162633;
-  --chart-top:#08121B;--chart-bottom:#1F3045;--mark:#E6D8A3;--earth:#1A140C;
+  --chart-top:#08121B;--chart-bottom:#1F3045;--mark:#E6D8A3;--earth:#1A140C;--garage:#202E2F;
 }}
 :root[data-theme=dark]{
   /* evening */
   --desk-face:#3B3121;   /* ink 11.04:1, muted 5.76:1 */
   --desk-top:#312718;--desk-front:#271D10;--desk-cut:#62533C;
   --sky:#1B2A3C;--city:#0E1C28;--city-2:#08131C;--lit:#E6D8A3;--unlit:#162633;
-  --chart-top:#08121B;--chart-bottom:#1F3045;--mark:#E6D8A3;--earth:#1A140C;
+  --chart-top:#08121B;--chart-bottom:#1F3045;--mark:#E6D8A3;--earth:#1A140C;--garage:#202E2F;
 }
 
 
@@ -216,133 +216,241 @@ body{min-height:100vh;text-rendering:optimizeLegibility;-webkit-font-smoothing:a
    16px. Its colours are the kit's ground and ink mixed, so the hall is lit by day and dark by
    evening. Below 75rem it becomes a column: the select strip, then the build on show. */
 .hall{container-type:inline-size;overflow-x:clip;color:var(--ink);
-  --g-wall:color-mix(in oklab,var(--bg) 88%,var(--ink));--g-floor:color-mix(in oklab,var(--bg) 78%,var(--ink));--g-ceil:color-mix(in oklab,var(--bg) 70%,var(--ink));
-  --g-far:color-mix(in oklab,var(--bg) 82%,var(--ink));--g-door:color-mix(in oklab,var(--bg) 66%,var(--ink));--g-rib:color-mix(in oklab,var(--bg) 56%,var(--ink));
+  --g-wall:var(--garage);--g-floor:color-mix(in oklab,var(--garage) 89%,var(--ink));--g-ceil:color-mix(in oklab,var(--garage) 80%,var(--ink));
+  --g-far:color-mix(in oklab,var(--garage) 93%,var(--ink));--g-door:color-mix(in oklab,var(--garage) 75%,var(--ink));--g-rib:color-mix(in oklab,var(--garage) 64%,var(--ink));
   --hud:var(--surface);background:var(--g-wall)}
 .hall-box{position:relative;max-width:1440px;margin:0 auto;aspect-ratio:1440/836;font-size:clamp(13.5px,1.111cqw,16px)}
 .hall-art{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
 .g-wall{fill:var(--g-wall)}.g-floor{fill:var(--g-floor)}.g-ceil{fill:var(--g-ceil)}.g-far{fill:var(--g-far)}.g-door{fill:var(--g-door)}.g-rib{fill:var(--g-rib)}
 .g-lane{stroke:var(--mark);stroke-opacity:.35;stroke-width:3;stroke-dasharray:26 18}
-.g-light{stroke:var(--mark);stroke-opacity:.5}
 .g-pool{stop-color:var(--mark);stop-opacity:.26}.g-pool-end{stop-opacity:0}
-/* one big roll-up door on the left wall, a hand's width open, light under it */
+/* walls: a darker band to waist height, a kick plate, panel seams; the ceiling's beams and lamps */
+.g-wains{fill:color-mix(in oklab,var(--g-wall) 90%,var(--ink))}.g-kick{fill:var(--g-rib)}
+.g-seam{stroke:var(--line);stroke-width:1.5}.g-beam{stroke:var(--g-rib);stroke-width:7}
+.g-lamp{fill:color-mix(in oklab,var(--mark) 35%,white)}.g-lamp-glow{fill:var(--mark);opacity:.55}
+/* the floor: satin toward the far wall, pools of lamplight, slab joints, oil */
+.g-sheen{stop-color:white;stop-opacity:.12}.g-sheen-end{stop-opacity:0}.g-sheen-fill{fill:url(#sheen)}
+.g-lamp-pool{fill:url(#lamp-pool)}.g-joint{stroke:var(--line);stroke-width:1.5}
+.g-stain{fill:var(--ink);fill-opacity:.07}
+/* the turntable's bay: hazard stripes and its number, painted */
+.g-haz{fill:var(--brass);fill-opacity:.75}.g-bay-edge{fill:url(#hazard)}
+.g-bay{font-family:var(--display);font-weight:800;font-size:30px;letter-spacing:.14em;fill:var(--ink);fill-opacity:.22}
+/* the tool wall: pegboard, tools, and the outline painted behind each one */
+.g-peg{fill:color-mix(in oklab,var(--brass-deep) 30%,var(--g-wall));stroke:var(--line-strong);stroke-width:1.5}
+.g-holes{stroke:color-mix(in oklab,var(--brass-deep) 45%,var(--g-rib));stroke-width:2.6;stroke-linecap:round}
+.g-tool{fill:color-mix(in oklab,var(--ink) 60%,var(--g-wall))}.g-tool-ghost{fill:none;stroke:var(--mark);stroke-opacity:.7;stroke-width:1.4}
+/* the 3D props (turntable.js), drawn over the room from its own camera */
+.props-3d{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+/* one big roll-up door on the left wall, a hand's width open, light under it: slats closing on
+   the vanishing point, guide rails, the roller's housing, a bottom bar with its pull */
 .g-frame{fill:var(--g-ceil);stroke:var(--line-strong);stroke-width:3}
 .g-gap{fill:var(--mark);fill-opacity:.3}
-.g-shutter{fill:url(#corrugated);stroke:var(--line-strong)}
+.g-shutter{fill:var(--g-door);stroke:var(--line-strong)}
+.g-slat{stroke:var(--g-rib);stroke-width:2.2}.g-rail{stroke:var(--g-rib);stroke-width:6}
+.g-roller{fill:var(--g-rib);stroke:var(--line-strong);stroke-width:1.5}
+.g-bar{stroke:var(--line-strong);stroke-width:5}.g-pull{fill:var(--brass-deep)}
 .g-skirt{stroke:var(--line-strong);stroke-width:2}
-.hall-h1{position:absolute;z-index:2;left:calc(5.7% + 1.25em);top:calc(3.8% + 1.05em)}
-.nb .hall-h1{font:800 1.4em/1 var(--display);font-stretch:112%;color:var(--muted)}
+.hall-h1{position:absolute;z-index:2;left:calc(2.4% + 1.3em);top:calc(3.8% + .78em)}
+.nb .hall-h1{font:800 max(11px,.78em)/1 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--hud);transform:skewX(-10deg)}
 .show[hidden]{display:none}
 .show{display:contents}
-/* the far wall: the walkthrough, and its transcript under it */
-.screen{position:absolute;z-index:1;left:29.17%;top:10.3%;width:41.67%}
+/* the far wall: the walkthrough fills it; the model turns in front of its lower edge */
+.screen{position:absolute;z-index:1;left:23.6%;top:9.6%;width:52.8%}
 .screen video,.no-reel{width:100%;border:.6em solid #070B0C;border-radius:var(--r-m);background:#070B0C;box-shadow:0 0 0 1px var(--line-strong),0 30px 50px -30px rgb(0 0 0 / .7)}
 .no-reel{aspect-ratio:16/9;display:grid;place-items:center;padding:2em;background:var(--g-far);color:var(--ink-2);text-align:center}
-.screen .transcript{margin:.7em 0 0;padding:0;background:none;box-shadow:none}
-.screen .transcript summary{display:inline-flex;align-items:center;gap:.6em;padding:.6em 1em;border-radius:999px;list-style:none;background:var(--hud);color:var(--ink);box-shadow:inset 0 0 0 1.5px var(--accent)}
-.screen .transcript summary::-webkit-details-marker{display:none}
-.screen .transcript summary::after{content:"+";color:var(--accent);font-size:1.15em;line-height:1}
-.screen .transcript[open] summary::after{content:"\2212"}
-/* open, the transcript comes forward over the turntable and strip, and scrolls in its own box */
-.screen:has(.transcript[open]){z-index:3}
-.screen .transcript .tx{margin-top:.7em;max-height:14em;overflow-y:auto;overscroll-behavior:contain;padding:1em 1.1em;background:var(--hud);border-radius:var(--r-m);box-shadow:inset 0 0 0 1px var(--line-strong)}
-.screen .transcript .tx p{margin:0 0 .5em;font-size:.92em;color:var(--ink-2)}
-.screen .transcript .tx:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* the transcript opens from the floor, right of the turntable, and scrolls in its own box */
+.hall .transcript{position:absolute;z-index:2;left:68.5%;bottom:2.4%;margin:0;padding:0;background:none;box-shadow:none}
+.hall .transcript[open]{z-index:3}
+.hall .transcript summary{display:inline-flex;align-items:center;gap:.55em;padding:.65em 1.1em .65em .9em;list-style:none;cursor:pointer;
+  font:800 max(11px,.78em)/1 var(--display);letter-spacing:.12em;text-transform:uppercase;background:var(--hud);color:var(--ink);
+  clip-path:polygon(0 0,calc(100% - .7em) 0,100% .7em,100% 100%,0 100%);box-shadow:inset 0 -3px 0 var(--mark)}
+.hall .transcript summary::-webkit-details-marker{display:none}
+.hall .transcript[open] summary{background:var(--mark);color:var(--hud)}
+.hall .transcript summary:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+.tx-ico{width:1em;height:1.15em;background:currentColor;-webkit-mask:linear-gradient(#000 0 0) 0 .15em/100% 2px,linear-gradient(#000 0 0) 0 .5em/100% 2px,linear-gradient(#000 0 0) 0 .85em/65% 2px;-webkit-mask-repeat:no-repeat;
+  mask:linear-gradient(#000 0 0) 0 .15em/100% 2px,linear-gradient(#000 0 0) 0 .5em/100% 2px,linear-gradient(#000 0 0) 0 .85em/65% 2px;mask-repeat:no-repeat}
+.hall .transcript .tx{position:absolute;right:0;bottom:calc(100% + .5em);width:28em;max-height:24em;overflow-y:auto;overscroll-behavior:contain;padding:1em 1.2em;background:var(--hud);box-shadow:inset 0 0 0 1px var(--line-strong),0 20px 40px -24px rgb(0 0 0 / .6)}
+.hall .transcript .tx p{margin:0 0 .5em;font-size:.92em;color:var(--ink-2)}
+.hall .transcript .tx:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+/* the walkthrough's own controls, along its top edge so the model never covers them (site.js) */
+.vbar{display:flex;align-items:center;gap:.5em;padding:.4em .8em;border-radius:var(--r-m) var(--r-m) 0 0;background:#070B0C;box-shadow:0 0 0 1px var(--line-strong);color:#F2F5F5;font:700 max(11px,.75em)/1 var(--display);font-variant-numeric:tabular-nums}
+.vbar[hidden]{display:none}
+.reel:has(.vbar) video{border-top-width:0;border-radius:0 0 var(--r-m) var(--r-m)}
+.vbar button{display:grid;place-items:center;min-width:2.2em;height:2.2em;padding:0 .4em;border:0;background:none;color:inherit;font:inherit;cursor:pointer}
+.vbar button:hover{background:rgb(255 255 255 / .12)}
+.vbar button:focus-visible,.vbar input:focus-visible{outline:2px solid #F2F5F5;outline-offset:-2px}
+.vbar button[aria-pressed="false"]{opacity:.55}
+.vbar svg{width:1.15em;height:1.15em;fill:currentColor}
+.vbar input{flex:1;min-width:4em;accent-color:var(--accent)}
 .reel{position:relative}
 .play{position:absolute;left:50%;top:50%;width:4em;height:4em;margin:-2em 0 0 -2em;border:0;border-radius:50%;background:rgb(10 25 26 / .78);box-shadow:inset 0 0 0 2px var(--mark);cursor:pointer}
 .play::after{content:"";position:absolute;left:1.6em;top:1.25em;border:.75em solid transparent;border-left:1.15em solid var(--mark);border-right:0}
 .play[hidden]{display:none}
 .play:hover{background:rgb(10 25 26 / .92)}
 .play:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-/* a build coming on show rises into place */
-.show:not([hidden]) > .hud,.show:not([hidden]) > .turntable{animation:rise .3s var(--ease)}
-/* the panels either side, engraved like the kit's tags */
-.hud{position:absolute;z-index:1;top:3.8%;width:20.8%;padding:1.1em 1.25em 1.25em;background:var(--hud);border-radius:var(--r-m);
-  box-shadow:inset 0 0 0 1px var(--line-strong),inset 0 0 0 4px var(--hud),inset 0 0 0 5px var(--line)}
-.about{left:5.7%;padding-top:3.3em}
-.about .kick{font:600 .82em/1.25 var(--display);color:var(--muted);margin-top:.4em}
-.nb .about h2{font:800 2.05em/1.04 var(--display);font-stretch:110%}
+/* a build coming on show: its panels slide in from either side, its model rises, its meters fill */
+.show:not([hidden]) > .about{animation:in-l .4s var(--ease)}
+.show:not([hidden]) > .spec-sheet{animation:in-r .4s var(--ease)}
+.show:not([hidden]) > .turntable{animation:rise .3s var(--ease)}
+@keyframes in-l{from{opacity:0;transform:translateX(-2.5em)}}
+@keyframes in-r{from{opacity:0;transform:translateX(2.5em)}}
+.show:not([hidden]) .sbar i{animation:fill .8s var(--ease)}
+@keyframes fill{from{width:0}}
+/* the panels either side: a racing game's HUD. Chamfered corners, a header bar in the mark
+   colour with its label reversed out of it, big slanted figures, segmented meters */
+.hud{position:absolute;z-index:1;top:3.8%;width:19.5%;padding:3.1em 1.2em 1.2em;
+  background:var(--hud);
+  clip-path:polygon(0 0,calc(100% - 1.5em) 0,100% 1.5em,100% 100%,1.5em 100%,0 calc(100% - 1.5em));
+  box-shadow:inset 0 0 0 1px var(--line-strong),inset 0 -4px 0 var(--mark)}
+.hud::before{content:"";position:absolute;inset:0 0 auto;height:2.25em;background:var(--mark)}
+.about{left:2.4%}
+.about .bay{position:absolute;right:4.4em;top:.78em;font:800 max(11px,.78em)/1 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--hud);font-variant-numeric:tabular-nums;transform:skewX(-10deg)}
+.about .bay b{font-size:1.3em}
+.about .kick{font:600 max(12px,.82em)/1.25 var(--display);color:var(--muted);margin-top:.4em}
+.nb .about h2{text-wrap:wrap;font:800 1.85em/1.04 var(--display);font-stretch:112%;transform:skewX(-6deg);transform-origin:left bottom}
 .about h2:focus{outline:0}
+/* the name opens the case study; the button by the bay opens more about the build */
+.about h2 a{color:inherit;text-decoration:none}
+.about h2 a:hover{text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:.12em}
+.about h2 a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.about h2 .go{color:var(--mark)}
+.about .more{position:absolute;right:1.9em;top:.3em;z-index:1;display:grid;place-items:center;width:1.7em;height:1.7em;margin:0;padding:0;border:0;border-radius:50%;background:none;color:var(--hud);font-size:inherit;cursor:pointer}
+.about .more svg{width:1.35em;height:1.35em}
+.about .more:hover{background:color-mix(in oklab,var(--hud) 22%,transparent)}
+.about .more:focus-visible{outline:2px solid var(--hud);outline-offset:-2px}
 .about .line{font-size:.94em;color:var(--ink-2);margin-top:.6em}
 .about .role{font-weight:650;color:var(--mark);margin-top:.7em}
 .about .nb-btn{margin-top:1em;display:inline-flex;align-items:center}
-.spec-sheet{right:5.7%}
-.spec-h{font:600 .78em/1 var(--display);color:var(--muted);margin-bottom:.5em}
-.sfig{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.75em;align-items:baseline;padding:.5em 0;border-top:1px solid var(--line)}
-.sfig b{font:800 1.7em/1 var(--display);font-stretch:108%;font-variant-numeric:tabular-nums;color:var(--mark)}
-.sfig span{font-size:.82em;line-height:1.3;color:var(--ink-2)}
-.sbar{grid-column:1/-1;height:5px;margin-top:.45em;border-radius:3px;background:var(--line)}
-.sbar i{display:block;height:100%;border-radius:3px;background:var(--mark)}
+.spec-sheet{right:2.4%;width:18%}
+.all-specs{display:inline-flex;align-items:center;margin-top:.7em;padding:.55em .9em;border:0;background:var(--mark);color:var(--hud);font:800 max(11px,.76em)/1 var(--display);letter-spacing:.12em;text-transform:uppercase;cursor:pointer;
+  clip-path:polygon(0 0,calc(100% - .6em) 0,100% .6em,100% 100%,0 100%)}
+.all-specs:hover{filter:brightness(1.12)}
+.all-specs:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+.spec-h{position:absolute;left:1.3em;top:.78em;font:800 max(11px,.78em)/1 var(--display);letter-spacing:.16em;text-transform:uppercase;color:var(--hud);transform:skewX(-10deg)}
+.sfig{display:grid;padding:.32em 0;border-top:1px solid var(--line)}
+.sfig:first-of-type{border-top:0}
+.sfig b{justify-self:start;font:800 1.4em/1 var(--display);font-stretch:110%;font-variant-numeric:tabular-nums;color:var(--mark);transform:skewX(-10deg)}
+.sfig span{margin-top:.15em;font-size:max(12px,.78em);line-height:1.2;color:var(--ink-2)}
+.sbar{height:8px;margin-top:.45em;background:var(--line);
+  -webkit-mask:repeating-linear-gradient(90deg,#000 0 7px,transparent 7px 9px);mask:repeating-linear-gradient(90deg,#000 0 7px,transparent 7px 9px)}
+.sbar i{display:block;height:100%;background:var(--mark)}
 .schips{display:flex;flex-wrap:wrap;gap:.35em;margin-top:.8em}
-.schips span{font:600 .72em/1 var(--display);padding:.45em .6em;border-radius:999px;box-shadow:inset 0 0 0 1px var(--line-strong);color:var(--ink-2)}
-/* the turntable: the build's model, turning clockwise, one turn in 12s */
-.turntable{position:absolute;z-index:1;left:50%;top:55.5%;width:26em;height:16em;margin-left:-13em}
-.turntable::before{content:"";position:absolute;left:0;right:0;bottom:0;height:6em;border-radius:50%;background:var(--g-ceil);box-shadow:inset 0 0 0 2px var(--line-strong),inset 0 0 0 1.6em var(--g-ceil),inset 0 0 0 calc(1.6em + 1.5px) var(--line),0 .5em 0 rgb(0 0 0 / .25)}
-.turntable .turn{position:absolute;left:50%;bottom:2em;width:13.5em;height:13.5em;margin-left:-6.75em}
+.schips span{font:600 max(11px,.72em)/1 var(--display);padding:.45em .7em;border-radius:3px;box-shadow:inset 0 0 0 1px var(--line-strong);color:var(--ink-2)}
+/* the turntable, down on the floor: the build's model, turning clockwise, one turn in 12s,
+   standing in front of the screen's lower edge */
+.turntable{position:absolute;z-index:2;left:50%;bottom:2.4%;width:30em;height:21em;margin-left:-15em;pointer-events:none}
+.turntable::before{content:"";position:absolute;left:0;right:0;bottom:0;height:6.6em;border-radius:50%;background:var(--g-ceil);
+  box-shadow:inset 0 0 0 2px var(--line-strong),inset 0 0 0 1.6em var(--g-ceil),inset 0 0 0 calc(1.6em + 1.5px) var(--line),inset 0 0 0 calc(1.6em + 3px) color-mix(in oklab,var(--mark) 55%,transparent),
+    0 .5em 0 rgb(0 0 0 / .25)}
+/* the platter's ring of ticks turns with the model, a turn in 12s */
+.turntable::after{content:"";position:absolute;left:calc(50% - 13.4em);bottom:calc(3.3em - 13.4em);width:26.8em;height:26.8em;border-radius:50%;
+  background:repeating-conic-gradient(var(--mark) 0 1.2deg,transparent 1.2deg 7.5deg);
+  -webkit-mask:radial-gradient(closest-side,transparent 90%,#000 91% 99%,transparent 100%);mask:radial-gradient(closest-side,transparent 90%,#000 91% 99%,transparent 100%);
+  opacity:.75;transform:scaleY(.127);animation:platter 12s linear infinite}
+@keyframes platter{from{transform:scaleY(.127) rotate(0)}to{transform:scaleY(.127) rotate(-360deg)}}
+.turntable .turn{position:absolute;left:50%;bottom:2.2em;width:17em;height:17em;margin-left:-8.5em}
 .nb .turntable .turn{animation-duration:12s;animation-play-state:running}
 /* live 3D (turntable.js): the canvas takes the flipbook's place, larger and sharp */
-.turntable-3d{position:absolute;left:50%;bottom:1.2em;width:16em;height:16em;margin-left:-8em;cursor:grab;touch-action:pan-y}
+.turntable-3d{position:absolute;left:50%;bottom:1.4em;width:20em;height:20em;margin-left:-10em;cursor:grab;touch-action:pan-y;pointer-events:auto}
 .turntable-3d.dragging{cursor:grabbing}
 .turntable.live .turn{visibility:hidden}
-/* the select strip along the floor; the build on show is lit, the rest dim back */
-.classes{position:absolute;z-index:1;left:5.7%;bottom:15.6%;display:flex;gap:.4em}
-.classes[hidden]{display:none}
-.classes button{font:700 .78em/1 var(--display);padding:.6em .95em;border:0;border-radius:999px;background:var(--hud);color:var(--ink-2);box-shadow:inset 0 0 0 1px var(--line-strong);cursor:pointer}
-.classes button[aria-pressed="true"]{background:var(--mark);color:var(--surface);box-shadow:none}
-.classes button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.strip{position:absolute;z-index:1;left:5.7%;right:5.7%;bottom:1.9%;list-style:none;display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:.5em}
+/* every build, listed down the left over the garage door as a game lists its cars, under a
+   one-line sort menu; the build on show is lit and steps out, the rest dim back */
+.sort{position:absolute;z-index:1;left:2.4%;top:50.6%;width:19.5%;display:flex;align-items:stretch;
+  clip-path:polygon(0 0,calc(100% - .7em) 0,100% .7em,100% 100%,0 100%)}
+.sort[hidden]{display:none}
+.sort label{display:grid;place-items:center;padding:0 .9em;background:var(--mark);color:var(--hud);font:800 max(11px,.74em)/1 var(--display);letter-spacing:.16em;text-transform:uppercase}
+.sort select{flex:1;min-width:0;padding:.55em .8em;border:0;border-radius:0;background:var(--hud);color:var(--ink);font:700 max(12px,.82em)/1.2 var(--display);cursor:pointer}
+.sort select:focus-visible{outline:2px solid var(--accent);outline-offset:-3px}
+.strip{position:absolute;z-index:1;left:2.4%;top:55.8%;width:19.5%;list-style:none;display:grid;gap:.25em}
 .strip li[hidden]{display:none}
-.nb .tile{display:grid;grid-template-columns:2.75em minmax(0,1fr);grid-template-rows:auto auto;column-gap:.55em;align-items:center;height:100%;padding:.6em .7em;
-  border-radius:var(--r-m);background:var(--hud);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);text-decoration:none;filter:saturate(.35) brightness(.82);transition:filter .2s var(--ease)}
-.tile .plate-model,.tile-3d{grid-row:1/3;grid-column:1;width:2.75em;height:2.75em}
+.nb .tile{display:grid;grid-template-columns:2.5em auto minmax(0,1fr);column-gap:.6em;align-items:center;min-height:2.75em;padding:.15em .9em .15em .45em;
+  border-radius:0;background:var(--hud);box-shadow:inset 0 0 0 1px var(--line);color:var(--ink);text-decoration:none;filter:saturate(.35) brightness(.82);transition:filter .2s var(--ease)}
+.nb .tile{clip-path:polygon(0 0,calc(100% - .7em) 0,100% .7em,100% 100%,0 100%)}
+.tile .plate-model,.tile-3d{grid-column:1;width:2.5em;height:2.5em}
 .tile.live .plate-model{display:none}
-.tn{font:800 .78em/1 var(--display);color:var(--mark)}
-.tt{font:800 .88em/1.15 var(--display);font-stretch:104%}
+.tn{display:inline-block;font:800 .95em/1 var(--display);color:var(--mark);transform:skewX(-10deg)}
+.tt{font:800 .86em/1.05 var(--display);font-stretch:104%}
 .nb .tile:hover,.nb .tile:focus-visible{filter:none}
-.nb .tile[aria-current="true"]{filter:none;background:var(--surface);box-shadow:inset 0 0 0 2px var(--mark)}
-.tile:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-/* easter eggs: the service log on its clipboard; the contact desk and its note are below */
-.clipboard{position:absolute;z-index:1;left:10.4%;top:56%;width:10.5em;display:flex;flex-direction:column;gap:.2em;padding:1.3em .8em .7em;text-align:left;
-  background:#EFE6CF;color:#2A2416;border:0;border-radius:var(--r-s);box-shadow:0 2px 0 #B7996C;transform:rotate(-4deg);cursor:pointer;font:400 .72em/1.3 var(--body)}
+.nb .tile[aria-current="true"]{filter:none;background:var(--mark);color:var(--hud);box-shadow:none;transform:translateX(.6em)}
+.nb .tile[aria-current="true"] .tn{color:var(--hud)}
+.nb .tile{transition:filter .2s var(--ease),transform .2s var(--ease)}
+/* the controls card, opened from the floor beside the transcript, as a game shows its controls */
+.legend-btn{position:absolute;z-index:2;left:79.4%;bottom:2.4%;display:grid;place-items:center;width:2.7em;height:2.35em;padding:0;border:0;background:var(--hud);color:var(--ink);cursor:pointer;
+  clip-path:polygon(0 0,calc(100% - .6em) 0,100% .6em,100% 100%,0 100%);box-shadow:inset 0 -3px 0 var(--mark)}
+.legend-btn:hover{background:var(--mark);color:var(--hud)}
+.legend-btn:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+@media (hover:none){.legend-btn{display:none}}
+.ico{display:inline-grid;place-items:center}.ico svg{width:1.25em;height:1.25em;fill:currentColor}
+.legend{display:grid;grid-template-columns:auto 1fr;gap:.55rem .9rem;align-items:center;margin-top:.8rem}
+.legend dt{display:flex;gap:.25rem;font:700 .85rem/1 var(--display);color:var(--ink)}
+.legend dd{font-size:.92rem;color:var(--ink-2)}
+.legend kbd{display:inline-grid;place-items:center;min-width:1.9rem;height:1.9rem;padding:0 .45rem;border-radius:5px;background:var(--surface);color:var(--ink);font:700 .85rem/1 var(--display);box-shadow:inset 0 0 0 1px var(--line-strong),0 2px 0 var(--line-strong)}
+/* a transcript's times: pressed, the walkthrough plays from there (site.js) */
+.ts{margin-right:.5em;padding:.15em .45em;border:0;border-radius:3px;background:color-mix(in oklab,var(--mark) 18%,transparent);color:var(--ink);font:700 .78em/1.2 var(--display);font-variant-numeric:tabular-nums;cursor:pointer;vertical-align:.1em}
+.ts:hover{background:var(--mark);color:var(--surface)}
+.ts:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+.tile:focus-visible{outline:2px solid var(--accent);outline-offset:-4px}
+/* easter eggs: past work on a clipboard hung on the tool wall (pressed, it opens the list);
+   the contact desk and its note are below */
+.clipboard{position:absolute;z-index:1;right:1.4%;top:61.5%;width:7.8em;height:9.6em;display:flex;flex-direction:column;gap:.25em;padding:1.6em .8em .7em;text-align:left;
+  background:repeating-linear-gradient(transparent 0 1.3em,#CDBB93 1.3em calc(1.3em + 1px)) 0 4.6em/100% calc(100% - 5.2em) no-repeat,#EFE6CF;
+  color:#2A2416;border:0;border-radius:var(--r-s);box-shadow:0 2px 0 #B7996C;transform:rotate(3deg);cursor:pointer;font:400 max(11px,.72em)/1.25 var(--body);transition:transform .2s var(--ease)}
 .clipboard::before{content:"";position:absolute;left:50%;top:-.5em;width:3.4em;height:1.1em;margin-left:-1.7em;border-radius:3px;background:#8A949A}
-.clip-h{font:800 1.1em/1.2 var(--display);margin-bottom:.15em}
-.clipboard:hover{transform:rotate(-2deg)}
-.clipboard:focus-visible,.hall-desk:focus-visible,.sticky:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
-/* the contact desk in the corner: computer, phone and fax, in the desk's clay */
-.desk-spot{position:absolute;z-index:1;right:5.7%;bottom:14.6%;width:15em}
-.hall-desk{display:block;border-radius:var(--r-s)}
-.desk-art{display:block;width:100%;height:auto;overflow:visible}
-.d-top{fill:var(--desk-top)}.d-face{fill:var(--desk-face);stroke:var(--desk-cut)}.d-pull{fill:var(--brass-deep)}
-.d-dev{fill:var(--g-door);stroke:var(--line-strong)}.d-key{fill:var(--g-rib)}.d-btn{fill:var(--mark)}
-.d-screen{fill:color-mix(in oklab,var(--mark) 30%,var(--g-ceil));transition:fill .2s var(--ease)}
-.d-glyph{stroke:var(--mark);stroke-width:2.5;stroke-linecap:round}
-.d-cord{fill:none;stroke:var(--line-strong);stroke-width:2}.d-paper{fill:#EFE6CF;stroke:#B7996C}
-.hall-desk:hover .d-screen,.hall-desk:focus-visible .d-screen{fill:color-mix(in oklab,var(--mark) 60%,var(--g-ceil))}
-.sticky{position:absolute;left:30%;top:9%;width:2.4em;height:2.4em;padding:0;border:0;border-radius:0;background:#EBD9A0;color:#2A2416;
-  font-family:"Noto Sans Cuneiform",sans-serif;font-size:1em;line-height:1;transform:rotate(7deg);box-shadow:0 1px 0 #B7996C;cursor:pointer}
-.sticky:hover{transform:rotate(3deg) translateY(-2px)}.card-log{list-style:none;margin-top:.6rem}
+.clip-h{font:800 1.2em/1.1 var(--display);letter-spacing:.06em;text-transform:uppercase}
+.clip-n{color:#5A4E36}
+.clipboard:hover{transform:rotate(1deg) translateY(-2px)}
+.clipboard:focus-visible,.hall-desk:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+/* the contact desk in the corner: computer, phone and fax, drawn in 3D in the room by
+   turntable.js; this link covers it (garage.rs places it), and its still shows until then */
+.desk-spot{position:absolute;z-index:1;left:var(--l);top:var(--t);width:var(--w);height:var(--h)}
+.hall-desk{display:block;width:100%;height:100%;border-radius:var(--r-s);color:inherit;text-decoration:none}
+.desk-still{display:block;width:100%;height:100%;object-fit:contain}
+.props-live .desk-still{visibility:hidden}
+.hall-desk:hover,.hall-desk:focus-visible{background:radial-gradient(closest-side,color-mix(in oklab,var(--mark) 22%,transparent),transparent)}
+/* pointed at, or tapped once on a phone (site.js), the desk shows its note: kin, work and a message */
+.kin-card{position:absolute;left:var(--nx);top:var(--ny);width:19em;display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.75em;row-gap:.2em;padding:.85em 1em;
+  background:#EBD9A0;color:#2A2416;box-shadow:0 2px 0 #B7996C;font:400 max(12px,.8em)/1.3 var(--body);transform:translate(-50%,calc(-100% - .6em)) rotate(-2deg);
+  opacity:0;visibility:hidden;pointer-events:none;transition:opacity .15s var(--ease),visibility .15s}
+.hall-desk:hover .kin-card,.hall-desk:focus-visible .kin-card,.desk-spot.open .kin-card{opacity:1;visibility:visible}
+.desk-spot.open .kin-card{pointer-events:auto}
+.kin-g{grid-row:1/4;font-family:"Noto Sans Cuneiform",sans-serif;font-size:2.6em;line-height:1}
+.kin-t b{font-weight:800}
+.kin-go{font:800 1em/1.2 var(--display);color:#0C606D;margin-top:.25em}
+.card-log{list-style:none;margin-top:.6rem}
 .card-log li{padding:.45rem 0;border-top:1px solid var(--line)}
 .card-log li > *{display:block}
 .card-log span{font-size:.9rem;color:var(--ink-2)}
 @media (max-width:75rem){
   .hall-box{aspect-ratio:auto;display:flex;flex-direction:column;gap:1rem;font-size:1rem;max-width:var(--wrap);padding:clamp(1.5rem,4vw,2.25rem) var(--gutter) 2.25rem}
-  .hall-draw{display:none}
-  .hall-h1,.screen,.hud,.turntable,.desk-spot,.clipboard,.classes,.strip{position:static;left:auto;right:auto;top:auto;bottom:auto;width:auto;margin:0}
-  .nb .hall-h1{order:1;font-size:clamp(2.2rem,8vw,3rem);color:var(--ink)}
-  .classes{order:2;flex-wrap:wrap}
+  .hall-draw,.props-3d,.legend-btn{display:none}
+  .hall .transcript{position:static;order:4}
+  .kin-card{position:static;display:none;width:auto;max-width:19em;margin-top:.6em;transform:rotate(-1deg)}
+  .desk-spot.open .kin-card{display:grid}
+  .hall .transcript .tx{position:static;width:auto;max-height:none;margin-top:.6em}
+  .nb .tile{grid-template-columns:2.75em minmax(0,1fr);grid-template-rows:auto auto;height:100%;padding:.6em .7em}
+  .tile .plate-model,.tile-3d{grid-row:1/3;width:2.75em;height:2.75em}
+  .nb .tile[aria-current="true"]{transform:translateY(-.3em)}
+  .props-live .desk-still{visibility:visible}
+  .hall-desk{height:auto}
+  .about .bay{right:auto;left:1.3em}
+  .hall-h1,.screen,.hud,.turntable,.desk-spot,.clipboard,.sort,.strip{position:static;left:auto;right:auto;top:auto;bottom:auto;width:auto;height:auto;margin:0}
+  .clipboard{width:11em;height:auto;min-height:7em}
+  .nb .hall-h1{order:1;font-size:clamp(2.2rem,8vw,3rem);font-weight:800;letter-spacing:normal;text-transform:none;color:var(--ink)}
+  .sort{order:2;clip-path:none}
   .strip{order:3;display:flex;overflow-x:auto;scroll-snap-type:x mandatory;padding:.2rem .1rem .5rem}
   .strip li{flex:0 0 11rem;scroll-snap-align:start}
   .show{order:4;display:flex;flex-direction:column;gap:1rem}
-  .about{padding-top:1.1em}
+  .hud{position:relative}
   .turntable{position:relative;width:18rem;height:12rem;margin:0 auto}
   .turntable::before{height:4.5rem}
+  .turntable::after{display:none}
   .turntable .turn{width:10rem;height:10rem;margin-left:-5rem;bottom:1.5rem}
   .turntable-3d{width:12rem;height:12rem;margin-left:-6rem;bottom:.5rem}
   .desk-spot,.clipboard{order:5;align-self:flex-start;transform:none}
   .desk-spot{position:relative;width:15rem}
   .clipboard{position:relative;margin-top:.6rem}
   .about{order:-1}
-  .screen .transcript .tx{max-height:none}
 }
 
 /* ── case study ──────────────────────────────────────────── */
@@ -540,6 +648,18 @@ body:has(.earth) .foot{margin-top:0}
 .card-glyph{font:400 1.7rem/1 "Noto Sans Cuneiform",sans-serif;color:var(--accent);letter-spacing:.1em}
 .card-x{position:absolute;right:.6rem;top:.55rem;width:2.25rem;height:2.25rem;border:0;border-radius:50%;background:none;color:var(--muted);font:400 1.4rem/1 var(--body);cursor:pointer}
 .card-x:hover{background:var(--soft);color:var(--ink)}
+/* the hall's build cards: where each link goes, with its icon and site; the whole spec sheet */
+.card-kick{font:800 .75rem/1 var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+.card-links{list-style:none;margin-top:.9rem;display:grid;gap:.35rem}
+.card-links a{display:grid;grid-template-columns:1.6rem 1fr auto;align-items:center;gap:.6rem;padding:.55rem .7rem;background:var(--soft);color:var(--ink);text-decoration:none;border-radius:var(--r-s)}
+.card-links a:hover{background:var(--mark);color:var(--surface)}
+.card-links .lbl{font:700 .95rem/1.2 var(--display)}
+.card-links .where{font-size:.8rem;color:var(--muted)}
+.card-links a:hover .where{color:inherit}
+.card-links .ico svg{width:1.3rem;height:1.3rem}
+.spec-all{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.8rem 1rem;margin-top:.8rem}
+.spec-all dt{font:800 1.35rem/1 var(--display);color:var(--mark);font-variant-numeric:tabular-nums}
+.spec-all dd{margin-top:.2rem;font-size:.85rem;line-height:1.3;color:var(--ink-2)}
 @media (max-width:75rem){
   .chart{aspect-ratio:auto;font-size:1rem;padding:clamp(1.5rem,4vw,2.25rem) var(--gutter) 2rem;max-width:var(--wrap)}
   .sky-draw{position:absolute;inset:0;z-index:-1;opacity:.7;pointer-events:none}
