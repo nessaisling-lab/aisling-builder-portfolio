@@ -186,8 +186,8 @@ function body() {
 
 function build(paper) {
   return new Document({
-    creator: "Stan (Aisling) Leiva-Davila",
-    title: "Stan (Aisling) Leiva-Davila — Résumé",
+    creator: "Aisling (Stan) Leiva-Davila",
+    title: "Aisling (Stan) Leiva-Davila — Résumé",
     styles: {
       default: { document: { run: { font: FONT, size: SZ.normal }, paragraph: { spacing: { line: 240, before: 0, after: 0 } } } },
       characterStyles: [{ id: "Hyperlink", name: "Hyperlink", run: { color: BLUE } }],

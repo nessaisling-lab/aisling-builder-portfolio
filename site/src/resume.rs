@@ -40,7 +40,7 @@ pub struct Project {
 }
 
 pub const HEADER: Header = Header {
-    name: "Stan (Aisling) Leiva-Davila",
+    name: "Aisling (Stan) Leiva-Davila",
     contact: &["ness.aisling@gmail.com", "aisling.ld@pursuit.org", "201-471-1178"],
     location: "New York, NY",
     linkedin: ("stan-leiva-davila", "https://www.linkedin.com/in/stan-leiva-davila/"),
@@ -52,8 +52,7 @@ pub const HEADER: Header = Header {
 
 pub const PORTFOLIO: &str = "https://nessaisling-lab.github.io/aisling-builder-portfolio/";
 
-pub const SUMMARY: &str = "Self-taught software engineer and AI-native builder, Rust-first with a C, \
-C++, and Assembly foundation. I build systems whose guarantees can be checked: Ed25519-signed, \
+pub const SUMMARY: &str = "AI-native builder. I build systems whose guarantees can be checked: Ed25519-signed, \
 hash-chained exports with an independent verifier; on-device speech-to-text where audio never \
 leaves the machine; Postgres row-level security for a nonprofit client. I ship end-to-end, solo and \
 on small teams, with Claude Code. Inaugural cohort, Pursuit AI-Native Builder.";
@@ -134,7 +133,7 @@ pub const PROJECTS: &[Project] = &[
              unsigned, tampered), with source dataset IDs inside the signed region",
             "Wrote an independent Python verifier and found a forgery path: a rewritten chain \
              re-signed with a forger's own key verified as intact. Closed it by publishing the \
-             signing key at a stable endpoint",
+             public key at a stable endpoint",
         ],
     },
     Project {
@@ -195,7 +194,7 @@ pub const EDUCATION: &[Entry] = &[
 ];
 
 pub const SKILLS: &[(&str, &str)] = &[
-    ("Languages & Frameworks", "Rust (axum, SQLx, Tauri 2, Dioxus, Iced), Python, C, C++, Assembly, TypeScript/React, SQL (Postgres, MySQL)"),
+    ("Languages & Frameworks", "Rust (axum, SQLx, Tauri 2, Dioxus, Iced), Python, TypeScript/React, SQL (Postgres, MySQL)"),
     ("Security & Integrity", "Ed25519 signatures, SHA-256 hash chains, Postgres row-level security, hashed bearer tokens, gitleaks, SSRF hardening"),
     ("Data Integration", "Salesforce data model and REST API, SOQL, ETL/import pipelines, Postgres/Supabase"),
     ("AI & Tooling", "Claude Code, Cursor, Anthropic + OpenAI APIs, MCP, whisper.cpp, RAG, agentic workflows"),

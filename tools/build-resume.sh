@@ -20,7 +20,7 @@ cargo run --quiet --manifest-path "$ROOT/site/Cargo.toml" --locked
 
 echo "==> pandoc formats from resume.md"
 "$PANDOC" "$D/resume.md" -t plain -o "$D/resume.txt"
-"$PANDOC" "$D/resume.md" -s --embed-resources --metadata title="Stan (Aisling) Leiva-Davila — Resume" -o "$D/resume.html"
+"$PANDOC" "$D/resume.md" -s --embed-resources --metadata title="Aisling (Stan) Leiva-Davila — Resume" -o "$D/resume.html"
 
 echo "==> Word files (letter + legal), matched to the PDF layout"
 node "$ROOT/tools/build-resume-docx.js"

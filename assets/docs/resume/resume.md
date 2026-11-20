@@ -1,4 +1,4 @@
-# Stan (Aisling) Leiva-Davila
+# Aisling (Stan) Leiva-Davila
 
 **Location:** New York, NY
 **Email:** ness.aisling@gmail.com
@@ -9,7 +9,7 @@
 
 ## Professional Summary
 
-Self-taught software engineer and AI-native builder, Rust-first with a C, C++, and Assembly foundation. I build systems whose guarantees can be checked: Ed25519-signed, hash-chained exports with an independent verifier; on-device speech-to-text where audio never leaves the machine; Postgres row-level security for a nonprofit client. I ship end-to-end, solo and on small teams, with Claude Code. Inaugural cohort, Pursuit AI-Native Builder.
+AI-native builder. I build systems whose guarantees can be checked: Ed25519-signed, hash-chained exports with an independent verifier; on-device speech-to-text where audio never leaves the machine; Postgres row-level security for a nonprofit client. I ship end-to-end, solo and on small teams, with Claude Code. Inaugural cohort, Pursuit AI-Native Builder.
 
 ## Work Experience
 
@@ -49,7 +49,7 @@ Jul. 2017 – Jan. 2020
 
 ## Projects
 
-- **HouseCheck: Verifiable Building Records for NYC Renters** (https://github.com/nessaisling-lab/housecheck) -- Building Health Card scored from public NYC data, with an export a stranger can verify offline. Live; 176 tests. Built a Rust/axum service whose exports carry an append-only SHA-256 hash chain with an Ed25519-signed head and three verification outcomes (signed and intact, intact but unsigned, tampered), with source dataset IDs inside the signed region. Wrote an independent Python verifier and found a forgery path: a rewritten chain re-signed with a forger's own key verified as intact. Closed it by publishing the signing key at a stable endpoint
+- **HouseCheck: Verifiable Building Records for NYC Renters** (https://github.com/nessaisling-lab/housecheck) -- Building Health Card scored from public NYC data, with an export a stranger can verify offline. Live; 176 tests. Built a Rust/axum service whose exports carry an append-only SHA-256 hash chain with an Ed25519-signed head and three verification outcomes (signed and intact, intact but unsigned, tampered), with source dataset IDs inside the signed region. Wrote an independent Python verifier and found a forgery path: a rewritten chain re-signed with a forger's own key verified as intact. Closed it by publishing the public key at a stable endpoint
 - **Ziqpu: Multi-Agent Astrology Synastry Engine** (https://github.com/nessaisling-lab/Ziqpu-L2-Cycle-3) -- Scores a natal chart against the chart of anything with a date of origin (v1: stocks by IPO); reflection, not advice. Led a 3-person team on a Rust workspace: a measurer agent and an interpreter agent, a read-only axum sidecar, an MCP server, and a Dioxus UI
 - **Resona / Wisper: Privacy-First On-Device Voice-to-Text** (https://github.com/aislingld-pursuit/L2-Clone-Prodject) -- Cross-platform desktop dictation app: live streaming + file/YouTube transcription, 100% on-device via whisper.cpp. Real-time pipeline (cpal → energy-VAD → incremental Whisper) with zero cloud STT and no accounts; CUDA/Vulkan/Metal/CPU backends from one Tauri 2 + Rust codebase. Ed25519-signed licenses with client-vs-server entitlement gating; fixed SSRF and unsafe-export issues; shipped v0.2.0-beta.29 on Windows, macOS, Linux
 
@@ -61,7 +61,7 @@ Jul. 2017 – Jan. 2020
 
 ## Skills
 
-- **Languages & Frameworks:** Rust (axum, SQLx, Tauri 2, Dioxus, Iced), Python, C, C++, Assembly, TypeScript/React, SQL (Postgres, MySQL)
+- **Languages & Frameworks:** Rust (axum, SQLx, Tauri 2, Dioxus, Iced), Python, TypeScript/React, SQL (Postgres, MySQL)
 - **Security & Integrity:** Ed25519 signatures, SHA-256 hash chains, Postgres row-level security, hashed bearer tokens, gitleaks, SSRF hardening
 - **Data Integration:** Salesforce data model and REST API, SOQL, ETL/import pipelines, Postgres/Supabase
 - **AI & Tooling:** Claude Code, Cursor, Anthropic + OpenAI APIs, MCP, whisper.cpp, RAG, agentic workflows
