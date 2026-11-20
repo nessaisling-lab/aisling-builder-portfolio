@@ -157,8 +157,8 @@ pub const BUILDS: &[Build] = &[
                      the document as its only input, and found a forgery path: a row rewritten to \
                      “NO VIOLATIONS OF ANY KIND AT THIS ADDRESS”, the chain recomputed and re-signed \
                      with the forger's own key, verified as intact.",
-                    "The fix was publishing the signing key at a stable endpoint, separate from the \
-                     documents it signs, so a reader has something independent to compare against.",
+                    "The fix was publishing the public key at a stable endpoint, separate from the \
+                     documents it verifies, so a reader has something independent to compare against.",
                 ],
             },
             Section {
@@ -173,7 +173,7 @@ pub const BUILDS: &[Build] = &[
             },
         ],
         verify: Some((
-            "Every live figure is served by the app itself. The signing key is published apart from the documents it signs:",
+            "Every live figure is served by the app itself. The public key is published apart from the documents it verifies:",
             "curl -s https://housecheck-nessa.fly.dev/meta",
         )),
         note: Some(
